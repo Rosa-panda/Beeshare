@@ -9676,3 +9676,1120 @@ src.utils.exceptions.DataSaveException: 存储错误 [sqlite]: 保存数据失�
 2025-04-16 23:59:04,676 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
 2025-04-16 23:59:04,755 - src.data_sources.akshare - INFO - AKShare连接测试成功
 2025-04-16 23:59:04,756 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:25:31,108 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:25:31,109 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:25:31,109 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:25:31,109 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:25:31,110 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:25:31,262 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:25:31,262 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:25:39,077 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 00:25:39,100 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 00:25:39,101 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 00:25:39,102 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 00:25:39,106 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 00:25:39,107 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 00:25:39,125 - __main__ - INFO - 开始对股票 ['605288', '605009', '603681'] 进行聚类分析
+2025-04-17 00:25:39,138 - src.storage.sqlite_storage - WARNING - 表 historical_605288 不存在
+2025-04-17 00:25:39,141 - __main__ - INFO - 从数据源获取 605288 的历史数据
+2025-04-17 00:25:39,141 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 605288 -> 输出 605288
+2025-04-17 00:25:39,143 - src.data_sources.akshare - INFO - 股票 605288 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '凯迪股份', 'exists': True}
+2025-04-17 00:25:39,144 - src.data_sources.akshare - WARNING - 通过 _get_stock_data_via_standard_api 获取 605288 历史数据失败: 'NoneType' object has no attribute 'replace'
+2025-04-17 00:25:39,144 - src.data_sources.akshare - ERROR - 无法获取 605288 的历史数据
+2025-04-17 00:25:39,145 - __main__ - WARNING - 未找到 605288 的历史数据
+2025-04-17 00:25:39,145 - src.storage.sqlite_storage - WARNING - 表 historical_605009 不存在
+2025-04-17 00:25:39,146 - __main__ - INFO - 从数据源获取 605009 的历史数据
+2025-04-17 00:25:39,147 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 605009 -> 输出 605009
+2025-04-17 00:25:39,148 - src.data_sources.akshare - INFO - 股票 605009 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '豪悦护理', 'exists': True}
+2025-04-17 00:25:39,148 - src.data_sources.akshare - WARNING - 通过 _get_stock_data_via_standard_api 获取 605009 历史数据失败: 'NoneType' object has no attribute 'replace'
+2025-04-17 00:25:39,149 - src.data_sources.akshare - ERROR - 无法获取 605009 的历史数据
+2025-04-17 00:25:39,149 - __main__ - WARNING - 未找到 605009 的历史数据
+2025-04-17 00:25:39,150 - src.storage.sqlite_storage - WARNING - 表 historical_603681 不存在
+2025-04-17 00:25:39,151 - __main__ - INFO - 从数据源获取 603681 的历史数据
+2025-04-17 00:25:39,151 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 603681 -> 输出 603681
+2025-04-17 00:25:39,152 - src.data_sources.akshare - INFO - 股票 603681 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '永冠新材', 'exists': True}
+2025-04-17 00:25:39,152 - src.data_sources.akshare - WARNING - 通过 _get_stock_data_via_standard_api 获取 603681 历史数据失败: 'NoneType' object has no attribute 'replace'
+2025-04-17 00:25:39,153 - src.data_sources.akshare - ERROR - 无法获取 603681 的历史数据
+2025-04-17 00:25:39,153 - __main__ - WARNING - 未找到 603681 的历史数据
+2025-04-17 00:25:39,153 - __main__ - ERROR - 未能获取任何数据，无法进行聚类分析
+2025-04-17 00:25:39,154 - __main__ - INFO - 程序执行完毕
+2025-04-17 00:29:58,055 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:29:58,055 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:29:58,055 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:29:58,056 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:29:58,057 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:29:58,217 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:29:58,217 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:30:05,926 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 00:30:05,927 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 00:30:05,927 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 00:30:05,928 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 00:30:05,929 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 00:30:05,929 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 00:30:05,935 - __main__ - INFO - 开始对股票 ['605288', '605009', '603681'] 进行聚类分析
+2025-04-17 00:30:05,936 - src.storage.sqlite_storage - WARNING - 表 historical_605288 不存在
+2025-04-17 00:30:05,938 - __main__ - INFO - 从数据源获取 605288 的历史数据
+2025-04-17 00:30:05,938 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 605288 -> 输出 605288
+2025-04-17 00:30:05,939 - src.data_sources.akshare - INFO - 股票 605288 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '凯迪股份', 'exists': True}
+2025-04-17 00:30:05,939 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 605288 -> 输出 605288
+2025-04-17 00:30:05,939 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 605288 -> 输出 605288
+2025-04-17 00:30:05,940 - src.data_sources.akshare - INFO - 股票 605288 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '凯迪股份', 'exists': True}
+2025-04-17 00:30:06,088 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 00:30:06,089 - src.data_sources.akshare - WARNING - 使用备用方法获取 605288 历史数据
+2025-04-17 00:30:06,089 - src.data_sources.akshare - WARNING - 备用方法没有实现实际数据获取功能，返回空数据
+2025-04-17 00:30:06,089 - src.data_sources.akshare - ERROR - 无法获取 605288 的历史数据
+2025-04-17 00:30:06,090 - __main__ - WARNING - 未找到 605288 的历史数据
+2025-04-17 00:30:06,091 - src.storage.sqlite_storage - WARNING - 表 historical_605009 不存在
+2025-04-17 00:30:06,091 - __main__ - INFO - 从数据源获取 605009 的历史数据
+2025-04-17 00:30:06,092 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 605009 -> 输出 605009
+2025-04-17 00:30:06,093 - src.data_sources.akshare - INFO - 股票 605009 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '豪悦护理', 'exists': True}
+2025-04-17 00:30:06,093 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 605009 -> 输出 605009
+2025-04-17 00:30:06,093 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 605009 -> 输出 605009
+2025-04-17 00:30:06,094 - src.data_sources.akshare - INFO - 股票 605009 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '豪悦护理', 'exists': True}
+2025-04-17 00:30:06,171 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 00:30:06,171 - src.data_sources.akshare - WARNING - 使用备用方法获取 605009 历史数据
+2025-04-17 00:30:06,171 - src.data_sources.akshare - WARNING - 备用方法没有实现实际数据获取功能，返回空数据
+2025-04-17 00:30:06,172 - src.data_sources.akshare - ERROR - 无法获取 605009 的历史数据
+2025-04-17 00:30:06,172 - __main__ - WARNING - 未找到 605009 的历史数据
+2025-04-17 00:30:06,173 - src.storage.sqlite_storage - WARNING - 表 historical_603681 不存在
+2025-04-17 00:30:06,174 - __main__ - INFO - 从数据源获取 603681 的历史数据
+2025-04-17 00:30:06,174 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 603681 -> 输出 603681
+2025-04-17 00:30:06,175 - src.data_sources.akshare - INFO - 股票 603681 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '永冠新材', 'exists': True}
+2025-04-17 00:30:06,175 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 603681 -> 输出 603681
+2025-04-17 00:30:06,176 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 603681 -> 输出 603681
+2025-04-17 00:30:06,176 - src.data_sources.akshare - INFO - 股票 603681 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '永冠新材', 'exists': True}
+2025-04-17 00:30:06,266 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 00:30:06,266 - src.data_sources.akshare - WARNING - 使用备用方法获取 603681 历史数据
+2025-04-17 00:30:06,266 - src.data_sources.akshare - WARNING - 备用方法没有实现实际数据获取功能，返回空数据
+2025-04-17 00:30:06,267 - src.data_sources.akshare - ERROR - 无法获取 603681 的历史数据
+2025-04-17 00:30:06,267 - __main__ - WARNING - 未找到 603681 的历史数据
+2025-04-17 00:30:06,268 - __main__ - ERROR - 未能获取任何数据，无法进行聚类分析
+2025-04-17 00:30:06,268 - __main__ - INFO - 程序执行完毕
+2025-04-17 00:30:47,810 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:30:47,810 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:30:47,810 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:30:47,811 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:30:47,811 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:30:47,939 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:30:47,939 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:31:11,663 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:31:11,663 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:31:11,663 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:31:11,664 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:31:11,665 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:31:11,772 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:31:11,772 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:33:07,153 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:33:07,153 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:33:07,153 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:33:07,154 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:33:07,154 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:33:07,346 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:33:07,346 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:33:20,337 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:33:20,337 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:33:20,337 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:33:20,338 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:33:20,339 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:33:20,451 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:33:20,452 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:33:52,627 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:33:52,628 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:33:52,628 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:33:52,629 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:33:52,629 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:33:52,744 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:33:52,744 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:36:38,182 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:36:38,182 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:36:38,182 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:36:38,183 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:36:38,184 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:36:38,329 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:36:38,330 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:36:49,641 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 00:36:49,646 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 00:36:49,648 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 00:36:49,648 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 00:36:49,654 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 00:36:49,655 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 00:36:49,675 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 00:36:49,682 - src.storage.sqlite_storage - INFO - 成功加载 600519 的 91 条 从 None 到 None historical 数据
+2025-04-17 00:36:49,705 - src.storage.sqlite_storage - INFO - 成功加载 601398 的 91 条 从 None 到 None historical 数据
+2025-04-17 00:36:49,717 - src.storage.sqlite_storage - INFO - 成功加载 600036 的 456 条 从 None 到 None historical 数据
+2025-04-17 00:36:49,725 - __main__ - ERROR - 聚类分析失败: cannot access local variable 'pd' where it is not associated with a value
+2025-04-17 00:36:49,726 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 879, in run_clustering_analysis
+    combined_data = pd.concat(all_data.values(), ignore_index=True)
+                    ^^
+UnboundLocalError: cannot access local variable 'pd' where it is not associated with a value
+
+2025-04-17 00:36:49,727 - __main__ - INFO - 程序执行完毕
+2025-04-17 00:38:21,393 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:38:21,393 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:38:21,393 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:38:21,394 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:38:21,394 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:38:21,506 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:38:21,506 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:38:36,504 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:38:36,504 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:38:36,505 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:38:36,505 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:38:36,506 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:38:36,624 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:38:36,624 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:38:45,641 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 00:38:45,645 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 00:38:45,645 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 00:38:45,645 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 00:38:45,663 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 00:38:45,663 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 00:38:45,683 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 00:38:45,690 - src.storage.sqlite_storage - INFO - 成功加载 600519 的 91 条 从 None 到 None historical 数据
+2025-04-17 00:38:45,712 - src.storage.sqlite_storage - INFO - 成功加载 601398 的 91 条 从 None 到 None historical 数据
+2025-04-17 00:38:45,724 - src.storage.sqlite_storage - INFO - 成功加载 600036 的 456 条 从 None 到 None historical 数据
+2025-04-17 00:38:45,733 - __main__ - INFO - 使用 2 个聚类运行KMeans聚类
+2025-04-17 00:38:45,734 - __main__ - ERROR - 聚类分析失败: 'NoneType' object is not iterable
+2025-04-17 00:38:45,736 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 909, in run_clustering_analysis
+    clustering_result = analyzer.kmeans_clustering(
+        params={
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\laisn\Desktop\Beeshare\src\analysis\clustering.py", line 292, in kmeans_clustering
+    for feature in params['features']:
+                   ~~~~~~^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+2025-04-17 00:38:45,738 - __main__ - INFO - 程序执行完毕
+2025-04-17 00:42:48,541 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:42:48,541 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:42:48,542 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:42:48,542 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:42:48,543 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:42:48,735 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:42:48,736 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:42:56,872 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 00:42:56,878 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 00:42:56,879 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 00:42:56,880 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 00:42:56,885 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 00:42:56,886 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 00:42:56,920 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 00:42:56,929 - src.storage.sqlite_storage - INFO - 成功加载 600519 的 91 条 从 None 到 None historical 数据
+2025-04-17 00:42:56,956 - src.storage.sqlite_storage - INFO - 成功加载 601398 的 91 条 从 None 到 None historical 数据
+2025-04-17 00:42:56,969 - src.storage.sqlite_storage - INFO - 成功加载 600036 的 456 条 从 None 到 None historical 数据
+2025-04-17 00:42:56,978 - __main__ - INFO - 使用 3 个聚类运行KMeans聚类
+2025-04-17 00:42:56,979 - __main__ - ERROR - 聚类分析失败: 'NoneType' object is not iterable
+2025-04-17 00:42:56,981 - __main__ - ERROR - Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 909, in run_clustering_analysis
+    clustering_result = analyzer.kmeans_clustering(
+        params={
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\laisn\Desktop\Beeshare\src\analysis\clustering.py", line 292, in kmeans_clustering
+    for feature in params['features']:
+                   ~~~~~~^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+2025-04-17 00:42:56,983 - __main__ - INFO - 程序执行完毕
+2025-04-17 00:54:45,192 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:54:45,193 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:54:45,193 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:54:45,194 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:54:45,194 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:54:45,354 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:54:45,355 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:54:53,469 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 00:54:53,475 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 00:54:53,475 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 00:54:53,476 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 00:54:53,479 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 00:54:53,480 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 00:54:53,500 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 00:54:53,501 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 00:54:53,502 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 00:54:53,502 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 00:54:53,503 - __main__ - ERROR - 获取 600519 数据失败: 'AKShareDS' object has no attribute 'standardize_code'
+2025-04-17 00:54:53,504 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 00:54:53,504 - __main__ - ERROR - 获取 601398 数据失败: 'AKShareDS' object has no attribute 'standardize_code'
+2025-04-17 00:54:53,505 - __main__ - INFO - 获取 600036 的历史数据
+2025-04-17 00:54:53,505 - __main__ - ERROR - 获取 600036 数据失败: 'AKShareDS' object has no attribute 'standardize_code'
+2025-04-17 00:54:53,505 - __main__ - ERROR - 没有获取到任何有效的历史数据
+2025-04-17 00:54:53,506 - __main__ - INFO - 程序执行完毕
+2025-04-17 00:59:02,162 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 00:59:02,162 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 00:59:02,163 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 00:59:02,163 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 00:59:02,164 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 00:59:02,272 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 00:59:02,273 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 00:59:11,077 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 00:59:11,083 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 00:59:11,084 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 00:59:11,084 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 00:59:11,087 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 00:59:11,088 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 00:59:11,105 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 00:59:11,105 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 00:59:11,106 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 00:59:11,106 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 00:59:11,107 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 00:59:11,108 - __main__ - ERROR - 获取 600519 数据失败: AKShareDS.get_historical_data() got an unexpected keyword argument 'adjust'
+2025-04-17 00:59:11,108 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 00:59:11,109 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 00:59:11,109 - __main__ - ERROR - 获取 601398 数据失败: AKShareDS.get_historical_data() got an unexpected keyword argument 'adjust'
+2025-04-17 00:59:11,110 - __main__ - INFO - 获取 600036 的历史数据
+2025-04-17 00:59:11,110 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 00:59:11,111 - __main__ - ERROR - 获取 600036 数据失败: AKShareDS.get_historical_data() got an unexpected keyword argument 'adjust'
+2025-04-17 00:59:11,111 - __main__ - ERROR - 没有获取到任何有效的历史数据
+2025-04-17 00:59:11,112 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:00:40,759 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:00:40,759 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:00:40,759 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:00:40,760 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:00:40,761 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:00:40,895 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:00:40,896 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:00:49,591 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:00:49,597 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:00:49,599 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:00:49,600 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:00:49,604 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:00:49,605 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:00:49,623 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 01:00:49,624 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:00:49,625 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:00:49,625 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 01:00:49,626 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:00:49,626 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:00:49,628 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:00:49,629 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:00:49,629 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:00:49,631 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:00:49,787 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:00:49,788 - src.data_sources.akshare - WARNING - 使用备用方法获取 600519 历史数据
+2025-04-17 01:00:49,788 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 600519 的历史数据
+2025-04-17 01:00:49,791 - src.data_sources.akshare - INFO - 成功生成 600519 的模拟数据，共 65 行
+2025-04-17 01:00:49,791 - src.data_sources.akshare - WARNING - 通过 _get_stock_data_via_fallback_api 获取 600519 历史数据失败: standardize_columns() got an unexpected keyword argument 'verbose'
+2025-04-17 01:00:49,792 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据
+2025-04-17 01:00:49,792 - __main__ - WARNING - 获取不到 600519 的历史数据
+2025-04-17 01:00:49,793 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 01:00:49,793 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:00:49,794 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:00:49,795 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:00:49,795 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:00:49,796 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:00:49,797 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:00:49,880 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:00:49,881 - src.data_sources.akshare - WARNING - 使用备用方法获取 601398 历史数据
+2025-04-17 01:00:49,881 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 601398 的历史数据
+2025-04-17 01:00:49,883 - src.data_sources.akshare - INFO - 成功生成 601398 的模拟数据，共 65 行
+2025-04-17 01:00:49,884 - src.data_sources.akshare - WARNING - 通过 _get_stock_data_via_fallback_api 获取 601398 历史数据失败: standardize_columns() got an unexpected keyword argument 'verbose'
+2025-04-17 01:00:49,884 - src.data_sources.akshare - ERROR - 无法获取 601398 的历史数据
+2025-04-17 01:00:49,885 - __main__ - WARNING - 获取不到 601398 的历史数据
+2025-04-17 01:00:49,885 - __main__ - INFO - 获取 600036 的历史数据
+2025-04-17 01:00:49,886 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:00:49,886 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:00:49,887 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:00:49,888 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:00:49,888 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:00:49,890 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:00:49,979 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:00:49,980 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 01:00:49,981 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 600036 的历史数据
+2025-04-17 01:00:49,983 - src.data_sources.akshare - INFO - 成功生成 600036 的模拟数据，共 65 行
+2025-04-17 01:00:49,984 - src.data_sources.akshare - WARNING - 通过 _get_stock_data_via_fallback_api 获取 600036 历史数据失败: standardize_columns() got an unexpected keyword argument 'verbose'
+2025-04-17 01:00:49,985 - src.data_sources.akshare - ERROR - 无法获取 600036 的历史数据
+2025-04-17 01:00:49,985 - __main__ - WARNING - 获取不到 600036 的历史数据
+2025-04-17 01:00:49,986 - __main__ - ERROR - 没有获取到任何有效的历史数据
+2025-04-17 01:00:49,987 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:02:47,114 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:02:47,114 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:02:47,114 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:02:47,115 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:02:47,116 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:02:47,252 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:02:47,254 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:03:05,752 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:03:05,753 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:03:05,753 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:03:05,753 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:03:05,754 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:03:05,829 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:03:05,830 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:04:13,590 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:04:13,590 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:04:13,590 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:04:13,591 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:04:13,592 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:04:13,691 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:04:13,691 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:04:57,137 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:04:57,137 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:04:57,137 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:04:57,138 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:04:57,139 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:04:57,237 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:04:57,237 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:05:05,594 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:05:05,597 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:05:05,597 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:05:05,597 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:05:05,599 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:05:05,600 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:05:05,611 - __main__ - INFO - 开始对股票 ['600519', '858'] 进行聚类分析
+2025-04-17 01:05:05,611 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:05:05,612 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:05:05,612 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 01:05:05,613 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:05:05,613 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:05:05,615 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:05:05,616 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:05:05,616 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:05:05,618 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:05:05,765 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:05:05,766 - src.data_sources.akshare - WARNING - 使用备用方法获取 600519 历史数据
+2025-04-17 01:05:05,766 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 600519 的历史数据
+2025-04-17 01:05:05,768 - src.data_sources.akshare - INFO - 成功生成 600519 的模拟数据，共 65 行
+2025-04-17 01:05:05,768 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:05,768 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:05,769 - src.data_sources.akshare - WARNING - 数据缺少必需列: [<StandardColumns.DATE: 'date'>, <StandardColumns.OPEN: 'open'>, <StandardColumns.HIGH: 'high'>, <StandardColumns.LOW: 'low'>, <StandardColumns.CLOSE: 'close'>, <StandardColumns.VOLUME: 'volume'>]
+2025-04-17 01:05:05,769 - src.data_sources.akshare - WARNING - 获取的数据缺少关键列，尝试下一个方法
+2025-04-17 01:05:05,770 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据
+2025-04-17 01:05:05,770 - __main__ - WARNING - 获取不到 600519 的历史数据
+2025-04-17 01:05:05,770 - __main__ - INFO - 获取 858 的历史数据
+2025-04-17 01:05:05,771 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000858 -> 输出 000858
+2025-04-17 01:05:05,771 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000858 -> 输出 000858
+2025-04-17 01:05:05,772 - src.data_sources.akshare - INFO - 股票 000858 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '五 粮 液', 'exists': True}
+2025-04-17 01:05:05,772 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000858 -> 输出 000858
+2025-04-17 01:05:05,772 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000858 -> 输出 000858
+2025-04-17 01:05:05,773 - src.data_sources.akshare - INFO - 股票 000858 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '五 粮 液', 'exists': True}
+2025-04-17 01:05:05,853 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:05:05,854 - src.data_sources.akshare - WARNING - 使用备用方法获取 000858 历史数据
+2025-04-17 01:05:05,854 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000858 的历史数据
+2025-04-17 01:05:05,856 - src.data_sources.akshare - INFO - 成功生成 000858 的模拟数据，共 65 行
+2025-04-17 01:05:05,856 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:05,856 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:05,857 - src.data_sources.akshare - WARNING - 数据缺少必需列: [<StandardColumns.DATE: 'date'>, <StandardColumns.OPEN: 'open'>, <StandardColumns.HIGH: 'high'>, <StandardColumns.LOW: 'low'>, <StandardColumns.CLOSE: 'close'>, <StandardColumns.VOLUME: 'volume'>]
+2025-04-17 01:05:05,857 - src.data_sources.akshare - WARNING - 获取的数据缺少关键列，尝试下一个方法
+2025-04-17 01:05:05,857 - src.data_sources.akshare - ERROR - 无法获取 000858 的历史数据
+2025-04-17 01:05:05,858 - __main__ - WARNING - 获取不到 858 的历史数据
+2025-04-17 01:05:05,858 - __main__ - ERROR - 没有获取到任何有效的历史数据
+2025-04-17 01:05:05,858 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:05:39,811 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:05:39,811 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:05:39,812 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:05:39,812 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:05:39,813 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:05:39,912 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:05:39,913 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:05:49,324 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:05:49,326 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:05:49,327 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:05:49,327 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:05:49,339 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:05:49,339 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:05:49,346 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 01:05:49,347 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:05:49,347 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:05:49,348 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 01:05:49,348 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:05:49,348 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:05:49,349 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:05:49,349 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:05:49,350 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:05:49,350 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:05:49,435 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:05:49,436 - src.data_sources.akshare - WARNING - 使用备用方法获取 600519 历史数据
+2025-04-17 01:05:49,436 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 600519 的历史数据
+2025-04-17 01:05:49,438 - src.data_sources.akshare - INFO - 成功生成 600519 的模拟数据，共 65 行
+2025-04-17 01:05:49,438 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:49,438 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:49,439 - src.data_sources.akshare - WARNING - 数据缺少必需列: [<StandardColumns.DATE: 'date'>, <StandardColumns.OPEN: 'open'>, <StandardColumns.HIGH: 'high'>, <StandardColumns.LOW: 'low'>, <StandardColumns.CLOSE: 'close'>, <StandardColumns.VOLUME: 'volume'>]
+2025-04-17 01:05:49,439 - src.data_sources.akshare - WARNING - 获取的数据缺少关键列，尝试下一个方法
+2025-04-17 01:05:49,439 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据
+2025-04-17 01:05:49,439 - __main__ - WARNING - 获取不到 600519 的历史数据
+2025-04-17 01:05:49,440 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 01:05:49,440 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:05:49,440 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:05:49,441 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:05:49,441 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:05:49,441 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:05:49,442 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:05:49,526 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:05:49,527 - src.data_sources.akshare - WARNING - 使用备用方法获取 601398 历史数据
+2025-04-17 01:05:49,527 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 601398 的历史数据
+2025-04-17 01:05:49,529 - src.data_sources.akshare - INFO - 成功生成 601398 的模拟数据，共 65 行
+2025-04-17 01:05:49,529 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:49,529 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:49,529 - src.data_sources.akshare - WARNING - 数据缺少必需列: [<StandardColumns.DATE: 'date'>, <StandardColumns.OPEN: 'open'>, <StandardColumns.HIGH: 'high'>, <StandardColumns.LOW: 'low'>, <StandardColumns.CLOSE: 'close'>, <StandardColumns.VOLUME: 'volume'>]
+2025-04-17 01:05:49,530 - src.data_sources.akshare - WARNING - 获取的数据缺少关键列，尝试下一个方法
+2025-04-17 01:05:49,530 - src.data_sources.akshare - ERROR - 无法获取 601398 的历史数据
+2025-04-17 01:05:49,531 - __main__ - WARNING - 获取不到 601398 的历史数据
+2025-04-17 01:05:49,531 - __main__ - INFO - 获取 600036 的历史数据
+2025-04-17 01:05:49,531 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:05:49,531 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:05:49,532 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:05:49,532 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:05:49,533 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:05:49,534 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:05:49,622 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:05:49,623 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 01:05:49,623 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 600036 的历史数据
+2025-04-17 01:05:49,624 - src.data_sources.akshare - INFO - 成功生成 600036 的模拟数据，共 65 行
+2025-04-17 01:05:49,625 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:49,625 - src.utils.column_mapping - WARNING - 数据源 AKSHARE 没有任何列可以映射到标准列名
+2025-04-17 01:05:49,625 - src.data_sources.akshare - WARNING - 数据缺少必需列: [<StandardColumns.DATE: 'date'>, <StandardColumns.OPEN: 'open'>, <StandardColumns.HIGH: 'high'>, <StandardColumns.LOW: 'low'>, <StandardColumns.CLOSE: 'close'>, <StandardColumns.VOLUME: 'volume'>]
+2025-04-17 01:05:49,626 - src.data_sources.akshare - WARNING - 获取的数据缺少关键列，尝试下一个方法
+2025-04-17 01:05:49,626 - src.data_sources.akshare - ERROR - 无法获取 600036 的历史数据
+2025-04-17 01:05:49,626 - __main__ - WARNING - 获取不到 600036 的历史数据
+2025-04-17 01:05:49,626 - __main__ - ERROR - 没有获取到任何有效的历史数据
+2025-04-17 01:05:49,627 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:09:50,338 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:09:50,339 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:09:50,339 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:09:50,339 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:09:50,340 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:09:50,462 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:09:50,463 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:11:00,010 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:11:00,010 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:11:00,010 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:11:00,011 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:11:00,012 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:11:00,106 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:11:00,106 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:11:08,230 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:11:08,231 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:11:08,231 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:11:08,232 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:11:08,233 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:11:08,233 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:11:08,263 - __main__ - INFO - 开始对股票 ['600519', '601398'] 进行聚类分析
+2025-04-17 01:11:08,264 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:11:08,265 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:11:08,265 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 01:11:08,265 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:11:08,266 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:11:08,268 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:11:08,269 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:11:08,269 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:11:08,271 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:11:08,362 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:11:08,362 - src.data_sources.akshare - WARNING - 使用备用方法获取 600519 历史数据
+2025-04-17 01:11:08,363 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 600519 的历史数据
+2025-04-17 01:11:08,365 - src.data_sources.akshare - INFO - 成功生成 600519 的模拟数据，共 65 行
+2025-04-17 01:11:08,365 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:08,366 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:08,367 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 600519 历史数据: 65 行
+2025-04-17 01:11:08,368 - __main__ - INFO - 成功添加 600519 的数据，共 65 行
+2025-04-17 01:11:08,368 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 01:11:08,368 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:11:08,369 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:11:08,370 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:11:08,370 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:11:08,370 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:11:08,371 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:11:08,447 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:11:08,448 - src.data_sources.akshare - WARNING - 使用备用方法获取 601398 历史数据
+2025-04-17 01:11:08,448 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 601398 的历史数据
+2025-04-17 01:11:08,451 - src.data_sources.akshare - INFO - 成功生成 601398 的模拟数据，共 65 行
+2025-04-17 01:11:08,452 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:08,453 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:08,454 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 601398 历史数据: 65 行
+2025-04-17 01:11:08,455 - __main__ - INFO - 成功添加 601398 的数据，共 65 行
+2025-04-17 01:11:08,457 - __main__ - INFO - 合并所有股票数据，共 130 行
+2025-04-17 01:11:08,458 - __main__ - INFO - 初始化聚类分析器
+2025-04-17 01:11:08,458 - __main__ - INFO - 使用 3 个聚类运行KMeans聚类
+2025-04-17 01:11:08,459 - src.analysis.clustering - INFO - 使用以下特征进行聚类: ['close', 'volume', 'change_pct']
+2025-04-17 01:11:08,465 - src.analysis.clustering - INFO - 开始执行KMeans聚类 (n_clusters=3, max_iter=300, n_init=10)
+2025-04-17 01:11:08,601 - src.analysis.clustering - INFO - 聚类轮廓分数: 0.3407
+2025-04-17 01:11:08,772 - src.analysis.clustering - INFO - 聚类统计信息计算完成，共 3 个聚类
+2025-04-17 01:11:08,772 - src.analysis.clustering - INFO - 聚类 #0: 34 个样本 (26.15%)
+2025-04-17 01:11:08,772 - src.analysis.clustering - INFO - 聚类 #1: 31 个样本 (23.85%)
+2025-04-17 01:11:08,773 - src.analysis.clustering - INFO - 聚类 #2: 65 个样本 (50.00%)
+2025-04-17 01:11:08,773 - src.analysis.clustering - INFO - KMeans聚类分析完成，生成了 3 个聚类
+2025-04-17 01:11:08,773 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:11:08,774 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:11:08,774 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:11:08,776 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:11:30,832 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:11:30,832 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:11:30,832 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:11:30,833 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:11:30,834 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:11:30,906 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:11:30,907 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:11:38,699 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:11:38,701 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:11:38,701 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:11:38,702 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:11:38,710 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:11:38,710 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:11:38,717 - __main__ - INFO - 开始对股票 ['1', '2', '333'] 进行聚类分析
+2025-04-17 01:11:38,718 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:11:38,718 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:11:38,718 - __main__ - INFO - 获取 1 的历史数据
+2025-04-17 01:11:38,719 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:11:38,719 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:11:38,720 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 01:11:38,720 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:11:38,720 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:11:38,721 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 01:11:38,812 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:11:38,813 - src.data_sources.akshare - WARNING - 使用备用方法获取 000001 历史数据
+2025-04-17 01:11:38,813 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000001 的历史数据
+2025-04-17 01:11:38,815 - src.data_sources.akshare - INFO - 成功生成 000001 的模拟数据，共 65 行
+2025-04-17 01:11:38,816 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:38,816 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:38,817 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000001 历史数据: 65 行
+2025-04-17 01:11:38,818 - __main__ - INFO - 成功添加 1 的数据，共 65 行
+2025-04-17 01:11:38,818 - __main__ - INFO - 获取 2 的历史数据
+2025-04-17 01:11:38,818 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:11:38,818 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:11:38,819 - src.data_sources.akshare - INFO - 股票 000002 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '万  科Ａ', 'exists': True}
+2025-04-17 01:11:38,820 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:11:38,820 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:11:38,821 - src.data_sources.akshare - INFO - 股票 000002 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '万  科Ａ', 'exists': True}
+2025-04-17 01:11:38,910 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:11:38,910 - src.data_sources.akshare - WARNING - 使用备用方法获取 000002 历史数据
+2025-04-17 01:11:38,910 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000002 的历史数据
+2025-04-17 01:11:38,912 - src.data_sources.akshare - INFO - 成功生成 000002 的模拟数据，共 65 行
+2025-04-17 01:11:38,913 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:38,913 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:38,914 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000002 历史数据: 65 行
+2025-04-17 01:11:38,915 - __main__ - INFO - 成功添加 2 的数据，共 65 行
+2025-04-17 01:11:38,915 - __main__ - INFO - 获取 333 的历史数据
+2025-04-17 01:11:38,915 - src.data_sources.akshare - INFO - 股票代码修正: 添加前导零 -> 000333
+2025-04-17 01:11:38,915 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:11:38,916 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:11:38,916 - src.data_sources.akshare - INFO - 股票 000333 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '美的集团', 'exists': True}
+2025-04-17 01:11:38,917 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:11:38,917 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:11:38,918 - src.data_sources.akshare - INFO - 股票 000333 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '美的集团', 'exists': True}
+2025-04-17 01:11:39,002 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:11:39,002 - src.data_sources.akshare - WARNING - 使用备用方法获取 000333 历史数据
+2025-04-17 01:11:39,003 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000333 的历史数据
+2025-04-17 01:11:39,004 - src.data_sources.akshare - INFO - 成功生成 000333 的模拟数据，共 65 行
+2025-04-17 01:11:39,005 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:39,005 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:11:39,006 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000333 历史数据: 65 行
+2025-04-17 01:11:39,007 - __main__ - INFO - 成功添加 333 的数据，共 65 行
+2025-04-17 01:11:39,008 - __main__ - INFO - 合并所有股票数据，共 195 行
+2025-04-17 01:11:39,009 - __main__ - INFO - 初始化聚类分析器
+2025-04-17 01:11:39,009 - __main__ - INFO - 使用 3 个聚类运行KMeans聚类
+2025-04-17 01:11:39,009 - src.analysis.clustering - INFO - 使用以下特征进行聚类: ['close', 'volume', 'change_pct', 'high', 'low']
+2025-04-17 01:11:39,013 - src.analysis.clustering - INFO - 开始执行KMeans聚类 (n_clusters=3, max_iter=300, n_init=10)
+2025-04-17 01:11:39,102 - src.analysis.clustering - INFO - 聚类轮廓分数: 0.3250
+2025-04-17 01:11:39,290 - src.analysis.clustering - INFO - 聚类统计信息计算完成，共 3 个聚类
+2025-04-17 01:11:39,290 - src.analysis.clustering - INFO - 聚类 #0: 70 个样本 (35.90%)
+2025-04-17 01:11:39,291 - src.analysis.clustering - INFO - 聚类 #1: 64 个样本 (32.82%)
+2025-04-17 01:11:39,291 - src.analysis.clustering - INFO - 聚类 #2: 61 个样本 (31.28%)
+2025-04-17 01:11:39,291 - src.analysis.clustering - INFO - KMeans聚类分析完成，生成了 3 个聚类
+2025-04-17 01:11:39,292 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:11:39,292 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:11:39,292 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:11:39,294 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:12:57,220 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:12:57,220 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:12:57,221 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:12:57,221 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:12:57,222 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:12:57,359 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:12:57,359 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:14:00,393 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:14:00,394 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:14:00,394 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:14:00,394 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:14:00,395 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:14:00,475 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:14:00,475 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:14:09,437 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:14:09,440 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:14:09,441 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:14:09,441 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:14:09,457 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:14:09,457 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:14:09,469 - __main__ - INFO - 开始对股票 ['1', '2', '333'] 进行聚类分析
+2025-04-17 01:14:09,469 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:14:09,469 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:14:09,469 - __main__ - INFO - 获取 1 的历史数据
+2025-04-17 01:14:09,470 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:14:09,470 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:14:09,471 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 01:14:09,471 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:14:09,471 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:14:09,472 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 01:14:09,617 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:14:09,617 - src.data_sources.akshare - WARNING - 使用备用方法获取 000001 历史数据
+2025-04-17 01:14:09,618 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000001 的历史数据
+2025-04-17 01:14:09,622 - src.data_sources.akshare - INFO - 成功生成 000001 的模拟数据，共 65 行
+2025-04-17 01:14:09,623 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:14:09,625 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:14:09,626 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000001 历史数据: 65 行
+2025-04-17 01:14:09,628 - __main__ - INFO - 成功添加 1 的数据，共 65 行
+2025-04-17 01:14:09,628 - __main__ - INFO - 获取 2 的历史数据
+2025-04-17 01:14:09,629 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:14:09,629 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:14:09,631 - src.data_sources.akshare - INFO - 股票 000002 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '万  科Ａ', 'exists': True}
+2025-04-17 01:14:09,632 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:14:09,633 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:14:09,635 - src.data_sources.akshare - INFO - 股票 000002 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '万  科Ａ', 'exists': True}
+2025-04-17 01:14:09,707 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:14:09,707 - src.data_sources.akshare - WARNING - 使用备用方法获取 000002 历史数据
+2025-04-17 01:14:09,708 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000002 的历史数据
+2025-04-17 01:14:09,710 - src.data_sources.akshare - INFO - 成功生成 000002 的模拟数据，共 65 行
+2025-04-17 01:14:09,710 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:14:09,711 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:14:09,711 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000002 历史数据: 65 行
+2025-04-17 01:14:09,712 - __main__ - INFO - 成功添加 2 的数据，共 65 行
+2025-04-17 01:14:09,712 - __main__ - INFO - 获取 333 的历史数据
+2025-04-17 01:14:09,713 - src.data_sources.akshare - INFO - 股票代码修正: 添加前导零 -> 000333
+2025-04-17 01:14:09,713 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:14:09,713 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:14:09,714 - src.data_sources.akshare - INFO - 股票 000333 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '美的集团', 'exists': True}
+2025-04-17 01:14:09,714 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:14:09,715 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:14:09,715 - src.data_sources.akshare - INFO - 股票 000333 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '美的集团', 'exists': True}
+2025-04-17 01:14:09,788 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:14:09,789 - src.data_sources.akshare - WARNING - 使用备用方法获取 000333 历史数据
+2025-04-17 01:14:09,789 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000333 的历史数据
+2025-04-17 01:14:09,791 - src.data_sources.akshare - INFO - 成功生成 000333 的模拟数据，共 65 行
+2025-04-17 01:14:09,792 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:14:09,793 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:14:09,793 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000333 历史数据: 65 行
+2025-04-17 01:14:09,794 - __main__ - INFO - 成功添加 333 的数据，共 65 行
+2025-04-17 01:14:09,798 - __main__ - INFO - 合并所有股票数据，共 195 行
+2025-04-17 01:14:09,799 - __main__ - INFO - 初始化聚类分析器
+2025-04-17 01:14:09,800 - __main__ - INFO - 使用 3 个聚类运行KMeans聚类
+2025-04-17 01:14:09,802 - src.analysis.clustering - INFO - 使用以下特征进行聚类: ['close', 'volume', 'change_pct', 'high', 'low']
+2025-04-17 01:14:09,817 - src.analysis.clustering - INFO - 开始执行KMeans聚类 (n_clusters=3, max_iter=300, n_init=10)
+2025-04-17 01:14:09,928 - src.analysis.clustering - INFO - 聚类轮廓分数: 0.4046
+2025-04-17 01:14:10,095 - src.analysis.clustering - INFO - 聚类统计信息计算完成，共 3 个聚类
+2025-04-17 01:14:10,096 - src.analysis.clustering - INFO - 聚类 #0: 65 个样本 (33.33%)
+2025-04-17 01:14:10,096 - src.analysis.clustering - INFO - 聚类 #1: 59 个样本 (30.26%)
+2025-04-17 01:14:10,096 - src.analysis.clustering - INFO - 聚类 #2: 71 个样本 (36.41%)
+2025-04-17 01:14:10,097 - src.analysis.clustering - INFO - KMeans聚类分析完成，生成了 3 个聚类
+2025-04-17 01:14:10,098 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:14:10,098 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:14:10,099 - src.analysis.clustering - ERROR - 聚类结果缺少必要的键: ['n_clusters']
+2025-04-17 01:14:10,101 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:17:57,317 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:17:57,317 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:17:57,317 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:17:57,318 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:17:57,319 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:17:57,398 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:17:57,399 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:18:05,172 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:18:05,176 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:18:05,176 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:18:05,177 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:18:05,187 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:18:05,188 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:18:05,202 - __main__ - INFO - 开始对股票 ['1', '2', '333'] 进行聚类分析
+2025-04-17 01:18:05,203 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:18:05,204 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:18:05,204 - __main__ - INFO - 获取 1 的历史数据
+2025-04-17 01:18:05,204 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:18:05,205 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:18:05,206 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 01:18:05,206 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:18:05,206 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 01:18:05,207 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 01:18:05,272 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:18:05,272 - src.data_sources.akshare - WARNING - 使用备用方法获取 000001 历史数据
+2025-04-17 01:18:05,272 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000001 的历史数据
+2025-04-17 01:18:05,274 - src.data_sources.akshare - INFO - 成功生成 000001 的模拟数据，共 65 行
+2025-04-17 01:18:05,275 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:18:05,275 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:18:05,276 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000001 历史数据: 65 行
+2025-04-17 01:18:05,277 - __main__ - INFO - 成功添加 1 的数据，共 65 行
+2025-04-17 01:18:05,277 - __main__ - INFO - 获取 2 的历史数据
+2025-04-17 01:18:05,277 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:18:05,277 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:18:05,278 - src.data_sources.akshare - INFO - 股票 000002 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '万  科Ａ', 'exists': True}
+2025-04-17 01:18:05,279 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:18:05,279 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000002 -> 输出 000002
+2025-04-17 01:18:05,280 - src.data_sources.akshare - INFO - 股票 000002 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '万  科Ａ', 'exists': True}
+2025-04-17 01:18:05,352 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:18:05,352 - src.data_sources.akshare - WARNING - 使用备用方法获取 000002 历史数据
+2025-04-17 01:18:05,353 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000002 的历史数据
+2025-04-17 01:18:05,354 - src.data_sources.akshare - INFO - 成功生成 000002 的模拟数据，共 65 行
+2025-04-17 01:18:05,355 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:18:05,356 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:18:05,357 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000002 历史数据: 65 行
+2025-04-17 01:18:05,358 - __main__ - INFO - 成功添加 2 的数据，共 65 行
+2025-04-17 01:18:05,358 - __main__ - INFO - 获取 333 的历史数据
+2025-04-17 01:18:05,359 - src.data_sources.akshare - INFO - 股票代码修正: 添加前导零 -> 000333
+2025-04-17 01:18:05,359 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:18:05,360 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:18:05,362 - src.data_sources.akshare - INFO - 股票 000333 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '美的集团', 'exists': True}
+2025-04-17 01:18:05,362 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:18:05,363 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000333 -> 输出 000333
+2025-04-17 01:18:05,364 - src.data_sources.akshare - INFO - 股票 000333 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '美的集团', 'exists': True}
+2025-04-17 01:18:05,429 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:18:05,430 - src.data_sources.akshare - WARNING - 使用备用方法获取 000333 历史数据
+2025-04-17 01:18:05,430 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 000333 的历史数据
+2025-04-17 01:18:05,433 - src.data_sources.akshare - INFO - 成功生成 000333 的模拟数据，共 65 行
+2025-04-17 01:18:05,433 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:18:05,435 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:18:05,436 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 000333 历史数据: 65 行
+2025-04-17 01:18:05,437 - __main__ - INFO - 成功添加 333 的数据，共 65 行
+2025-04-17 01:18:05,439 - __main__ - INFO - 合并所有股票数据，共 195 行
+2025-04-17 01:18:05,440 - __main__ - INFO - 初始化聚类分析器
+2025-04-17 01:18:05,440 - __main__ - INFO - 使用 3 个聚类运行KMeans聚类
+2025-04-17 01:18:05,441 - src.analysis.clustering - INFO - 使用以下特征进行聚类: ['close', 'volume', 'change_pct', 'high', 'low']
+2025-04-17 01:18:05,448 - src.analysis.clustering - INFO - 开始执行KMeans聚类 (n_clusters=3, max_iter=300, n_init=10)
+2025-04-17 01:18:05,548 - src.analysis.clustering - INFO - 聚类轮廓分数: 0.3128
+2025-04-17 01:18:05,731 - src.analysis.clustering - INFO - 聚类统计信息计算完成，共 3 个聚类
+2025-04-17 01:18:05,732 - src.analysis.clustering - INFO - 聚类 #0: 82 个样本 (42.05%)
+2025-04-17 01:18:05,732 - src.analysis.clustering - INFO - 聚类 #1: 48 个样本 (24.62%)
+2025-04-17 01:18:05,732 - src.analysis.clustering - INFO - 聚类 #2: 65 个样本 (33.33%)
+2025-04-17 01:18:05,733 - src.analysis.clustering - INFO - KMeans聚类分析完成，生成了 3 个聚类
+2025-04-17 01:18:06,428 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:19:01,244 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:19:01,244 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:19:01,244 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:19:01,245 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:19:01,246 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:19:01,334 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:19:01,334 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:19:08,826 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:19:08,831 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:19:08,832 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:19:08,833 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:19:08,848 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:19:08,849 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:19:08,865 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 01:19:08,865 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:19:08,866 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:19:08,866 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 01:19:08,866 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:19:08,866 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:19:08,867 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:19:08,868 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:19:08,868 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:19:08,868 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:19:08,937 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:19:08,938 - src.data_sources.akshare - WARNING - 使用备用方法获取 600519 历史数据
+2025-04-17 01:19:08,938 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 600519 的历史数据
+2025-04-17 01:19:08,940 - src.data_sources.akshare - INFO - 成功生成 600519 的模拟数据，共 65 行
+2025-04-17 01:19:08,940 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:19:08,941 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:19:08,942 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 600519 历史数据: 65 行
+2025-04-17 01:19:08,942 - __main__ - INFO - 成功添加 600519 的数据，共 65 行
+2025-04-17 01:19:08,943 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 01:19:08,943 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:19:08,943 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:19:08,944 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:19:08,945 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:19:08,945 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:19:08,946 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:19:09,020 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:19:09,020 - src.data_sources.akshare - WARNING - 使用备用方法获取 601398 历史数据
+2025-04-17 01:19:09,021 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 601398 的历史数据
+2025-04-17 01:19:09,024 - src.data_sources.akshare - INFO - 成功生成 601398 的模拟数据，共 65 行
+2025-04-17 01:19:09,025 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:19:09,027 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:19:09,028 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 601398 历史数据: 65 行
+2025-04-17 01:19:09,029 - __main__ - INFO - 成功添加 601398 的数据，共 65 行
+2025-04-17 01:19:09,030 - __main__ - INFO - 获取 600036 的历史数据
+2025-04-17 01:19:09,030 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:19:09,031 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:19:09,033 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:19:09,034 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:19:09,034 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:19:09,036 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:19:09,113 - src.data_sources.akshare - WARNING - 标准API返回空数据集
+2025-04-17 01:19:09,113 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 01:19:09,113 - src.data_sources.akshare - WARNING - 数据源未就绪或启用了测试模式，使用模拟数据获取 600036 的历史数据
+2025-04-17 01:19:09,115 - src.data_sources.akshare - INFO - 成功生成 600036 的模拟数据，共 65 行
+2025-04-17 01:19:09,115 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:19:09,116 - src.utils.column_mapping - INFO - 数据源 AKSHARE 映射了 11/11 列到标准列名
+2025-04-17 01:19:09,116 - src.data_sources.akshare - INFO - 成功通过 _get_stock_data_via_fallback_api 获取 600036 历史数据: 65 行
+2025-04-17 01:19:09,116 - __main__ - INFO - 成功添加 600036 的数据，共 65 行
+2025-04-17 01:19:09,118 - __main__ - INFO - 合并所有股票数据，共 195 行
+2025-04-17 01:19:09,118 - __main__ - INFO - 初始化聚类分析器
+2025-04-17 01:19:09,118 - __main__ - INFO - 使用 3 个聚类运行KMeans聚类
+2025-04-17 01:19:09,119 - src.analysis.clustering - INFO - 使用以下特征进行聚类: ['open', 'close', 'high', 'low', 'volume', 'change_pct']
+2025-04-17 01:19:09,122 - src.analysis.clustering - INFO - 开始执行KMeans聚类 (n_clusters=3, max_iter=300, n_init=10)
+2025-04-17 01:19:09,214 - src.analysis.clustering - INFO - 聚类轮廓分数: 0.3869
+2025-04-17 01:19:09,386 - src.analysis.clustering - INFO - 聚类统计信息计算完成，共 3 个聚类
+2025-04-17 01:19:09,386 - src.analysis.clustering - INFO - 聚类 #0: 63 个样本 (32.31%)
+2025-04-17 01:19:09,386 - src.analysis.clustering - INFO - 聚类 #1: 65 个样本 (33.33%)
+2025-04-17 01:19:09,387 - src.analysis.clustering - INFO - 聚类 #2: 67 个样本 (34.36%)
+2025-04-17 01:19:09,387 - src.analysis.clustering - INFO - KMeans聚类分析完成，生成了 3 个聚类
+2025-04-17 01:19:09,536 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:24:48,204 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:24:48,205 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:24:48,205 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:24:48,205 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 01:24:48,206 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:24:48,206 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:24:48,348 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:24:48,349 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:24:56,045 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:24:56,051 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:24:56,052 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:24:56,053 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:24:56,071 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:24:56,072 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:24:56,089 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 01:24:56,090 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 01:24:56,090 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 01:24:56,090 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 01:24:56,091 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:24:56,091 - src.data_sources.akshare - INFO - 获取 600519 的历史数据，时间区间: 2025-01-17 至 2025-04-17，数据间隔: 1d
+2025-04-17 01:24:56,092 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:24:56,093 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:24:56,094 - src.data_sources.akshare - INFO - 股票 600519 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:24:56,094 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600519 历史数据
+2025-04-17 01:24:56,095 - root - INFO - 使用上交所专用接口获取 600519 历史数据
+2025-04-17 01:24:56,231 - root - WARNING - 上交所接口未能获取到 600519 历史数据
+2025-04-17 01:24:56,231 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600519 历史数据
+2025-04-17 01:24:56,232 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:24:56,233 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:24:56,235 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:24:56,236 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600519, 期间: daily, 开始日期: 20250117, 结束日期: 20250417
+2025-04-17 01:24:56,310 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 01:24:56,311 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 01:24:56,387 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600519 历史数据
+2025-04-17 01:24:56,387 - src.data_sources.akshare - WARNING - 使用备用方法获取 600519 历史数据
+2025-04-17 01:24:56,387 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:24:56,388 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:24:56,389 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:24:56,389 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600519
+2025-04-17 01:24:56,389 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 01:24:56,390 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 600519
+2025-04-17 01:24:56,613 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 01:24:56,614 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据，且测试模式未启用
+2025-04-17 01:24:56,615 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 01:24:56,617 - __main__ - WARNING - 获取不到 600519 的历史数据
+2025-04-17 01:24:56,618 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 01:24:56,619 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:24:56,620 - src.data_sources.akshare - INFO - 获取 601398 的历史数据，时间区间: 2025-01-17 至 2025-04-17，数据间隔: 1d
+2025-04-17 01:24:56,621 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:24:56,625 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:24:56,626 - src.data_sources.akshare - INFO - 股票 601398 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:24:56,627 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 601398 历史数据
+2025-04-17 01:24:56,628 - root - INFO - 使用上交所专用接口获取 601398 历史数据
+2025-04-17 01:24:56,706 - root - WARNING - 上交所接口未能获取到 601398 历史数据
+2025-04-17 01:24:56,706 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 601398 历史数据
+2025-04-17 01:24:56,707 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:24:56,708 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:24:56,710 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:24:56,711 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh601398, 期间: daily, 开始日期: 20250117, 结束日期: 20250417
+2025-04-17 01:24:56,791 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 01:24:56,791 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 01:24:56,859 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 601398 历史数据
+2025-04-17 01:24:56,860 - src.data_sources.akshare - WARNING - 使用备用方法获取 601398 历史数据
+2025-04-17 01:24:56,860 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:24:56,860 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:24:56,861 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:24:56,862 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 601398
+2025-04-17 01:24:56,862 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 01:24:56,863 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 601398
+2025-04-17 01:24:57,027 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 01:24:57,027 - src.data_sources.akshare - ERROR - 无法获取 601398 的历史数据，且测试模式未启用
+2025-04-17 01:24:57,028 - src.data_sources.akshare - ERROR - 无法获取 601398 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 01:24:57,028 - __main__ - WARNING - 获取不到 601398 的历史数据
+2025-04-17 01:24:57,029 - __main__ - INFO - 获取 600036 的历史数据
+2025-04-17 01:24:57,029 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:24:57,029 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2025-01-17 至 2025-04-17，数据间隔: 1d
+2025-04-17 01:24:57,029 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:24:57,030 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:24:57,030 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:24:57,031 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 01:24:57,031 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 01:24:57,107 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 01:24:57,108 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 01:24:57,108 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:24:57,109 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:24:57,110 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:24:57,110 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20250117, 结束日期: 20250417
+2025-04-17 01:24:57,177 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 01:24:57,177 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 01:24:57,247 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 01:24:57,247 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 01:24:57,248 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:24:57,248 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:24:57,249 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:24:57,249 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 01:24:57,250 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 01:24:57,250 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 600036
+2025-04-17 01:24:57,428 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 01:24:57,429 - src.data_sources.akshare - ERROR - 无法获取 600036 的历史数据，且测试模式未启用
+2025-04-17 01:24:57,430 - src.data_sources.akshare - ERROR - 无法获取 600036 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 01:24:57,433 - __main__ - WARNING - 获取不到 600036 的历史数据
+2025-04-17 01:24:57,434 - __main__ - ERROR - 没有获取到任何有效的历史数据
+2025-04-17 01:24:57,435 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:43:10,500 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:43:10,501 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:43:10,501 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:43:10,501 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 01:43:10,502 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:43:10,502 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:43:10,644 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:43:10,644 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:43:19,053 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:43:19,054 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:43:19,055 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:43:19,055 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:43:19,057 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:43:19,057 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:43:33,122 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:43:33,122 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:43:33,122 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:43:33,122 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 01:43:33,123 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:43:33,124 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:43:33,203 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:43:33,203 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:43:41,579 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:43:41,581 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:43:41,582 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:43:41,582 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:43:41,594 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:43:41,595 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:43:54,314 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:43:54,314 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:43:54,314 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:43:54,314 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 01:43:54,315 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:43:54,315 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:43:54,419 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:43:54,419 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:44:08,098 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:44:08,099 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:44:08,099 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:44:08,099 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 01:44:08,099 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:44:08,100 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:44:08,187 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:44:08,188 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:48:32,092 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:48:32,092 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:48:32,092 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:48:32,092 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 01:48:32,093 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:48:32,094 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:48:32,176 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:48:32,176 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 01:48:40,177 - src.data_sources.akshare - INFO - 成功加载 5411 只A股股票信息
+2025-04-17 01:48:40,179 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 01:48:40,179 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 01:48:40,179 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 01:48:40,191 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 01:48:40,192 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 01:48:40,219 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036'] 进行聚类分析
+2025-04-17 01:48:40,220 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 01:48:40,220 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:48:40,221 - src.data_sources.akshare - INFO - 获取 600519 的历史数据，时间区间: 2023-01-01 至 2023-03-01，数据间隔: 1d
+2025-04-17 01:48:40,221 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:48:40,223 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:48:40,224 - src.data_sources.akshare - INFO - 股票 600519 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:48:40,224 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600519 历史数据
+2025-04-17 01:48:40,224 - root - INFO - 使用上交所专用接口获取 600519 历史数据
+2025-04-17 01:48:40,363 - root - WARNING - 上交所接口未能获取到 600519 历史数据
+2025-04-17 01:48:40,364 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600519 历史数据
+2025-04-17 01:48:40,364 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:48:40,364 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:48:40,366 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:48:40,367 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600519, 期间: daily, 开始日期: 20230101, 结束日期: 20230301
+2025-04-17 01:48:40,435 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 01:48:40,436 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 01:48:40,504 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600519 历史数据
+2025-04-17 01:48:40,505 - src.data_sources.akshare - WARNING - 使用备用方法获取 600519 历史数据
+2025-04-17 01:48:40,505 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:48:40,505 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 01:48:40,506 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 01:48:40,507 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600519
+2025-04-17 01:48:40,507 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 01:48:40,508 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 600519
+2025-04-17 01:48:40,701 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 01:48:40,701 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据，且测试模式未启用
+2025-04-17 01:48:40,701 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 01:48:40,702 - __main__ - WARNING - 获取不到 600519 的历史数据
+2025-04-17 01:48:40,703 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 01:48:40,703 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:48:40,703 - src.data_sources.akshare - INFO - 获取 601398 的历史数据，时间区间: 2023-01-01 至 2023-03-01，数据间隔: 1d
+2025-04-17 01:48:40,704 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:48:40,705 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:48:40,705 - src.data_sources.akshare - INFO - 股票 601398 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:48:40,705 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 601398 历史数据
+2025-04-17 01:48:40,705 - root - INFO - 使用上交所专用接口获取 601398 历史数据
+2025-04-17 01:48:40,771 - root - WARNING - 上交所接口未能获取到 601398 历史数据
+2025-04-17 01:48:40,772 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 601398 历史数据
+2025-04-17 01:48:40,772 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:48:40,773 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:48:40,774 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:48:40,774 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh601398, 期间: daily, 开始日期: 20230101, 结束日期: 20230301
+2025-04-17 01:48:40,846 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 01:48:40,846 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 01:48:40,921 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 601398 历史数据
+2025-04-17 01:48:40,921 - src.data_sources.akshare - WARNING - 使用备用方法获取 601398 历史数据
+2025-04-17 01:48:40,922 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:48:40,922 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 01:48:40,923 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 01:48:40,924 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 601398
+2025-04-17 01:48:40,924 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 01:48:40,925 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 601398
+2025-04-17 01:48:41,057 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 01:48:41,057 - src.data_sources.akshare - ERROR - 无法获取 601398 的历史数据，且测试模式未启用
+2025-04-17 01:48:41,057 - src.data_sources.akshare - ERROR - 无法获取 601398 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 01:48:41,058 - __main__ - WARNING - 获取不到 601398 的历史数据
+2025-04-17 01:48:41,059 - __main__ - INFO - 获取 600036 的历史数据
+2025-04-17 01:48:41,059 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:48:41,059 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2023-01-01 至 2023-03-01，数据间隔: 1d
+2025-04-17 01:48:41,059 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:48:41,060 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:48:41,061 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:48:41,061 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 01:48:41,061 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 01:48:41,137 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 01:48:41,138 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 01:48:41,138 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:48:41,138 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:48:41,140 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:48:41,140 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20230101, 结束日期: 20230301
+2025-04-17 01:48:41,206 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 01:48:41,207 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 01:48:41,276 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 01:48:41,277 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 01:48:41,277 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:48:41,277 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 01:48:41,278 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 01:48:41,279 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 01:48:41,279 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 01:48:41,279 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 600036
+2025-04-17 01:48:41,412 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 01:48:41,412 - src.data_sources.akshare - ERROR - 无法获取 600036 的历史数据，且测试模式未启用
+2025-04-17 01:48:41,413 - src.data_sources.akshare - ERROR - 无法获取 600036 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 01:48:41,413 - __main__ - WARNING - 获取不到 600036 的历史数据
+2025-04-17 01:48:41,414 - __main__ - ERROR - 没有获取到任何有效的历史数据
+2025-04-17 01:48:41,414 - __main__ - INFO - 程序执行完毕
+2025-04-17 01:48:59,874 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 01:48:59,875 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 01:48:59,875 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 01:48:59,875 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 01:48:59,876 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 01:48:59,877 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 01:48:59,957 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 01:48:59,957 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78

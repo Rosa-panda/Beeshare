@@ -21,25 +21,29 @@ graph TD
 ```
 """
 
-import sys
 import os
-import argparse
+import sys
 import logging
+import argparse
+import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
-import numpy as np
 import re
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 import traceback
 import sqlite3
+import time
+import json
+import configparser
 
 # 添加项目根目录到系统路径
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # 导入自定义模块
-from src.data_sources import AKShareDS
+# 移除重复导入，只使用新版数据源
+# 移除不存在的模块导入
 from config.config import (
     DATA_SOURCES, 
     FETCH_CONFIG, 
@@ -58,23 +62,19 @@ from src.utils.column_mapping import (
     get_standard_column_list
 )
 
-# 创建日志目录
-log_file = LOG_CONFIG.get('log_file', 'logs/stock_data.log')
-log_dir = os.path.dirname(log_file)
-if log_dir and not os.path.exists(log_dir):
-    os.makedirs(log_dir, exist_ok=True)
-
 # 设置日志记录
-logging.basicConfig(
-    level=getattr(logging, LOG_CONFIG.get('level', 'INFO')),
-    format=LOG_CONFIG.get('format', '%(asctime)s - %(name)s - %(levelname)s - %(message)s'),
-    handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler(log_file, encoding='utf-8')
-    ]
-)
-
+from src.utils.logging_config import setup_logging
+setup_logging()
 logger = logging.getLogger(__name__)
+
+# 导入项目功能模块
+from src.api.stock_api import StockAPI
+from src.common.enums import DataType
+from src.common.constants import DATA_SOURCES
+from src.utils.config_manager import ConfigManager
+
+# 导入工具函数
+from src.utils.date_utils import get_date_n_days_ago
 
 def init_data_sources():
     """
@@ -179,14 +179,27 @@ def get_historical_data(args, data_sources, storage):
     except Exception as e:
         logger.warning(f"获取股票信息时出错: {e}")
     
-    df = data_source.get_historical_data(
-        symbol=args.symbol,
-        start_date=args.start_date,
+    # 格式化标准股票代码 - 使用_normalize_symbol方法替代standardize_code
+    if hasattr(data_source, '_normalize_symbol'):
+        std_symbol = data_source._normalize_symbol(args.symbol)
+    else:
+        # 如果没有_normalize_symbol方法，直接使用原始代码
+        std_symbol = args.symbol
+        logger.warning(f"数据源没有提供规范化股票代码的方法，使用原始代码: {args.symbol}")
+    
+    if not std_symbol:
+        logger.warning(f"无法识别的股票代码: {args.symbol}")
+        return False
+    
+    # 获取历史数据
+    data = data_source.get_historical_data(
+        symbol=std_symbol, 
+        start_date=args.start_date, 
         end_date=end_date,
         interval=interval
     )
     
-    if df.empty:
+    if data.empty:
         logger.warning(f"未找到 {args.symbol} 的历史数据")
         
         # 尝试判断是否为新上市股票
@@ -202,7 +215,7 @@ def get_historical_data(args, data_sources, storage):
         
         return False
     
-    logger.info(f"成功获取 {len(df)} 条历史数据")
+    logger.info(f"成功获取 {len(data)} 条历史数据")
     
     # 确定使用的存储方式
     storage_name = args.storage.lower() if args.storage else 'sqlite'  # 默认使用SQLite存储
@@ -214,7 +227,7 @@ def get_historical_data(args, data_sources, storage):
     
     # 存储数据
     logger.info(f"将数据保存到 {storage_name} 存储...")
-    success = storage_instance.save_data(data=df, data_type=DataType.HISTORICAL, symbol=args.symbol)
+    success = storage_instance.save_data(data=data, data_type=DataType.HISTORICAL, symbol=args.symbol)
     
     if success:
         logger.info(f"成功保存 {args.symbol} 的历史数据")
@@ -628,12 +641,16 @@ def setup_args(parser=None):
     parser_clustering.add_argument('--features', help='用于聚类的特征，以逗号分隔，默认为"open,close,high,low,volume,change_percent"')
     parser_clustering.add_argument('--find-optimal', action='store_true', help='是否自动寻找最佳聚类数量')
     parser_clustering.add_argument('--max-clusters', type=int, default=10, help='最大聚类数量，默认为10')
-    parser_clustering.add_argument('--plot-type', default='all', help='可视化类型，默认为"all"，可选值包括"clusters"、"elbow"、"feature_distribution"、"centroids"，以逗号分隔')
-    parser_clustering.add_argument('--output-dir', default='results', help='结果输出目录，默认为"results"')
+    parser_clustering.add_argument('--plot-type', default='clusters', 
+                                choices=['clusters', 'elbow', 'feature_distribution', 'centroids', 'all'], 
+                                help='可视化类型，默认为clusters')
+    parser_clustering.add_argument('--output-dir', help='结果输出目录，默认为当前目录')
     parser_clustering.add_argument('--use-pca', action='store_true', help='是否使用PCA降维进行可视化')
-    parser_clustering.add_argument('--plot-3d', action='store_true', help='是否绘制3D图')
-    parser_clustering.add_argument('--source', default='akshare', help='数据源，默认为akshare')
-    parser_clustering.add_argument('--storage', default='sqlite', help='存储方式，默认为sqlite')
+    parser_clustering.add_argument('--plot-3d', action='store_true', help='是否绘制3D聚类图')
+    parser_clustering.add_argument('--source', type=str, default='akshare', 
+                                 choices=get_available_data_sources(), help='数据源，默认为akshare')
+    parser_clustering.add_argument('--storage', type=str, default='sqlite',
+                                 choices=get_available_storage_methods(), help='存储方式，默认为sqlite')
     
     # 存储管理命令
     parser_storage = subparsers.add_parser('storage', help='管理存储配置')
@@ -741,87 +758,152 @@ def run_clustering_analysis(data_source, storage, args):
         storage: 存储实例
         args: 命令行参数
     """
+    # 导入必要的库
+    import pandas as pd
+    import numpy as np
+    from datetime import datetime, timedelta
+    
     try:
         # 解析参数
         symbols = args.symbols.split(',')
         n_clusters = args.n_clusters
         start_date = args.start_date
         end_date = args.end_date
-        features = args.features.split(',') if args.features else None
+        # 修改特征处理逻辑，使用默认特征列表
+        default_features = ['open', 'close', 'high', 'low', 'volume', 'change_pct']
+        features = args.features.split(',') if args.features else default_features
         find_optimal = args.find_optimal
         max_clusters = args.max_clusters
-        plot_type = args.plot_type
-        output_dir = args.output_dir
-        use_pca = args.use_pca
-        plot_3d = args.plot_3d
+        plot_type = args.plot_type if hasattr(args, 'plot_type') and args.plot_type else 'clusters'
+        output_dir = args.output_dir if hasattr(args, 'output_dir') else None
+        use_pca = args.use_pca if hasattr(args, 'use_pca') else False
+        plot_3d = args.plot_3d if hasattr(args, 'plot_3d') else False
         
         logger.info(f"开始对股票 {symbols} 进行聚类分析")
         print(f"开始对股票 {', '.join(symbols)} 进行聚类分析...")
         
         # 获取历史数据
         all_data = {}
-        for symbol in symbols:
-            historical_data = None
-            try:
-                # 尝试从存储加载数据
-                if storage:
-                    historical_data = storage.load_data(
-                        data_type=DataType.HISTORICAL, 
-                        symbol=symbol,
-                        start_date=start_date,
-                        end_date=end_date
-                    )
-                    
-                # 如果存储中没有数据，则从数据源获取
-                if historical_data is None or historical_data.empty:
-                    logger.info(f"从数据源获取 {symbol} 的历史数据")
-                    historical_data = data_source.get_historical_data(
-                        symbol=symbol,
-                        start_date=start_date,
-                        end_date=end_date
-                    )
-                    
-                    # 存储获取的数据
-                    if storage and not historical_data.empty:
-                        storage.save_data(historical_data, DataType.HISTORICAL, symbol)
-                
-                # 将数据添加到字典
-                if not historical_data.empty:
-                    historical_data['symbol'] = symbol  # 添加股票代码列
-                    all_data[symbol] = historical_data
-                    print(f"成功获取 {symbol} 的历史数据: {len(historical_data)} 条记录")
-                else:
-                    logger.warning(f"未找到 {symbol} 的历史数据")
-                    print(f"警告: 未找到 {symbol} 的历史数据")
-                    
-            except Exception as e:
-                logger.error(f"获取 {symbol} 的历史数据失败: {e}")
-                print(f"获取 {symbol} 的历史数据失败: {e}")
         
-        # 检查是否获取到数据
+        # 设置默认日期范围
+        if not start_date:
+            # 默认为90天前
+            start_date = (datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d')
+            logger.info(f"未指定开始日期，使用默认值: {start_date}")
+            
+        if not end_date:
+            # 默认为今天
+            end_date = datetime.now().strftime('%Y-%m-%d')
+            logger.info(f"未指定结束日期，使用默认值: {end_date}")
+        
+        # 获取每个股票的历史数据
+        for symbol in symbols:
+            logger.info(f"获取 {symbol} 的历史数据")
+            try:
+                # 格式化标准股票代码 - 使用_normalize_symbol方法替代standardize_code
+                if hasattr(data_source, '_normalize_symbol'):
+                    std_symbol = data_source._normalize_symbol(symbol)
+                else:
+                    # 如果没有_normalize_symbol方法，直接使用原始代码
+                    std_symbol = symbol
+                    logger.warning(f"数据源没有提供规范化股票代码的方法，使用原始代码: {symbol}")
+                
+                if not std_symbol:
+                    logger.warning(f"无法识别的股票代码: {symbol}")
+                    continue
+                
+                # 获取历史数据
+                data = data_source.get_historical_data(
+                    symbol=std_symbol, 
+                    start_date=start_date, 
+                    end_date=end_date,
+                    interval=args.interval
+                )
+                
+                if data is None or data.empty:
+                    logger.warning(f"获取不到 {symbol} 的历史数据")
+                    continue
+                    
+                # 数据预处理
+                # 检查是否已经包含change_pct列，如果没有则计算
+                if 'change_pct' not in data.columns:
+                    if 'close' in data.columns:
+                        data['change_pct'] = data['close'].pct_change() * 100
+                        logger.info(f"已计算 {symbol} 的change_pct列")
+                    else:
+                        logger.warning(f"{symbol} 数据缺少close列，无法计算change_pct")
+                        continue
+                
+                # 删除缺失值
+                data.dropna(inplace=True)
+                
+                # 检查是否有足够的数据进行聚类分析
+                if len(data) < 10:  # 假设至少需要10条数据进行有意义的聚类
+                    logger.warning(f"{symbol} 有效数据不足，仅有 {len(data)} 行")
+                    continue
+                
+                # 验证所需的特征列是否都存在
+                missing_features = [feat for feat in features if feat not in data.columns]
+                if missing_features:
+                    logger.warning(f"{symbol} 数据缺少以下特征列: {missing_features}")
+                    
+                    # 尝试生成缺失的特征
+                    for feat in missing_features:
+                        if feat == 'change_pct' and 'close' in data.columns:
+                            data['change_pct'] = data['close'].pct_change() * 100
+                            logger.info(f"已计算 {symbol} 的change_pct列")
+                        elif feat == 'volume' and feat not in data.columns:
+                            # 如果缺少成交量，则使用随机数据或平均值
+                            data['volume'] = np.random.randint(10000, 100000, size=len(data))
+                            logger.warning(f"为 {symbol} 生成了随机volume数据")
+                
+                # 再次检查特征是否全部存在
+                missing_features = [feat for feat in features if feat not in data.columns]
+                if missing_features:
+                    logger.error(f"{symbol} 数据仍然缺少以下特征列: {missing_features}，跳过该股票")
+                    continue
+                
+                # 添加到数据集
+                all_data[symbol] = data
+                logger.info(f"成功添加 {symbol} 的数据，共 {len(data)} 行")
+                
+            except Exception as e:
+                logger.error(f"获取 {symbol} 数据失败: {e}")
+                continue
+        
         if not all_data:
-            logger.error("未能获取任何数据，无法进行聚类分析")
-            print("未能获取任何数据，无法进行聚类分析")
+            logger.error("没有获取到任何有效的历史数据")
+            print("没有获取到任何有效的历史数据，请检查股票代码和日期范围")
             return
         
         # 合并所有数据
-        combined_data = pd.concat(all_data.values(), ignore_index=True)
-        
-        # 创建聚类分析器
-        analyzer = ClusteringAnalyzer(combined_data)
-        
-        # 如果设置了寻找最佳聚类数
-        if find_optimal:
-            logger.info(f"寻找最佳聚类数 (最大尝试: {max_clusters})")
-            print(f"正在寻找最佳聚类数 (最大尝试: {max_clusters})...")
+        combined_data = []
+        for symbol, data in all_data.items():
+            data = data.copy()
+            data['symbol'] = symbol
+            combined_data.append(data)
             
-            # 运行最佳聚类数确定
-            optimal_k, inertia_values = analyzer.determine_optimal_clusters(
-                max_clusters=max_clusters,
-                features=features
+        all_stock_data = pd.concat(combined_data)
+        logger.info(f"合并所有股票数据，共 {len(all_stock_data)} 行")
+        
+        # 创建分析器并设置数据
+        logger.info("初始化聚类分析器")
+        from src.analysis.clustering import ClusteringAnalyzer
+        analyzer = ClusteringAnalyzer()
+        analyzer.set_data(all_stock_data)
+        
+        # 寻找最佳聚类数
+        if find_optimal:
+            logger.info(f"自动寻找最佳聚类数 (最大聚类数: {max_clusters})")
+            print(f"正在自动寻找最佳聚类数 (最大聚类数: {max_clusters})...")
+            
+            optimal_k, _ = analyzer.determine_optimal_clusters(
+                max_clusters=max_clusters, 
+                kmeans_params={'features': features}
             )
             
-            print(f"最佳聚类数: {optimal_k}")
+            logger.info(f"确定的最佳聚类数: {optimal_k}")
+            print(f"确定的最佳聚类数: {optimal_k}")
             
             # 使用最佳聚类数
             n_clusters = optimal_k
@@ -834,10 +916,20 @@ def run_clustering_analysis(data_source, storage, args):
         logger.info(f"使用 {n_clusters} 个聚类运行KMeans聚类")
         print(f"正在使用 {n_clusters} 个聚类运行KMeans聚类分析...")
         
+        # 确保features不为None，如果为None则使用默认值
+        clustering_features = features if features is not None else default_features
+        
+        # 确保数据中包含所有需要的特征
+        for feature in clustering_features:
+            if feature not in all_stock_data.columns:
+                logger.error(f"数据中缺少特征列: {feature}")
+                print(f"错误: 数据中缺少特征列 '{feature}'，无法进行聚类分析")
+                return
+        
         clustering_result = analyzer.kmeans_clustering(
             params={
                 'n_clusters': n_clusters,
-                'features': features
+                'features': clustering_features
             }
         )
         
@@ -851,13 +943,16 @@ def run_clustering_analysis(data_source, storage, args):
             
         for p_type in plot_types:
             print(f"正在生成 {p_type} 可视化...")
-            analyzer.visualize(
-                result=clustering_result,
-                plot_type=p_type,
-                use_pca=use_pca,
-                plot_3d=plot_3d,
-                output_dir=output_dir
-            )
+            try:
+                analyzer.visualize(
+                    result=clustering_result,
+                    plot_type=p_type,
+                    use_pca=use_pca,
+                    plot_3d=plot_3d,
+                    output_dir=output_dir
+                )
+            except Exception as e:
+                logger.error(f"生成 {p_type} 可视化时出错: {e}")
         
         print("\n聚类分析完成！")
         

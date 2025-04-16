@@ -114,7 +114,7 @@ class AKShareDS(DataSource):
         
         # 默认配置
         self.default_config = {
-            'testing': True,  # 默认启用测试模式，可以回退到模拟数据
+            'testing': False,  # 默认关闭测试模式，尝试使用真实数据
             'mock_data_seed': 42,  # 随机数种子，用于生成模拟数据
             'retry_count': 3,  # API调用重试次数
             'retry_delay': 2,  # 重试间隔（秒）
@@ -127,7 +127,10 @@ class AKShareDS(DataSource):
             self.config = self.default_config
         else:
             self.config = {**self.default_config, **config}
-            
+        
+        # 输出当前配置信息    
+        logger.info(f"AKShare数据源初始化，测试模式: {self.config.get('testing', False)}")
+        
         # 初始化股票列表（备选）
         self.stock_code_name_df = pd.DataFrame()
             
@@ -527,11 +530,14 @@ class AKShareDS(DataSource):
         import threading
         import numpy as np
         import logging  # 确保导入logging模块
+        import traceback
         from datetime import datetime, timedelta
         
         # 标准化参数
         if interval is None:
             interval = 'daily'
+            
+        logger.info(f"获取 {symbol} 的历史数据，时间区间: {start_date} 至 {end_date}，数据间隔: {interval}")
         
         # 确定股票类型
         stock_info = None
@@ -539,7 +545,7 @@ class AKShareDS(DataSource):
             try:
                 # 尝试获取股票信息，确定是股票还是指数
                 stock_info = self._identify_stock_type(symbol)
-                logger.debug(f"股票 {symbol} 类型信息: {stock_info}")
+                logger.info(f"股票 {symbol} 类型信息: {stock_info}")
             except Exception as e:
                 logger.warning(f"股票类型识别失败: {e}")
         
@@ -561,68 +567,122 @@ class AKShareDS(DataSource):
         # 添加交易所特定接口尝试
         if stock_info and not force_stock:
             exchange = stock_info.get('exchange')
-            if exchange == 'SH':
+            if exchange == 'SH' or exchange == '上海证券交易所':
                 methods.insert(0, self.get_sh_hist)
-            elif exchange == 'SZ':
+            elif exchange == 'SZ' or exchange == '深圳证券交易所':
                 methods.insert(0, self.get_sz_hist)
-            elif exchange == 'KCB':
+            elif exchange == 'KCB' or exchange == '科创板':
                 methods.insert(0, self.get_kcb_hist)
-            elif exchange == 'BJ':
+            elif exchange == 'BJ' or exchange == '北京证券交易所':
                 methods.insert(0, self.get_bj_hist)
         
         # 依次尝试各种方法
+        all_errors = []
         for method in methods:
             try:
-                logger.debug(f"尝试使用 {method.__name__} 获取 {symbol} 历史数据")
+                logger.info(f"尝试使用 {method.__name__} 获取 {symbol} 历史数据")
                 df = method(symbol, start_date, end_date, interval)
                 if df is not None and not df.empty:
                     # 检查数据是否包含必要的列
                     required_columns = [
-                        StandardColumns.DATE, 
-                        StandardColumns.OPEN, 
-                        StandardColumns.HIGH, 
-                        StandardColumns.LOW, 
-                        StandardColumns.CLOSE, 
-                        StandardColumns.VOLUME
+                        'date', 'open', 'high', 'low', 'close', 'volume'
                     ]
                     
+                    # 先保存原始数据，以便在必要时恢复丢失的列
+                    original_df = df.copy()
+                    
                     # 标准化列名
-                    df = standardize_columns(df, verbose=True)
+                    df = standardize_columns(df, source_type='AKSHARE')
                     
                     # 检测并记录列名问题
-                    missing_columns = detect_and_log_column_issues(df, required_columns, logger)
+                    missing_columns = [col for col in required_columns if col not in df.columns]
                     
-                    # 如果缺少关键列，尝试下一个方法
-                    if StandardColumns.DATE in missing_columns or StandardColumns.CLOSE in missing_columns:
+                    # 如果缺少关键列，尝试从原始数据恢复
+                    if missing_columns:
+                        logger.warning(f"标准化后数据缺少关键列: {missing_columns}，尝试从原始数据恢复")
+                        
+                        # 尝试从原始DataFrame恢复缺失的列
+                        for col in missing_columns:
+                            # 检查原始数据是否包含该列
+                            if col in original_df.columns:
+                                df[col] = original_df[col]
+                                logger.info(f"从原始数据恢复列 {col}")
+                            # 如果是英文列名，尝试查找中文对应的列
+                            else:
+                                # 常见的中文列名映射
+                                chinese_cols = {
+                                    'date': '日期',
+                                    'open': '开盘',
+                                    'high': '最高',
+                                    'low': '最低',
+                                    'close': '收盘',
+                                    'volume': '成交量',
+                                    'amount': '成交额',
+                                    'change': '涨跌额',
+                                    'change_pct': '涨跌幅'
+                                }
+                                
+                                if col in chinese_cols and chinese_cols[col] in original_df.columns:
+                                    df[col] = original_df[chinese_cols[col]]
+                                    logger.info(f"从原始数据的中文列 {chinese_cols[col]} 恢复列 {col}")
+                        
+                        # 再次检查缺失的关键列
+                        missing_columns = [col for col in required_columns if col not in df.columns]
+                    
+                    # 如果仍然缺少日期或收盘价等关键列，尝试下一个方法
+                    if 'date' in missing_columns or 'close' in missing_columns:
                         logger.warning(f"获取的数据缺少关键列，尝试下一个方法")
                         continue
                     
                     # 确保symbol列存在
-                    if StandardColumns.SYMBOL not in df.columns:
-                        df[StandardColumns.SYMBOL] = symbol
+                    if 'symbol' not in df.columns:
+                        df['symbol'] = symbol
                     
                     # 确保source列存在
-                    if StandardColumns.SOURCE not in df.columns:
-                        df[StandardColumns.SOURCE] = 'akshare'
+                    if 'source' not in df.columns:
+                        df['source'] = 'akshare'
                     
                     logger.info(f"成功通过 {method.__name__} 获取 {symbol} 历史数据: {len(df)} 行")
                     return df
             except Exception as e:
-                logger.warning(f"通过 {method.__name__} 获取 {symbol} 历史数据失败: {e}")
+                error_msg = f"通过 {method.__name__} 获取 {symbol} 历史数据失败: {e}"
+                logger.warning(error_msg)
+                logger.debug(traceback.format_exc())
+                all_errors.append(error_msg)
         
         # 如果所有方法都失败，返回空DataFrame
-        logger.error(f"无法获取 {symbol} 的历史数据")
+        error_details = "\n".join(all_errors)
+        logger.error(f"无法获取 {symbol} 的历史数据，尝试了所有可用方法\n错误详情:\n{error_details}")
+        
+        # 如果开启了测试模式，可以返回模拟数据
+        if self.config.get('testing', False):
+            logger.warning(f"测试模式已启用，将生成模拟数据")
+            # 使用_get_mock_data方法生成模拟数据
+            if hasattr(self, '_get_mock_data'):
+                return self._get_mock_data(symbol, start_date, end_date, interval)
+        
         return pd.DataFrame()
         
     def _get_stock_data_via_standard_api(self, symbol, start_date, end_date, interval):
         """使用标准AKShare API获取股票数据"""
         # 清理参数
-        clean_start_date = start_date.replace('-', '')
-        clean_end_date = end_date.replace('-', '')
+        if start_date is None:
+            clean_start_date = ''
+        else:
+            clean_start_date = start_date.replace('-', '')
+            
+        if end_date is None:
+            clean_end_date = ''
+        else:
+            clean_end_date = end_date.replace('-', '')
+            
         period = self.get_period_from_interval(interval)
         
         # 处理股票代码，添加正确的前缀
         prefixed_symbol = self._get_stock_symbol_with_prefix(symbol)
+        
+        # 记录详细的参数信息用于调试
+        logger.info(f"调用AKShare API获取股票数据, 代码: {prefixed_symbol}, 期间: {period}, 开始日期: {clean_start_date}, 结束日期: {clean_end_date}")
         
         try:
             # 获取数据
@@ -646,16 +706,86 @@ class AKShareDS(DataSource):
                 
                 return df
             else:
-                logger.warning(f"标准API返回空数据集")
+                logger.warning(f"标准API返回空数据集，请检查股票代码、日期范围或网络连接")
+                # 尝试使用不同的参数重试
+                if clean_start_date and clean_end_date:
+                    logger.info(f"尝试不使用日期参数进行查询")
+                    try:
+                        df_retry = ak.stock_zh_a_hist(
+                            symbol=prefixed_symbol,
+                            period=period,
+                            adjust="qfq"
+                        )
+                        if df_retry is not None and not df_retry.empty:
+                            logger.info(f"不使用日期参数成功获取数据，共 {len(df_retry)} 行")
+                            df_retry['symbol'] = symbol
+                            df_retry['source'] = 'akshare'
+                            return df_retry
+                    except Exception as retry_err:
+                        logger.warning(f"重试失败: {retry_err}")
                 return None
         except Exception as e:
             logger.warning(f"标准API获取数据失败: {e}")
+            logger.debug(f"异常详情: {traceback.format_exc()}")
             raise
 
     def _get_stock_data_via_fallback_api(self, symbol, start_date, end_date, interval):
-        """使用备用AKShare API获取股票数据"""
-        # 实现备用获取方法...
-        return None
+        """使用备用AKShare API获取股票数据，如果无法获取则生成模拟数据"""
+        import pandas as pd
+        import numpy as np
+        from datetime import datetime, timedelta
+        import traceback
+        
+        logger.warning(f"使用备用方法获取 {symbol} 历史数据")
+        
+        # 首先尝试使用备用AKShare API，而不是直接使用模拟数据
+        try:
+            # 尝试使用备用API获取数据
+            norm_symbol = self._normalize_symbol(symbol)
+            stock_info = self._identify_stock_type(norm_symbol)
+            
+            # 尝试使用其他AKShare方法
+            try:
+                logger.info(f"尝试使用东方财富网接口获取数据: {norm_symbol}")
+                if stock_info.get('prefix') == 'sh':
+                    full_code = f"1.{norm_symbol}"
+                elif stock_info.get('prefix') == 'sz':
+                    full_code = f"0.{norm_symbol}"
+                else:
+                    full_code = norm_symbol
+                
+                df = ak.stock_zh_a_hist_163(symbol=norm_symbol)
+                if df is not None and not df.empty:
+                    logger.info(f"成功通过网易财经接口获取 {symbol} 数据")
+                    df['symbol'] = symbol
+                    df['source'] = 'akshare_163'
+                    return df
+            except Exception as e:
+                logger.warning(f"网易财经接口获取数据失败: {e}")
+            
+            # 尝试使用腾讯财经接口
+            try:
+                logger.info(f"尝试使用腾讯财经接口获取数据: {norm_symbol}")
+                # 注意：不同的数据源可能需要不同的股票代码格式
+                df = ak.stock_zh_a_hist_tx(symbol=norm_symbol)
+                if df is not None and not df.empty:
+                    logger.info(f"成功通过腾讯财经接口获取 {symbol} 数据")
+                    df['symbol'] = symbol
+                    df['source'] = 'akshare_tx'
+                    return df
+            except Exception as e:
+                logger.warning(f"腾讯财经接口获取数据失败: {e}")
+                
+        except Exception as e:
+            logger.warning(f"尝试备用API时出错: {e}")
+        
+        # 如果测试模式关闭，直接返回空数据
+        if not self.config.get('testing', False):
+            logger.error(f"无法获取 {symbol} 的历史数据，且测试模式未启用")
+            return None
+            
+        # 如果测试模式开启，使用模拟数据
+        return self._get_mock_data(symbol, start_date, end_date, interval)
     
     def get_realtime_data(self, symbols):
         """
@@ -1457,4 +1587,144 @@ class AKShareDS(DataSource):
                 return None
         except Exception as e:
             logging.warning(f"使用北交所接口获取 {symbol} 数据时出错: {e}")
-            return None 
+            return None
+    
+    def standardize_code(self, symbol):
+        """
+        将股票代码标准化为系统需要的格式（公开方法）
+        
+        Args:
+            symbol (str): 原始股票代码
+        
+        Returns:
+            str: 标准化后的股票代码
+        """
+        # 调用内部的标准化方法
+        return self._normalize_symbol(symbol) 
+    
+    def _get_mock_data(self, symbol, start_date, end_date, interval=None):
+        """
+        生成模拟股票数据，仅用于测试目的
+        
+        Args:
+            symbol: 股票代码
+            start_date: 开始日期
+            end_date: 结束日期
+            interval: 数据间隔，支持的值：'daily'(日), 'weekly'(周), 'monthly'(月)，默认为'daily'
+            
+        Returns:
+            DataFrame: 包含模拟历史数据的DataFrame
+        """
+        import pandas as pd
+        import numpy as np
+        from datetime import datetime, timedelta
+        
+        logger.warning(f"生成 {symbol} 的模拟数据")
+        
+        # 生成日期范围
+        if start_date is None:
+            start = datetime.now() - timedelta(days=90)
+        else:
+            try:
+                start = datetime.strptime(start_date, '%Y-%m-%d')
+            except:
+                start = datetime.now() - timedelta(days=90)
+        
+        if end_date is None:
+            end = datetime.now()
+        else:
+            try:
+                end = datetime.strptime(end_date, '%Y-%m-%d')
+            except:
+                end = datetime.now()
+        
+        # 创建日期列表
+        date_range = []
+        current = start
+        
+        # 根据间隔调整日期生成逻辑
+        if interval == 'weekly' or interval == '1wk':
+            # 对于周数据，每7天一个点
+            while current <= end:
+                if current.weekday() == 0:  # 只取周一的数据
+                    date_range.append(current)
+                current += timedelta(days=1)
+        elif interval == 'monthly' or interval == '1mo':
+            # 对于月数据，每月1号一个点
+            while current <= end:
+                if current.day == 1:  # 只取每月1号的数据
+                    date_range.append(current)
+                current += timedelta(days=1)
+        else:
+            # 对于日数据，跳过周末
+            while current <= end:
+                if current.weekday() < 5:  # 0-4是周一至周五
+                    date_range.append(current)
+                current += timedelta(days=1)
+        
+        # 使用固定的随机种子确保可重复性
+        np.random.seed(self.config.get('mock_data_seed', 42) + hash(symbol) % 1000)
+        
+        # 获取基本股票信息，用于模拟更真实的价格
+        stock_info = self._identify_stock_type(symbol)
+        # 模拟一个基础价格，根据股票代码生成具有一定规律的价格
+        base_price = (ord(symbol[0]) * 10 + int(symbol[-2:]) % 100) % 90 + 10  # 10-100之间的价格
+        
+        # 生成模拟数据
+        price = base_price  # 使用计算的基础价格
+        mock_data = []
+        
+        for date in date_range:
+            # 使用正弦函数添加一些周期性变化
+            cycle_factor = np.sin(len(mock_data) / 10) * 0.01  # 添加轻微的周期性
+            
+            price_change = (np.random.normal(0, 0.02) + cycle_factor) * price  # 每日价格变化，正态分布
+            price += price_change
+            open_price = price * (1 + np.random.normal(0, 0.01))
+            high_price = max(price, open_price) * (1 + abs(np.random.normal(0, 0.01)))
+            low_price = min(price, open_price) * (1 - abs(np.random.normal(0, 0.01)))
+            close_price = price
+            volume = int(np.random.uniform(50000, 5000000))
+            amount = volume * price
+            
+            mock_data.append({
+                'date': date,
+                'open': open_price,
+                'high': high_price,
+                'low': low_price,
+                'close': close_price,
+                'volume': volume,
+                'amount': amount,
+                'change': price_change,
+                'change_pct': (price_change / (price - price_change)) * 100 if price - price_change != 0 else 0,
+                'symbol': symbol,
+                'source': 'mock_data'
+            })
+        
+        # 创建DataFrame
+        df = pd.DataFrame(mock_data)
+        logger.info(f"成功生成 {symbol} 的模拟数据，共 {len(df)} 行")
+        
+        # 标准化数据
+        try:
+            from src.utils.column_mapping import standardize_columns
+            standardized_df = standardize_columns(df, source_type='AKSHARE')
+            
+            # 检查是否返回了空的DataFrame
+            if standardized_df is None or standardized_df.empty:
+                logger.warning(f"standardize_columns返回了空数据，回退使用原始数据")
+                standardized_df = df
+            
+            # 检查是否缺少原本应该有的关键列
+            if 'date' not in standardized_df.columns and 'date' in df.columns:
+                logger.warning(f"标准化后丢失了date列，恢复原始列")
+                standardized_df['date'] = df['date']
+            
+            if 'close' not in standardized_df.columns and 'close' in df.columns:
+                logger.warning(f"标准化后丢失了close列，恢复原始列")
+                standardized_df['close'] = df['close']
+                
+            return standardized_df
+        except Exception as e:
+            logger.warning(f"标准化列名失败: {e}，将使用原始数据")
+            return df

@@ -409,7 +409,8 @@ class ClusteringAnalyzer(Analyzer):
                 'centroids': centroids,
                 'scaled_data': X_scaled,
                 'scaler': self.scaler,
-                'cluster_stats': cluster_stats
+                'cluster_stats': cluster_stats,
+                'n_clusters': n_clusters
             }
             
             if silhouette_score is not None:
@@ -576,7 +577,16 @@ class ClusteringAnalyzer(Analyzer):
             
         # 检查必要键是否存在
         required_keys = ['n_clusters', 'features']
-        missing_keys = [k for k in required_keys if k not in result]
+        missing_keys = []
+        for k in required_keys:
+            if k not in result:
+                # 尝试从cluster_stats中获取
+                if k == 'n_clusters' and 'cluster_stats' in result and result['cluster_stats'] and 'n_clusters' in result['cluster_stats']:
+                    # 从cluster_stats中获取n_clusters
+                    result['n_clusters'] = result['cluster_stats']['n_clusters']
+                else:
+                    missing_keys.append(k)
+        
         if missing_keys:
             logger.error(f"聚类结果缺少必要的键: {missing_keys}")
             return None
@@ -658,7 +668,16 @@ class ClusteringAnalyzer(Analyzer):
             plot_3d = kwargs.get('plot_3d', False)
             selected_features = kwargs.get('selected_features', result['features'])
             figsize = kwargs.get('figsize', (12, 10))
-            title = kwargs.get('title', f'聚类分析 ({len(set(result["labels"]))}个簇)')
+            
+            # 获取聚类数量，用于标题
+            if 'n_clusters' in result:
+                n_clusters = result['n_clusters']
+            elif 'labels' in result:
+                n_clusters = len(set(result["labels"]))
+            else:
+                n_clusters = len(set(self.data['cluster'])) if 'cluster' in self.data.columns else '未知'
+                
+            title = kwargs.get('title', f'聚类分析 ({n_clusters}个簇)')
             stock_names = kwargs.get('stock_names', {})
             
             # 确保所选特征都存在于数据中
@@ -921,8 +940,19 @@ class ClusteringAnalyzer(Analyzer):
         # 获取参数
         figsize = kwargs.get('figsize', (15, 10))
         selected_features = kwargs.get('selected_features', result['features'])
-        n_clusters = result['n_clusters']
         
+        # 获取n_clusters，首先尝试直接从result获取，然后尝试从cluster_stats获取
+        if 'n_clusters' in result:
+            n_clusters = result['n_clusters']
+        elif 'cluster_stats' in result and 'n_clusters' in result['cluster_stats']:
+            n_clusters = result['cluster_stats']['n_clusters']
+        elif 'labels' in result:
+            # 如果没有明确的n_clusters，尝试从标签中获取唯一值的数量
+            n_clusters = len(np.unique(result['labels']))
+        else:
+            logger.error("无法确定聚类数量")
+            return None
+            
         # 过滤选择的特征
         valid_features = [f for f in selected_features if f in result['features']]
         
@@ -1041,8 +1071,17 @@ class ClusteringAnalyzer(Analyzer):
             matplotlib.Figure: 雷达图
         """
         if 'features' not in result or 'cluster_centers' not in result:
-            logger.error("聚类结果缺少必要信息")
-            return None
+            # 尝试从其他字段获取必要信息
+            if 'features' not in result and hasattr(self, 'features') and self.features:
+                result['features'] = self.features
+            
+            if 'cluster_centers' not in result and hasattr(self, 'kmeans_model') and self.kmeans_model:
+                result['cluster_centers'] = self.kmeans_model.cluster_centers_
+            
+            # 再次检查必要字段是否存在
+            if 'features' not in result or 'cluster_centers' not in result:
+                logger.error("聚类结果缺少必要信息")
+                return None
             
         # 获取参数
         figsize = kwargs.get('figsize', (10, 8))

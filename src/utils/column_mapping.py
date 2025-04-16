@@ -48,6 +48,7 @@ class StandardColumns(enum.Enum):
     
     # 其他
     ADJ_FACTOR = "adj_factor"    # 复权因子
+    SOURCE = "source"            # 来源
 
 
 # 中文列名到英文列名的映射（兼容旧版本）
@@ -112,6 +113,7 @@ SOURCE_COLUMN_MAPPINGS = {
     
     # AKShare的字段映射
     "AKSHARE": {
+        # 中文列名映射
         "日期": StandardColumns.DATE,
         "开盘": StandardColumns.OPEN,
         "高": StandardColumns.HIGH,
@@ -128,6 +130,22 @@ SOURCE_COLUMN_MAPPINGS = {
         "代码": StandardColumns.SYMBOL,
         "名称": StandardColumns.NAME,
         "市场类型": StandardColumns.MARKET,
+        
+        # 增加英文列名映射，用于支持模拟数据和其他可能的英文数据源
+        "date": StandardColumns.DATE,
+        "open": StandardColumns.OPEN,
+        "high": StandardColumns.HIGH,
+        "low": StandardColumns.LOW,
+        "close": StandardColumns.CLOSE,
+        "volume": StandardColumns.VOLUME,
+        "amount": StandardColumns.AMOUNT,
+        "change": StandardColumns.CHANGE,
+        "change_pct": StandardColumns.CHANGE_PCT,
+        "turnover": StandardColumns.TURNOVER,
+        "symbol": StandardColumns.SYMBOL,
+        "name": StandardColumns.NAME,
+        "market": StandardColumns.MARKET,
+        "source": StandardColumns.SOURCE,
     },
     
     # Tushare字段映射
@@ -218,6 +236,10 @@ def standardize_columns(df: pd.DataFrame, source_type: str, logger: Optional[log
     if logger is None:
         logger = logging.getLogger(__name__)
         
+    if df is None or df.empty:
+        logger.warning("无法标准化空数据框")
+        return df
+        
     if source_type not in SOURCE_COLUMN_MAPPINGS:
         logger.warning(f"未知的数据源类型: {source_type}，无法进行列名标准化")
         return df
@@ -227,26 +249,35 @@ def standardize_columns(df: pd.DataFrame, source_type: str, logger: Optional[log
     
     for col in df.columns:
         if col in mapping:
-            std_col = mapping[col].value
+            std_col = mapping[col]
+            # 如果是StandardColumns枚举类型，获取它的值
+            if isinstance(std_col, StandardColumns):
+                std_col = std_col.value
             renamed_columns[col] = std_col
             logger.debug(f"列名映射: {col} -> {std_col}")
             
     # 如果没有列被映射，发出警告
     if not renamed_columns:
         logger.warning(f"数据源 {source_type} 没有任何列可以映射到标准列名")
-        return df
+        return df  # 返回原始DataFrame，而不是空DataFrame
         
     # 记录映射信息
     logger.info(f"数据源 {source_type} 映射了 {len(renamed_columns)}/{len(df.columns)} 列到标准列名")
     
     # 重命名列
     result = df.rename(columns=renamed_columns)
+    
+    # 确保没有丢失原始DataFrame中的数据
+    if result.empty and not df.empty:
+        logger.warning("列名标准化导致数据丢失，返回原始数据")
+        return df
+        
     return result
 
 
 def detect_and_log_column_issues(
     df: pd.DataFrame, 
-    required_columns: List[str], 
+    required_columns: List[Union[str, StandardColumns]], 
     logger: Optional[logging.Logger] = None
 ) -> List[str]:
     """
@@ -254,7 +285,7 @@ def detect_and_log_column_issues(
     
     Args:
         df: 输入数据框
-        required_columns: 必需列的列表
+        required_columns: 必需列的列表，可以是字符串或StandardColumns枚举
         logger: 可选的日志记录器
         
     Returns:
@@ -266,8 +297,16 @@ def detect_and_log_column_issues(
     # 获取数据框的列集合
     actual_columns = set(df.columns)
     
+    # 将所有列名转换为字符串形式
+    required_cols = []
+    for col in required_columns:
+        if isinstance(col, StandardColumns):
+            required_cols.append(col.value)
+        else:
+            required_cols.append(col)
+    
     # 检查缺失列
-    missing_columns = [col for col in required_columns if col not in actual_columns]
+    missing_columns = [col for col in required_cols if col not in actual_columns]
     
     if missing_columns:
         logger.warning(f"数据缺少必需列: {missing_columns}")
