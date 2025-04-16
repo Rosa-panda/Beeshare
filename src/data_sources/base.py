@@ -1,5 +1,20 @@
 """
-数据源基类模块，定义所有数据源应该实现的接口
+数据源基类模块，定义所有数据源应该实现的接口。
+
+该模块提供了数据源抽象接口的定义，所有具体的数据源实现（如AKShare、
+东方财富等）都需要继承该基类并实现定义的抽象方法。基类定义了统一的
+数据访问接口，使上层应用能够以统一的方式使用不同的数据源。
+
+主要功能：
+1. 历史数据获取
+2. 实时行情获取
+3. 股票代码搜索
+4. 股票详细信息获取
+5. 数据源连接检查
+
+创建日期: 2024-04-08
+最后修改: 2024-04-20
+作者: BeeShare开发团队
 
 流程图:
 ```mermaid
@@ -30,20 +45,26 @@ logger = logging.getLogger(__name__)
 
 class DataSource(ABC):
     """
-    数据源的抽象基类，定义了所有数据源都应该实现的方法
+    数据源的抽象基类，定义了所有数据源都应该实现的方法。
     
-    Args:
+    该类定义了统一的数据访问接口，所有具体的数据源实现都需要继承该类
+    并实现相应的抽象方法。通过统一接口，上层应用可以方便地切换不同的
+    数据源而不需要修改代码。
+    
+    Attributes:
         name (str): 数据源名称
         config (dict): 数据源配置信息
+        is_ready (bool): 数据源是否就绪可用
+        timeout (int): 请求超时时间（秒）
     """
     
     def __init__(self, name, config=None):
         """
-        初始化数据源
+        初始化数据源。
         
         Args:
             name (str): 数据源名称
-            config (dict, optional): 数据源配置. Defaults to None.
+            config (dict, optional): 数据源配置字典。默认为None。
         """
         self.name = name
         self.config = config or {}

@@ -1,5 +1,13 @@
+#!/usr/bin/env python
 """
-检查main.py文件修复情况
+测试专用脚本：验证AKShareDS数据源的修复是否生效。
+
+该脚本专门测试AKShareDS类中的_get_stock_data_via_fallback_api方法
+是否能正确生成模拟数据，并验证standardize_columns函数是否正确映射列名。
+
+创建日期: 2024-04-03
+最后修改: 2024-04-10
+作者: BeeShare开发团队
 """
 
 import re

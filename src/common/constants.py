@@ -1,13 +1,22 @@
 """
-常量定义
+项目常量定义模块。
+
+该模块包含整个项目中使用的各种常量值，以避免在代码中硬编码这些值。
+将常量集中在一处有助于维护和配置系统。
+
+创建日期: 2024-04-10
+最后修改: 2024-04-15
+作者: BeeShare开发团队
 """
 
+# 数据源配置常量
+# 用于定义系统中所有支持的数据源及其配置参数
 DATA_SOURCES = {
     "akshare": {
-        "enabled": True,
-        "testing": False,
-        "timeout": 10,
-        "retry_count": 3,
-        "retry_delay": 1
+        "enabled": True,       # 是否启用该数据源
+        "testing": False,      # 是否处于测试模式
+        "timeout": 10,         # API请求超时时间(秒)
+        "retry_count": 3,      # 重试次数
+        "retry_delay": 1       # 重试间隔(秒)
     }
 } 
