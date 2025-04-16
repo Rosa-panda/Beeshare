@@ -1,0 +1,8 @@
+{
+    "active_storage": "sqlite",
+    "storage_configs": {
+        "sqlite": {
+            "db_path": "data/stock_data.db"
+        }
+    }
+} 

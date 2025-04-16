@@ -1,0 +1,10 @@
+{
+    "akshare": {
+        "stock_list_cache_time": 86400,
+        "retry_count": 3,
+        "retry_delay": 2,
+        "timeout": 30,
+        "auto_initialize": true,
+        "testing": false
+    }
+} 
