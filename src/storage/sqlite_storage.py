@@ -234,7 +234,18 @@ class SQLiteStorage(Storage):
         Returns:
             Dict[str, Tuple[str, bool]]: 列名到(SQLite类型,是否为主键)的映射
         """
-        if data_type == DataType.SYMBOL:
+        # 将字符串类型的data_type转换为DataType枚举
+        if isinstance(data_type, str):
+            try:
+                data_type = DataType(data_type)
+            except (ValueError, TypeError):
+                # 如果无法转换，则保持原样
+                pass
+
+        # 获取data_type的值，无论它是字符串还是DataType枚举
+        data_type_value = data_type.value if hasattr(data_type, 'value') else str(data_type)
+        
+        if data_type_value == "symbol" or (isinstance(data_type, DataType) and data_type == DataType.SYMBOL):
             return {
                 StandardColumns.SYMBOL.value: ("TEXT", True),
                 StandardColumns.NAME.value: ("TEXT", False),
@@ -242,7 +253,7 @@ class SQLiteStorage(Storage):
                 StandardColumns.INDUSTRY.value: ("TEXT", False),
                 "updated_at": ("TIMESTAMP", False)
             }
-        elif data_type == DataType.HISTORICAL:
+        elif data_type_value == "historical" or (isinstance(data_type, DataType) and data_type == DataType.HISTORICAL):
             return {
                 StandardColumns.DATE.value: ("DATE", True),
                 StandardColumns.OPEN.value: ("REAL", False),
@@ -250,21 +261,21 @@ class SQLiteStorage(Storage):
                 StandardColumns.LOW.value: ("REAL", False),
                 StandardColumns.CLOSE.value: ("REAL", False),
                 StandardColumns.VOLUME.value: ("INTEGER", False),
-                STANDARD_TO_STORAGE_MAPPING.get(StandardColumns.AMOUNT.value, "turnover"): ("REAL", False),
+                StandardColumns.AMOUNT.value: ("REAL", False),  # 直接使用标准列名而不是映射
                 STANDARD_TO_STORAGE_MAPPING.get(StandardColumns.CHANGE_PCT.value, "change_pct"): ("REAL", False)
             }
-        elif data_type == DataType.REALTIME:
+        elif data_type_value == "realtime" or (isinstance(data_type, DataType) and data_type == DataType.REALTIME):
             return {
-                StandardColumns.TIMESTAMP.value if hasattr(StandardColumns, 'TIMESTAMP') else "timestamp": ("TIMESTAMP", True),
-                StandardColumns.PRICE.value if hasattr(StandardColumns, 'PRICE') else "price": ("REAL", False),
+                StandardColumns.TIMESTAMP.value: ("TIMESTAMP", True),
+                StandardColumns.PRICE.value: ("REAL", False),
                 StandardColumns.VOLUME.value: ("INTEGER", False),
-                StandardColumns.BID_PRICE.value if hasattr(StandardColumns, 'BID_PRICE') else "bid_price": ("REAL", False),
-                StandardColumns.ASK_PRICE.value if hasattr(StandardColumns, 'ASK_PRICE') else "ask_price": ("REAL", False),
-                StandardColumns.BID_VOLUME.value if hasattr(StandardColumns, 'BID_VOLUME') else "bid_volume": ("INTEGER", False),
-                StandardColumns.ASK_VOLUME.value if hasattr(StandardColumns, 'ASK_VOLUME') else "ask_volume": ("INTEGER", False),
+                StandardColumns.BID_PRICE.value: ("REAL", False),
+                StandardColumns.ASK_PRICE.value: ("REAL", False),
+                StandardColumns.BID_VOLUME.value: ("INTEGER", False),
+                StandardColumns.ASK_VOLUME.value: ("INTEGER", False),
                 STANDARD_TO_STORAGE_MAPPING.get(StandardColumns.CHANGE_PCT.value, "change_pct"): ("REAL", False)
             }
-        elif data_type == DataType.INDEX:
+        elif data_type_value == "index" or (isinstance(data_type, DataType) and data_type == DataType.INDEX):
             return {
                 StandardColumns.DATE.value: ("DATE", True),
                 StandardColumns.OPEN.value: ("REAL", False),
@@ -272,10 +283,13 @@ class SQLiteStorage(Storage):
                 StandardColumns.LOW.value: ("REAL", False),
                 StandardColumns.CLOSE.value: ("REAL", False),
                 StandardColumns.VOLUME.value: ("INTEGER", False),
+                StandardColumns.AMOUNT.value: ("REAL", False),  # 添加amount列
                 STANDARD_TO_STORAGE_MAPPING.get(StandardColumns.CHANGE_PCT.value, "change_pct"): ("REAL", False)
             }
         else:
-            raise ValueError(f"不支持的数据类型: {data_type}")
+            error_msg = f"不支持的数据类型: {data_type}"
+            logger.error(error_msg)
+            raise ValueError(error_msg)
     
     def _add_table_indexes(self, table_name: str, columns: List[str]) -> None:
         """
@@ -433,18 +447,18 @@ class SQLiteStorage(Storage):
             
             for table in tables:
                 table_name = table[0]
-                index_name = f"idx_{table_name}_time_date"
+                index_name = f"idx_{table_name}_timestamp"
                 
-                # 创建时间和日期的复合索引
-                query = f"CREATE INDEX IF NOT EXISTS {index_name} ON {table_name}(time, date)"
+                # 创建时间戳索引
+                query = f"CREATE INDEX IF NOT EXISTS {index_name} ON {table_name}({StandardColumns.TIMESTAMP.value})"
                 cursor.execute(query)
-                logger.debug(f"为表 {table_name} 创建时间和日期的复合索引：{index_name}")
+                logger.debug(f"为表 {table_name} 创建时间戳索引：{index_name}")
             
             conn.commit()
-            logger.info(f"成功为 {len(tables)} 个实时数据表添加时间和日期的复合索引")
+            logger.info(f"成功为 {len(tables)} 个实时数据表添加时间戳索引")
             
         except Exception as e:
-            logger.error(f"为实时数据表添加时间和日期的复合索引失败：{e}")
+            logger.error(f"为实时数据表添加时间戳索引失败：{e}")
             raise
 
     def optimize_indexes(self) -> None:
@@ -524,14 +538,39 @@ class SQLiteStorage(Storage):
             return False
         
         # 确保data_type是DataType枚举类型
-        if isinstance(data_type, str):
-            try:
-                # 尝试将字符串转换为DataType枚举
-                data_type = DataType(data_type)
-            except ValueError:
-                error_msg = f"无效的数据类型: {data_type}"
-                logger.error(error_msg)
-                raise DataSaveException(error_msg, storage_type="sqlite")
+        try:
+            if isinstance(data_type, str):
+                try:
+                    # 尝试将字符串转换为DataType枚举
+                    data_type = DataType(data_type)
+                except ValueError:
+                    error_msg = f"无效的数据类型字符串: {data_type}"
+                    logger.error(error_msg)
+                    raise DataSaveException(error_msg, storage_type="sqlite")
+            elif not isinstance(data_type, DataType) and hasattr(data_type, 'value'):
+                # 可能是从其他模块导入的枚举类型，尝试通过值匹配
+                data_type_value = data_type.value
+                try:
+                    data_type = DataType(data_type_value)
+                except ValueError:
+                    logger.warning(f"无法直接转换 {data_type} 到 DataType 枚举，将使用值匹配")
+                    # 使用值进行匹配
+                    if data_type_value == "historical":
+                        data_type = DataType.HISTORICAL
+                    elif data_type_value == "realtime":
+                        data_type = DataType.REALTIME
+                    elif data_type_value == "symbol":
+                        data_type = DataType.SYMBOL
+                    elif data_type_value == "index":
+                        data_type = DataType.INDEX
+                    else:
+                        error_msg = f"未知的数据类型值: {data_type_value}"
+                        logger.error(error_msg)
+                        raise DataSaveException(error_msg, storage_type="sqlite")
+        except Exception as e:
+            error_msg = f"处理数据类型时出错: {e}"
+            logger.error(error_msg)
+            raise DataSaveException(error_msg, storage_type="sqlite", original_error=e)
         
         conn = None
         try:
@@ -546,7 +585,10 @@ class SQLiteStorage(Storage):
                 
             # 对于历史和实时数据，需要为每个股票创建独立的表
             elif symbol:
-                self._save_stock_data(conn, data, data_type, symbol)
+                success = self._save_stock_data(conn, data, data_type, symbol)
+                if not success:
+                    # 如果保存失败但没有异常，返回失败
+                    return False
             else:
                 error_msg = f"保存 {data_type.value if hasattr(data_type, 'value') else str(data_type)} 数据失败: 必须提供symbol参数"
                 logger.error(error_msg)
@@ -700,18 +742,21 @@ class SQLiteStorage(Storage):
             conn.execute(create_table_sql)
             
             # 为表添加索引
-            if data_type == DataType.HISTORICAL:
+            if data_type == DataType.HISTORICAL or data_type.value == "historical" if hasattr(data_type, 'value') else str(data_type) == "historical":
                 self._add_table_indexes(table_name, [StandardColumns.DATE.value])
-            elif data_type == DataType.REALTIME:
-                self._add_table_indexes(table_name, [StandardColumns.TIMESTAMP.value if hasattr(StandardColumns, 'TIMESTAMP') else "timestamp"])
+            elif data_type == DataType.REALTIME or data_type.value == "realtime" if hasattr(data_type, 'value') else str(data_type) == "realtime":
+                self._add_table_indexes(table_name, [StandardColumns.TIMESTAMP.value])
             
             # 记录原始列
             original_columns = list(data.columns)
             logger.debug(f"原始数据列: {original_columns}")
             
-            # 标准化列名
-            data = standardize_columns(data, source_type="A_SHARE", logger=logger)
-            logger.debug(f"标准化后的列: {list(data.columns)}")
+            # 标准化列名 - 提供一个更安全的过程
+            try:
+                data = standardize_columns(data, source_type="A_SHARE", logger=logger)
+                logger.debug(f"标准化后的列: {list(data.columns)}")
+            except Exception as e:
+                logger.warning(f"列名标准化失败: {e}，将使用原始列名")
             
             # 创建标准列名到存储列名的映射
             column_mappings = {}
@@ -727,9 +772,34 @@ class SQLiteStorage(Storage):
                     renamed_columns[std_col] = storage_col
                 logger.info(f"已应用存储映射: {renamed_columns}")
             
+            # 获取表中实际存在的列
+            cursor = conn.cursor()
+            cursor.execute(f"PRAGMA table_info({table_name})")
+            existing_columns = [row[1] for row in cursor.fetchall()]
+            logger.debug(f"表 {table_name} 中的现有列: {existing_columns}")
+            
+            # 检查是否需要添加新列
+            for col in schema.keys():
+                if col not in existing_columns:
+                    col_type = schema[col][0]
+                    try:
+                        logger.info(f"向表 {table_name} 添加新列: {col} {col_type}")
+                        conn.execute(f"ALTER TABLE {table_name} ADD COLUMN {col} {col_type}")
+                    except Exception as e:
+                        logger.warning(f"添加列 {col} 失败: {e}")
+            
+            # 确保data包含schema中定义的amount列
+            if "amount" not in data.columns and StandardColumns.AMOUNT.value in schema:
+                logger.warning(f"数据中缺少amount列，将添加空列")
+                data[StandardColumns.AMOUNT.value] = None
+            
+            # 重新获取表中实际存在的列，确保获取最新列表
+            cursor.execute(f"PRAGMA table_info({table_name})")
+            existing_columns = [row[1] for row in cursor.fetchall()]
+            
             # 确保数据包含所需列
-            required_columns = list(schema.keys())
-            logger.debug(f"存储表需要的列: {required_columns}")
+            required_columns = [col for col in schema.keys() if col in existing_columns]
+            logger.debug(f"准备插入的列: {required_columns}")
             missing_columns = [col for col in required_columns if col not in data.columns]
             
             if missing_columns:
@@ -754,16 +824,22 @@ class SQLiteStorage(Storage):
                     except Exception as e:
                         logger.warning(f"转换列 {col} 的数据类型时出错: {e}")
             
-            # 使用executemany进行批量插入
-            insert_columns = ', '.join(required_columns)
-            placeholders = ', '.join(['?' for _ in required_columns])
-            insert_sql = f"INSERT OR REPLACE INTO {table_name} ({insert_columns}) VALUES ({placeholders})"
+            # 使用executemany进行批量插入，只使用表中存在的列
+            # 过滤数据列，只使用实际存在于表中的列
+            insert_columns = [col for col in required_columns if col in data.columns]
+            
+            if not insert_columns:
+                logger.error(f"没有可插入的列")
+                return False
+                
+            placeholders = ', '.join(['?' for _ in insert_columns])
+            insert_sql = f"INSERT OR REPLACE INTO {table_name} ({', '.join(insert_columns)}) VALUES ({placeholders})"
             
             # 准备插入数据
             rows = []
             for _, row in data.iterrows():
                 row_data = []
-                for col in required_columns:
+                for col in insert_columns:
                     val = row.get(col)
                     # 格式化日期时间对象
                     if isinstance(val, (datetime, date)):
@@ -775,10 +851,14 @@ class SQLiteStorage(Storage):
             cursor = conn.cursor()
             cursor.executemany(insert_sql, rows)
             
-            logger.info(f"成功保存 {len(data)} 条 {symbol} 的 {data_type.value} 数据")
+            logger.info(f"成功保存 {len(data)} 条 {symbol} 的 {data_type.value if hasattr(data_type, 'value') else str(data_type)} 数据")
+            return True
+            
         except Exception as e:
             error_msg = f"保存股票数据失败: {e}"
             logger.error(error_msg)
+            # 记录详细错误信息以便调试
+            logger.debug(f"错误详情: {traceback.format_exc()}")
             raise DataSaveException(error_msg, storage_type="sqlite", data_type=data_type, symbol=symbol, original_error=e)
     
     def _clear_related_cache(self, data_type: DataType, symbol: Optional[str] = None) -> None:
@@ -939,7 +1019,7 @@ class SQLiteStorage(Storage):
             query = f"SELECT * FROM {table_name}"
             params = []
             
-            date_col = StandardColumns.DATE.value if data_type == DataType.HISTORICAL else StandardColumns.TIMESTAMP.value if hasattr(StandardColumns, 'TIMESTAMP') else "timestamp"
+            date_col = StandardColumns.DATE.value if data_type == DataType.HISTORICAL else StandardColumns.TIMESTAMP.value
             
             # 添加日期过滤
             if start_date or end_date:

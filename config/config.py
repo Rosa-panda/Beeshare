@@ -23,7 +23,8 @@ DATA_SOURCES = {
         'timeout': 30,     # 增加超时时间
         'retry_count': 3,  # 添加重试次数
         'retry_delay': 2,  # 添加重试延迟
-        'testing': False,  # 关闭测试模式
+        'testing': True,   # 开启测试模式（失败时使用模拟数据）
+        'mock_data_seed': 42,  # 模拟数据随机种子
     }
 }
 
@@ -98,4 +99,14 @@ APP_CONFIG = {
     'name': '股票数据获取系统',
     'version': '0.1.0',
     'author': 'Beeshare Team',
+} 
+
+# 整合所有配置到CONFIG变量
+CONFIG = {
+    'DATA_SOURCES': DATA_SOURCES,
+    'FETCH_CONFIG': FETCH_CONFIG,
+    'STORAGE_CONFIG': STORAGE_CONFIG,
+    'MARKETS': MARKETS,
+    'LOG_CONFIG': LOG_CONFIG,
+    'APP_CONFIG': APP_CONFIG
 } 

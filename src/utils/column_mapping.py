@@ -9,6 +9,7 @@ import enum
 import logging
 import pandas as pd
 from typing import List, Dict, Set, Optional, Union, Any
+import traceback
 
 
 class StandardColumns(enum.Enum):
@@ -16,6 +17,7 @@ class StandardColumns(enum.Enum):
     
     # 基础行情数据
     DATE = "date"                # 日期
+    TIMESTAMP = "timestamp"      # 时间戳（新增）
     OPEN = "open"                # 开盘价
     HIGH = "high"                # 最高价
     LOW = "low"                  # 最低价
@@ -45,6 +47,13 @@ class StandardColumns(enum.Enum):
     TOTAL_LIAB = "total_liab"            # 总负债
     NET_PROFIT = "net_profit"            # 净利润
     REVENUE = "revenue"                  # 营业收入
+    
+    # 实时数据特有字段（新增区块）
+    PRICE = "price"              # 当前价格
+    BID_PRICE = "bid_price"      # 买入价
+    ASK_PRICE = "ask_price"      # 卖出价
+    BID_VOLUME = "bid_volume"    # 买入量
+    ASK_VOLUME = "ask_volume"    # 卖出量
     
     # 其他
     ADJ_FACTOR = "adj_factor"    # 复权因子
@@ -115,6 +124,8 @@ SOURCE_COLUMN_MAPPINGS = {
     "AKSHARE": {
         # 中文列名映射
         "日期": StandardColumns.DATE,
+        "时间": StandardColumns.TIMESTAMP,
+        "时间戳": StandardColumns.TIMESTAMP,
         "开盘": StandardColumns.OPEN,
         "高": StandardColumns.HIGH,
         "最高": StandardColumns.HIGH,
@@ -130,9 +141,15 @@ SOURCE_COLUMN_MAPPINGS = {
         "代码": StandardColumns.SYMBOL,
         "名称": StandardColumns.NAME,
         "市场类型": StandardColumns.MARKET,
+        "最新价": StandardColumns.PRICE,
+        "买入价": StandardColumns.BID_PRICE,
+        "卖出价": StandardColumns.ASK_PRICE,
+        "买入量": StandardColumns.BID_VOLUME,
+        "卖出量": StandardColumns.ASK_VOLUME,
         
         # 增加英文列名映射，用于支持模拟数据和其他可能的英文数据源
         "date": StandardColumns.DATE,
+        "timestamp": StandardColumns.TIMESTAMP,
         "open": StandardColumns.OPEN,
         "high": StandardColumns.HIGH,
         "low": StandardColumns.LOW,
@@ -145,6 +162,11 @@ SOURCE_COLUMN_MAPPINGS = {
         "symbol": StandardColumns.SYMBOL,
         "name": StandardColumns.NAME,
         "market": StandardColumns.MARKET,
+        "price": StandardColumns.PRICE,
+        "bid_price": StandardColumns.BID_PRICE,
+        "ask_price": StandardColumns.ASK_PRICE,
+        "bid_volume": StandardColumns.BID_VOLUME,
+        "ask_volume": StandardColumns.ASK_VOLUME,
         "source": StandardColumns.SOURCE,
     },
     
@@ -202,6 +224,7 @@ SOURCE_COLUMN_MAPPINGS = {
 # 存储用映射字典
 STORAGE_TO_STANDARD_MAPPING = {
     "date": StandardColumns.DATE.value,
+    "timestamp": StandardColumns.TIMESTAMP.value,
     "open": StandardColumns.OPEN.value,
     "high": StandardColumns.HIGH.value,
     "low": StandardColumns.LOW.value, 
@@ -214,7 +237,12 @@ STORAGE_TO_STANDARD_MAPPING = {
     "symbol": StandardColumns.SYMBOL.value,
     "name": StandardColumns.NAME.value,
     "market": StandardColumns.MARKET.value,
-    "industry": StandardColumns.INDUSTRY.value
+    "industry": StandardColumns.INDUSTRY.value,
+    "price": StandardColumns.PRICE.value,
+    "bid_price": StandardColumns.BID_PRICE.value,
+    "ask_price": StandardColumns.ASK_PRICE.value,
+    "bid_volume": StandardColumns.BID_VOLUME.value,
+    "ask_volume": StandardColumns.ASK_VOLUME.value
 }
 
 # 标准到存储的映射
@@ -239,40 +267,73 @@ def standardize_columns(df: pd.DataFrame, source_type: str, logger: Optional[log
     if df is None or df.empty:
         logger.warning("无法标准化空数据框")
         return df
+    
+    # 创建一个数据框的副本，避免修改原始数据
+    result_df = df.copy()    
         
+    # 处理source_type大小写不敏感
+    source_type = source_type.upper() if source_type.upper() in SOURCE_COLUMN_MAPPINGS else source_type
+    
     if source_type not in SOURCE_COLUMN_MAPPINGS:
-        logger.warning(f"未知的数据源类型: {source_type}，无法进行列名标准化")
-        return df
-        
-    mapping = SOURCE_COLUMN_MAPPINGS[source_type]
-    renamed_columns = {}
+        # 如果找不到精确匹配，尝试部分匹配
+        possible_types = [t for t in SOURCE_COLUMN_MAPPINGS.keys() if source_type.upper() in t.upper()]
+        if possible_types:
+            source_type = possible_types[0]
+            logger.info(f"未找到精确匹配的数据源类型 {source_type}，使用相似类型: {source_type}")
+        else:
+            logger.warning(f"未知的数据源类型: {source_type}，无法进行列名标准化")
+            return result_df  # 返回原始DataFrame的副本
     
-    for col in df.columns:
-        if col in mapping:
-            std_col = mapping[col]
-            # 如果是StandardColumns枚举类型，获取它的值
-            if isinstance(std_col, StandardColumns):
-                std_col = std_col.value
-            renamed_columns[col] = std_col
-            logger.debug(f"列名映射: {col} -> {std_col}")
+    try:
+        mapping = SOURCE_COLUMN_MAPPINGS[source_type]
+        renamed_columns = {}
+        
+        # 首先进行中文列名到英文的初步转换
+        cn_columns = [col for col in result_df.columns if col in CN_TO_EN_COLUMN_MAPPING]
+        if cn_columns:
+            cn_mapping = {col: CN_TO_EN_COLUMN_MAPPING[col] for col in cn_columns}
+            logger.info(f"发现 {len(cn_columns)} 个中文列名，进行初步转换")
+            result_df = result_df.rename(columns=cn_mapping)
+        
+        # 然后进行标准化映射
+        for col in result_df.columns:
+            if col in mapping:
+                std_col = mapping[col]
+                # 如果是StandardColumns枚举类型，获取它的值
+                if isinstance(std_col, StandardColumns):
+                    std_col = std_col.value
+                renamed_columns[col] = std_col
+                logger.debug(f"列名映射: {col} -> {std_col}")
+        
+        # 如果没有列被映射，尝试直接匹配标准列名
+        if not renamed_columns:
+            # 检查是否有列名直接匹配标准列名
+            std_cols = [col.value for col in StandardColumns]
+            direct_matches = [col for col in result_df.columns if col in std_cols]
+            if direct_matches:
+                logger.info(f"发现 {len(direct_matches)} 个直接匹配标准列名的列，不需要映射")
+                return result_df
             
-    # 如果没有列被映射，发出警告
-    if not renamed_columns:
-        logger.warning(f"数据源 {source_type} 没有任何列可以映射到标准列名")
-        return df  # 返回原始DataFrame，而不是空DataFrame
+            logger.warning(f"数据源 {source_type} 没有任何列可以映射到标准列名")
+            return result_df  # 返回原始DataFrame的副本，而不是空DataFrame
         
-    # 记录映射信息
-    logger.info(f"数据源 {source_type} 映射了 {len(renamed_columns)}/{len(df.columns)} 列到标准列名")
-    
-    # 重命名列
-    result = df.rename(columns=renamed_columns)
-    
-    # 确保没有丢失原始DataFrame中的数据
-    if result.empty and not df.empty:
-        logger.warning("列名标准化导致数据丢失，返回原始数据")
-        return df
+        # 记录映射信息
+        logger.info(f"数据源 {source_type} 映射了 {len(renamed_columns)}/{len(result_df.columns)} 列到标准列名")
         
-    return result
+        # 重命名列
+        result_df = result_df.rename(columns=renamed_columns)
+        
+        # 确保没有丢失原始DataFrame中的数据
+        if result_df.empty and not df.empty:
+            logger.warning("列名标准化导致数据丢失，返回原始数据")
+            return df.copy()
+        
+        return result_df
+        
+    except Exception as e:
+        logger.error(f"标准化列名时发生错误: {e}")
+        logger.debug(f"错误详情: {traceback.format_exc()}")
+        return df.copy()  # 出错时返回原始DataFrame的副本
 
 
 def detect_and_log_column_issues(

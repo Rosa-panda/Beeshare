@@ -69,12 +69,9 @@ logger = logging.getLogger(__name__)
 
 # 导入项目功能模块
 from src.api.stock_api import StockAPI
-from src.common.enums import DataType
+# 移除重复导入
 from src.common.constants import DATA_SOURCES
 from src.utils.config_manager import ConfigManager
-
-# 导入工具函数
-from src.utils.date_utils import get_date_n_days_ago
 
 def init_data_sources():
     """
@@ -795,6 +792,12 @@ def run_clustering_analysis(data_source, storage, args):
             # 默认为今天
             end_date = datetime.now().strftime('%Y-%m-%d')
             logger.info(f"未指定结束日期，使用默认值: {end_date}")
+            
+        # 确保日期不是未来日期
+        today = datetime.now().strftime('%Y-%m-%d')
+        if end_date > today:
+            logger.warning(f"指定的结束日期 {end_date} 是未来日期，将使用今天的日期: {today}")
+            end_date = today
         
         # 获取每个股票的历史数据
         for symbol in symbols:

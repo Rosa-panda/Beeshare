@@ -10793,3 +10793,643 @@ TypeError: 'NoneType' object is not iterable
 2025-04-17 01:48:59,877 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
 2025-04-17 01:48:59,957 - src.data_sources.akshare - INFO - AKShare连接测试成功
 2025-04-17 01:48:59,957 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 10:25:13,425 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 10:25:13,426 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 10:25:13,426 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 10:25:13,426 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 10:25:13,427 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 10:25:13,428 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 10:25:13,670 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 10:25:13,670 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 10:25:23,329 - src.data_sources.akshare - INFO - 成功加载 5412 只A股股票信息
+2025-04-17 10:25:23,335 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 10:25:23,336 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 10:25:23,336 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 10:25:23,342 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 10:25:23,342 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 10:25:23,356 - __main__ - INFO - 开始对股票 ['600519', '601398', '600036', '1'] 进行聚类分析
+2025-04-17 10:25:23,357 - __main__ - INFO - 未指定开始日期，使用默认值: 2025-01-17
+2025-04-17 10:25:23,357 - __main__ - INFO - 未指定结束日期，使用默认值: 2025-04-17
+2025-04-17 10:25:23,358 - __main__ - INFO - 获取 600519 的历史数据
+2025-04-17 10:25:23,358 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 10:25:23,359 - src.data_sources.akshare - INFO - 获取 600519 的历史数据，时间区间: 2025-01-17 至 2025-04-17，数据间隔: 1d
+2025-04-17 10:25:23,359 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 10:25:23,360 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 10:25:23,360 - src.data_sources.akshare - INFO - 股票 600519 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 10:25:23,360 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600519 历史数据
+2025-04-17 10:25:23,361 - root - INFO - 使用上交所专用接口获取 600519 历史数据
+2025-04-17 10:25:23,531 - root - WARNING - 上交所接口未能获取到 600519 历史数据
+2025-04-17 10:25:23,532 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600519 历史数据
+2025-04-17 10:25:23,533 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 10:25:23,534 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 10:25:23,536 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 10:25:23,537 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600519, 期间: daily, 开始日期: 20250117, 结束日期: 20250417
+2025-04-17 10:25:23,635 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 10:25:23,635 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 10:25:23,740 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600519 历史数据
+2025-04-17 10:25:23,741 - src.data_sources.akshare - WARNING - 使用备用方法获取 600519 历史数据
+2025-04-17 10:25:23,742 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 10:25:23,743 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600519 -> 输出 600519
+2025-04-17 10:25:23,746 - src.data_sources.akshare - INFO - 股票 600519 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '贵州茅台', 'exists': True}
+2025-04-17 10:25:23,748 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600519
+2025-04-17 10:25:23,749 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 10:25:23,750 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 600519
+2025-04-17 10:25:23,970 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 10:25:23,971 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据，且测试模式未启用
+2025-04-17 10:25:23,972 - src.data_sources.akshare - ERROR - 无法获取 600519 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 10:25:23,975 - __main__ - WARNING - 获取不到 600519 的历史数据
+2025-04-17 10:25:23,976 - __main__ - INFO - 获取 601398 的历史数据
+2025-04-17 10:25:23,976 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 10:25:23,977 - src.data_sources.akshare - INFO - 获取 601398 的历史数据，时间区间: 2025-01-17 至 2025-04-17，数据间隔: 1d
+2025-04-17 10:25:23,978 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 10:25:23,982 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 10:25:23,984 - src.data_sources.akshare - INFO - 股票 601398 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 10:25:23,985 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 601398 历史数据
+2025-04-17 10:25:23,986 - root - INFO - 使用上交所专用接口获取 601398 历史数据
+2025-04-17 10:25:24,074 - root - WARNING - 上交所接口未能获取到 601398 历史数据
+2025-04-17 10:25:24,075 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 601398 历史数据
+2025-04-17 10:25:24,076 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 10:25:24,077 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 10:25:24,081 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 10:25:24,082 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh601398, 期间: daily, 开始日期: 20250117, 结束日期: 20250417
+2025-04-17 10:25:24,180 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 10:25:24,181 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 10:25:24,287 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 601398 历史数据
+2025-04-17 10:25:24,288 - src.data_sources.akshare - WARNING - 使用备用方法获取 601398 历史数据
+2025-04-17 10:25:24,289 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 10:25:24,290 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 601398 -> 输出 601398
+2025-04-17 10:25:24,294 - src.data_sources.akshare - INFO - 股票 601398 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '工商银行', 'exists': True}
+2025-04-17 10:25:24,295 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 601398
+2025-04-17 10:25:24,296 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 10:25:24,297 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 601398
+2025-04-17 10:25:24,435 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 10:25:24,436 - src.data_sources.akshare - ERROR - 无法获取 601398 的历史数据，且测试模式未启用
+2025-04-17 10:25:24,437 - src.data_sources.akshare - ERROR - 无法获取 601398 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 10:25:24,440 - __main__ - WARNING - 获取不到 601398 的历史数据
+2025-04-17 10:25:24,441 - __main__ - INFO - 获取 600036 的历史数据
+2025-04-17 10:25:24,442 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 10:25:24,443 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2025-01-17 至 2025-04-17，数据间隔: 1d
+2025-04-17 10:25:24,444 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 10:25:24,449 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 10:25:24,451 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 10:25:24,453 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 10:25:24,454 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 10:25:24,575 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 10:25:24,576 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 10:25:24,576 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 10:25:24,576 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 10:25:24,578 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 10:25:24,578 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20250117, 结束日期: 20250417
+2025-04-17 10:25:24,692 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 10:25:24,693 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 10:25:24,785 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 10:25:24,786 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 10:25:24,787 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 10:25:24,788 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 10:25:24,791 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 10:25:24,792 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 10:25:24,793 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 10:25:24,794 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 600036
+2025-04-17 10:25:24,917 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 10:25:24,918 - src.data_sources.akshare - ERROR - 无法获取 600036 的历史数据，且测试模式未启用
+2025-04-17 10:25:24,919 - src.data_sources.akshare - ERROR - 无法获取 600036 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 10:25:24,921 - __main__ - WARNING - 获取不到 600036 的历史数据
+2025-04-17 10:25:24,922 - __main__ - INFO - 获取 1 的历史数据
+2025-04-17 10:25:24,923 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 10:25:24,924 - src.data_sources.akshare - INFO - 获取 000001 的历史数据，时间区间: 2025-01-17 至 2025-04-17，数据间隔: 1d
+2025-04-17 10:25:24,925 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 10:25:24,928 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 10:25:24,930 - src.data_sources.akshare - INFO - 股票 000001 类型信息: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 10:25:24,931 - src.data_sources.akshare - INFO - 尝试使用 get_sz_hist 获取 000001 历史数据
+2025-04-17 10:25:24,932 - root - INFO - 使用深交所专用接口获取 000001 历史数据
+2025-04-17 10:25:25,047 - root - WARNING - 深交所接口未能获取到 000001 历史数据
+2025-04-17 10:25:25,048 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 000001 历史数据
+2025-04-17 10:25:25,049 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 10:25:25,050 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 10:25:25,053 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 10:25:25,055 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sz000001, 期间: daily, 开始日期: 20250117, 结束日期: 20250417
+2025-04-17 10:25:25,175 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 10:25:25,176 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 10:25:25,298 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 000001 历史数据
+2025-04-17 10:25:25,299 - src.data_sources.akshare - WARNING - 使用备用方法获取 000001 历史数据
+2025-04-17 10:25:25,300 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 10:25:25,301 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 000001 -> 输出 000001
+2025-04-17 10:25:25,305 - src.data_sources.akshare - INFO - 股票 000001 分析结果: {'market': 'A股', 'exchange': '深圳证券交易所', 'board': '主板', 'prefix': 'sz', 'name': '平安银行', 'exists': True}
+2025-04-17 10:25:25,306 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 000001
+2025-04-17 10:25:25,307 - src.data_sources.akshare - WARNING - 网易财经接口获取数据失败: module 'akshare' has no attribute 'stock_zh_a_hist_163'
+2025-04-17 10:25:25,308 - src.data_sources.akshare - INFO - 尝试使用腾讯财经接口获取数据: 000001
+2025-04-17 10:25:25,452 - src.data_sources.akshare - WARNING - 腾讯财经接口获取数据失败: invalid literal for int() with base 10: 'i'
+2025-04-17 10:25:25,454 - src.data_sources.akshare - ERROR - 无法获取 000001 的历史数据，且测试模式未启用
+2025-04-17 10:25:25,455 - src.data_sources.akshare - ERROR - 无法获取 000001 的历史数据，尝试了所有可用方法
+错误详情:
+
+2025-04-17 10:25:25,457 - __main__ - WARNING - 获取不到 1 的历史数据
+2025-04-17 10:25:25,458 - __main__ - ERROR - 没有获取到任何有效的历史数据
+2025-04-17 10:25:25,460 - __main__ - INFO - 程序执行完毕
+2025-04-17 11:30:19,043 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 11:30:19,044 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 11:30:19,044 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 11:30:19,044 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 11:30:19,045 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 11:30:19,045 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:30:19,046 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:30:19,193 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 11:30:19,193 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 11:30:28,558 - src.data_sources.akshare - INFO - 成功加载 5412 只A股股票信息
+2025-04-17 11:30:28,561 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 11:30:28,561 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 11:30:28,561 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 11:30:28,563 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 11:30:28,563 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 11:30:28,569 - __main__ - INFO - 从 akshare 获取 600036 的历史数据...
+2025-04-17 11:30:28,569 - __main__ - INFO - 数据时间范围: 2023-01-01 至 2023-12-31
+2025-04-17 11:30:28,570 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,570 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,571 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:30:28,572 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,572 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,573 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:30:28,660 - src.data_sources.akshare - WARNING - 解析600036的详细信息时发生错误: If using all scalar values, you must pass an index
+2025-04-17 11:30:28,661 - __main__ - INFO - 股票确认: 600036 - 招商银行, 交易所: 上海证券交易所
+2025-04-17 11:30:28,662 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,662 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,662 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2023-01-01 至 2023-12-31，数据间隔: daily
+2025-04-17 11:30:28,663 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,664 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:30:28,664 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:30:28,665 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 11:30:28,665 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 11:30:28,882 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 11:30:28,882 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 11:30:28,883 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,883 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,884 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:30:28,884 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20230101, 结束日期: 20231231
+2025-04-17 11:30:28,885 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:28,886 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:30:28,992 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 11:30:28,992 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 11:30:29,082 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 11:30:29,082 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 11:30:29,082 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:29,083 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:30:29,084 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:30:29,084 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 11:30:29,165 - src.data_sources.akshare - INFO - 尝试使用新浪财经接口获取数据: 600036
+2025-04-17 11:30:30,138 - src.data_sources.akshare - INFO - 成功通过新浪财经接口获取 600036 数据，共 5516 行
+2025-04-17 11:30:30,138 - __main__ - INFO - 成功获取 5516 条历史数据
+2025-04-17 11:30:30,139 - __main__ - INFO - 将数据保存到 sqlite 存储...
+2025-04-17 11:30:30,153 - src.storage.sqlite_storage - ERROR - 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL
+2025-04-17 11:30:30,153 - src.storage.sqlite_storage - ERROR - 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL (原始错误: 不支持的数据类型: DataType.HISTORICAL)
+2025-04-17 11:30:30,155 - src.storage.sqlite_storage - ERROR - SQLiteStorage.save_data 发生异常: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL (原始错误: 不支持的数据类型: DataType.HISTORICAL) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL (原始错误: 不支持的数据类型: DataType.HISTORICAL))
+2025-04-17 11:30:30,158 - __main__ - ERROR - 程序执行过程中发生错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL (原始错误: 不支持的数据类型: DataType.HISTORICAL) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL (原始错误: 不支持的数据类型: DataType.HISTORICAL))
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 685, in _save_stock_data
+    schema = self._get_data_type_schema(data_type)
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 278, in _get_data_type_schema
+    raise ValueError(f"不支持的数据类型: {data_type}")
+ValueError: 不支持的数据类型: DataType.HISTORICAL
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 549, in save_data
+    self._save_stock_data(conn, data, data_type, symbol)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 782, in _save_stock_data
+    raise DataSaveException(error_msg, storage_type="sqlite", data_type=data_type, symbol=symbol, original_error=e)
+src.utils.exceptions.DataSaveException: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL (原始错误: 不支持的数据类型: DataType.HISTORICAL)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 700, in main
+    get_historical_data(args, data_sources, storage)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 227, in get_historical_data
+    success = storage_instance.save_data(data=data, data_type=DataType.HISTORICAL, symbol=args.symbol)
+  File "C:\Users\laisn\Desktop\Beeshare\src\utils\logging_utils.py", line 173, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 582, in save_data
+    raise DataSaveException(error_msg, storage_type="sqlite", data_type=data_type, symbol=symbol, original_error=e)
+src.utils.exceptions.DataSaveException: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL (原始错误: 不支持的数据类型: DataType.HISTORICAL) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: 不支持的数据类型: DataType.HISTORICAL (原始错误: 不支持的数据类型: DataType.HISTORICAL))
+2025-04-17 11:32:59,009 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 11:32:59,010 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 11:32:59,010 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 11:32:59,010 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 11:32:59,011 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 11:32:59,011 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:32:59,012 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:32:59,090 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 11:32:59,090 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 11:33:07,974 - src.data_sources.akshare - INFO - 成功加载 5412 只A股股票信息
+2025-04-17 11:33:07,976 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 11:33:07,976 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 11:33:07,977 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 11:33:07,978 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 11:33:07,978 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 11:33:07,984 - __main__ - INFO - 从 akshare 获取 600036 的历史数据...
+2025-04-17 11:33:07,984 - __main__ - INFO - 数据时间范围: 2023-01-01 至 2023-12-31
+2025-04-17 11:33:07,984 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:07,985 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:07,986 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:33:07,986 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:07,986 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:07,987 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:33:08,102 - src.data_sources.akshare - WARNING - 解析600036的详细信息时发生错误: If using all scalar values, you must pass an index
+2025-04-17 11:33:08,104 - __main__ - INFO - 股票确认: 600036 - 招商银行, 交易所: 上海证券交易所
+2025-04-17 11:33:08,104 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:08,104 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:08,105 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2023-01-01 至 2023-12-31，数据间隔: daily
+2025-04-17 11:33:08,105 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:08,106 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:33:08,106 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:33:08,107 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 11:33:08,107 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 11:33:08,253 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 11:33:08,254 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 11:33:08,254 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:08,254 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:08,256 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:33:08,256 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20230101, 结束日期: 20231231
+2025-04-17 11:33:08,256 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:08,257 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:33:08,358 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 11:33:08,358 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 11:33:08,459 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 11:33:08,460 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 11:33:08,460 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:08,460 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:33:08,462 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:33:08,462 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 11:33:08,561 - src.data_sources.akshare - INFO - 尝试使用新浪财经接口获取数据: 600036
+2025-04-17 11:33:09,389 - src.data_sources.akshare - INFO - 成功通过新浪财经接口获取 600036 数据，共 5516 行
+2025-04-17 11:33:09,390 - __main__ - INFO - 成功获取 5516 条历史数据
+2025-04-17 11:33:09,390 - __main__ - INFO - 将数据保存到 sqlite 存储...
+2025-04-17 11:33:09,402 - src.storage.sqlite_storage - INFO - 成功为表 historical_600036 添加索引
+2025-04-17 11:33:09,403 - src.storage.sqlite_storage - WARNING - 数据源 A_SHARE 没有任何列可以映射到标准列名
+2025-04-17 11:33:09,403 - src.storage.sqlite_storage - WARNING - 数据缺少必要列: ['change_pct']，将使用null值填充
+2025-04-17 11:33:09,670 - src.storage.sqlite_storage - ERROR - 保存股票数据失败: table historical_600036 has no column named amount
+2025-04-17 11:33:09,671 - src.storage.sqlite_storage - ERROR - 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount)
+2025-04-17 11:33:09,673 - src.storage.sqlite_storage - ERROR - SQLiteStorage.save_data 发生异常: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount))
+2025-04-17 11:33:09,675 - __main__ - ERROR - 程序执行过程中发生错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount))
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 776, in _save_stock_data
+    cursor.executemany(insert_sql, rows)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table historical_600036 has no column named amount
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 549, in save_data
+    self._save_stock_data(conn, data, data_type, symbol)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 782, in _save_stock_data
+    raise DataSaveException(error_msg, storage_type="sqlite", data_type=data_type, symbol=symbol, original_error=e)
+src.utils.exceptions.DataSaveException: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 700, in main
+    get_historical_data(args, data_sources, storage)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 227, in get_historical_data
+    success = storage_instance.save_data(data=data, data_type=DataType.HISTORICAL, symbol=args.symbol)
+  File "C:\Users\laisn\Desktop\Beeshare\src\utils\logging_utils.py", line 173, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 582, in save_data
+    raise DataSaveException(error_msg, storage_type="sqlite", data_type=data_type, symbol=symbol, original_error=e)
+src.utils.exceptions.DataSaveException: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount))
+2025-04-17 11:36:35,769 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 11:36:35,769 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 11:36:35,769 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 11:36:35,769 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 11:36:35,770 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 11:36:35,770 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:36:35,770 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:36:35,914 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 11:36:35,914 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 11:36:44,421 - src.data_sources.akshare - INFO - 成功加载 5412 只A股股票信息
+2025-04-17 11:36:44,424 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 11:36:44,424 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 11:36:44,425 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 11:36:44,426 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 11:36:44,427 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 11:36:44,434 - __main__ - INFO - 从 akshare 获取 600036 的历史数据...
+2025-04-17 11:36:44,434 - __main__ - INFO - 数据时间范围: 2023-01-01 至 2023-12-31
+2025-04-17 11:36:44,435 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,435 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,436 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:36:44,436 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,436 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,437 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:36:44,535 - src.data_sources.akshare - WARNING - 解析600036的详细信息时发生错误: If using all scalar values, you must pass an index
+2025-04-17 11:36:44,536 - __main__ - INFO - 股票确认: 600036 - 招商银行, 交易所: 上海证券交易所
+2025-04-17 11:36:44,537 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,537 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,537 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2023-01-01 至 2023-12-31，数据间隔: daily
+2025-04-17 11:36:44,538 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,539 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:36:44,539 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:36:44,539 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 11:36:44,540 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 11:36:44,670 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 11:36:44,671 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 11:36:44,671 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,671 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,673 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:36:44,673 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20230101, 结束日期: 20231231
+2025-04-17 11:36:44,674 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,675 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:36:44,766 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 11:36:44,766 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 11:36:44,853 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 11:36:44,853 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 11:36:44,854 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,854 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:36:44,855 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:36:44,856 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 11:36:44,941 - src.data_sources.akshare - INFO - 尝试使用新浪财经接口获取数据: 600036
+2025-04-17 11:36:45,522 - src.data_sources.akshare - INFO - 成功通过新浪财经接口获取 600036 数据，共 5516 行
+2025-04-17 11:36:45,523 - __main__ - INFO - 成功获取 5516 条历史数据
+2025-04-17 11:36:45,523 - __main__ - INFO - 将数据保存到 sqlite 存储...
+2025-04-17 11:36:45,537 - src.storage.sqlite_storage - INFO - 成功为表 historical_600036 添加索引
+2025-04-17 11:36:45,537 - src.storage.sqlite_storage - WARNING - 数据源 A_SHARE 没有任何列可以映射到标准列名
+2025-04-17 11:36:45,537 - src.storage.sqlite_storage - WARNING - 数据缺少必要列: ['change_pct']，将使用null值填充
+2025-04-17 11:36:45,816 - src.storage.sqlite_storage - ERROR - 保存股票数据失败: table historical_600036 has no column named amount
+2025-04-17 11:36:45,816 - src.storage.sqlite_storage - ERROR - 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount)
+2025-04-17 11:36:45,818 - src.storage.sqlite_storage - ERROR - SQLiteStorage.save_data 发生异常: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount))
+2025-04-17 11:36:45,820 - __main__ - ERROR - 程序执行过程中发生错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount))
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 776, in _save_stock_data
+    cursor.executemany(insert_sql, rows)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table historical_600036 has no column named amount
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 549, in save_data
+    self._save_stock_data(conn, data, data_type, symbol)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 782, in _save_stock_data
+    raise DataSaveException(error_msg, storage_type="sqlite", data_type=data_type, symbol=symbol, original_error=e)
+src.utils.exceptions.DataSaveException: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 700, in main
+    get_historical_data(args, data_sources, storage)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\laisn\Desktop\Beeshare\main.py", line 227, in get_historical_data
+    success = storage_instance.save_data(data=data, data_type=DataType.HISTORICAL, symbol=args.symbol)
+  File "C:\Users\laisn\Desktop\Beeshare\src\utils\logging_utils.py", line 173, in wrapper
+    result = func(*args, **kwargs)
+  File "C:\Users\laisn\Desktop\Beeshare\src\storage\sqlite_storage.py", line 582, in save_data
+    raise DataSaveException(error_msg, storage_type="sqlite", data_type=data_type, symbol=symbol, original_error=e)
+src.utils.exceptions.DataSaveException: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存数据失败: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount) (原始错误: 存储错误 [sqlite]: 保存数据失败 (historical, 股票代码: 600036): 保存股票数据失败: table historical_600036 has no column named amount (原始错误: table historical_600036 has no column named amount))
+2025-04-17 11:40:45,223 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 11:40:45,223 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 11:40:45,223 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 11:40:45,223 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 11:40:45,224 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 11:40:45,224 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:40:45,225 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:40:45,406 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 11:40:45,406 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 11:40:53,114 - src.data_sources.akshare - INFO - 成功加载 5412 只A股股票信息
+2025-04-17 11:40:53,116 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 11:40:53,116 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 11:40:53,116 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 11:40:53,118 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 11:40:53,118 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 11:40:53,125 - __main__ - INFO - 从 akshare 获取 600036 的历史数据...
+2025-04-17 11:40:53,125 - __main__ - INFO - 数据时间范围: 2023-01-01 至 2023-12-31
+2025-04-17 11:40:53,125 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,125 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,126 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:40:53,126 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,126 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,127 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:40:53,222 - src.data_sources.akshare - WARNING - 解析600036的详细信息时发生错误: If using all scalar values, you must pass an index
+2025-04-17 11:40:53,224 - __main__ - INFO - 股票确认: 600036 - 招商银行, 交易所: 上海证券交易所
+2025-04-17 11:40:53,224 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,224 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,224 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2023-01-01 至 2023-12-31，数据间隔: daily
+2025-04-17 11:40:53,224 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,225 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:40:53,225 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:40:53,225 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 11:40:53,226 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 11:40:53,329 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 11:40:53,330 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 11:40:53,330 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,330 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,332 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:40:53,332 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20230101, 结束日期: 20231231
+2025-04-17 11:40:53,333 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,334 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:40:53,423 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 11:40:53,423 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 11:40:53,517 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 11:40:53,517 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 11:40:53,518 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,518 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:40:53,519 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:40:53,520 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 11:40:53,602 - src.data_sources.akshare - INFO - 尝试使用新浪财经接口获取数据: 600036
+2025-04-17 11:40:54,399 - src.data_sources.akshare - INFO - 成功通过新浪财经接口获取 600036 数据，共 5516 行
+2025-04-17 11:40:54,400 - __main__ - INFO - 成功获取 5516 条历史数据
+2025-04-17 11:40:54,400 - __main__ - INFO - 将数据保存到 sqlite 存储...
+2025-04-17 11:40:54,413 - src.storage.sqlite_storage - INFO - 成功为表 historical_600036 添加索引
+2025-04-17 11:40:54,413 - src.storage.sqlite_storage - WARNING - 数据源 A_SHARE 没有任何列可以映射到标准列名
+2025-04-17 11:40:54,413 - src.storage.sqlite_storage - INFO - 向表 historical_600036 添加新列: amount REAL
+2025-04-17 11:40:54,427 - src.storage.sqlite_storage - WARNING - 数据缺少必要列: ['change_pct']，将使用null值填充
+2025-04-17 11:40:54,710 - src.storage.sqlite_storage - INFO - 成功保存 5516 条 600036 的 historical 数据
+2025-04-17 11:40:54,712 - __main__ - INFO - 成功保存 600036 的历史数据
+2025-04-17 11:40:54,713 - __main__ - INFO - 程序执行完毕
+2025-04-17 11:52:05,647 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 11:52:05,647 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 11:52:05,648 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 11:52:05,648 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 11:52:05,648 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 11:52:05,649 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:52:05,649 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 11:52:05,799 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 11:52:05,799 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 11:52:13,713 - src.data_sources.akshare - INFO - 成功加载 5412 只A股股票信息
+2025-04-17 11:52:13,715 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 11:52:13,715 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 11:52:13,715 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 11:52:13,725 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 11:52:13,726 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 11:52:13,733 - __main__ - INFO - 从 akshare 获取 600036 的历史数据...
+2025-04-17 11:52:13,733 - __main__ - INFO - 数据时间范围: 2023-01-01 至 2023-12-31
+2025-04-17 11:52:13,733 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,733 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,734 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:52:13,734 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,734 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,735 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:52:13,806 - src.data_sources.akshare - WARNING - 解析600036的详细信息时发生错误: If using all scalar values, you must pass an index
+2025-04-17 11:52:13,808 - __main__ - INFO - 股票确认: 600036 - 招商银行, 交易所: 上海证券交易所
+2025-04-17 11:52:13,808 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,808 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,809 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2023-01-01 至 2023-12-31，数据间隔: daily
+2025-04-17 11:52:13,809 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,810 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:52:13,810 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:52:13,811 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 11:52:13,811 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 11:52:13,940 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 11:52:13,940 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 11:52:13,941 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,942 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,944 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:52:13,945 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20230101, 结束日期: 20231231
+2025-04-17 11:52:13,946 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:13,949 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:52:14,031 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 11:52:14,031 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 11:52:14,094 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 11:52:14,095 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 11:52:14,095 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:14,096 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 11:52:14,097 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 11:52:14,098 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 11:52:14,179 - src.data_sources.akshare - INFO - 尝试使用新浪财经接口获取数据: 600036
+2025-04-17 11:52:14,893 - src.data_sources.akshare - INFO - 成功通过新浪财经接口获取 600036 数据，共 5516 行
+2025-04-17 11:52:14,894 - __main__ - INFO - 成功获取 5516 条历史数据
+2025-04-17 11:52:14,894 - __main__ - INFO - 将数据保存到 sqlite 存储...
+2025-04-17 11:52:14,907 - src.storage.sqlite_storage - INFO - 成功为表 historical_600036 添加索引
+2025-04-17 11:52:14,907 - src.storage.sqlite_storage - INFO - 发现 10 个直接匹配标准列名的列，不需要映射
+2025-04-17 11:52:14,908 - src.storage.sqlite_storage - WARNING - 数据缺少必要列: ['change_pct']，将使用null值填充
+2025-04-17 11:52:15,189 - src.storage.sqlite_storage - INFO - 成功保存 5516 条 600036 的 historical 数据
+2025-04-17 11:52:15,191 - __main__ - INFO - 成功保存 600036 的历史数据
+2025-04-17 11:52:15,191 - __main__ - INFO - 程序执行完毕
+2025-04-17 12:01:48,389 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 12:01:48,389 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 12:01:48,390 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 12:01:48,390 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 12:01:48,391 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 12:01:48,391 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 12:01:48,392 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 12:01:48,578 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 12:01:48,579 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 12:01:57,716 - src.data_sources.akshare - INFO - 成功加载 5412 只A股股票信息
+2025-04-17 12:01:57,723 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 12:01:57,724 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 12:01:57,725 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 12:01:57,733 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 12:01:57,734 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 12:01:57,753 - __main__ - INFO - 从 akshare 获取 600036 的历史数据...
+2025-04-17 12:01:57,754 - __main__ - INFO - 数据时间范围: 2023-01-01 至 2023-12-31
+2025-04-17 12:01:57,754 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:57,755 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:57,757 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:01:57,758 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:57,758 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:57,760 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:01:57,875 - src.data_sources.akshare - WARNING - 解析600036的详细信息时发生错误: If using all scalar values, you must pass an index
+2025-04-17 12:01:57,880 - __main__ - INFO - 股票确认: 600036 - 招商银行, 交易所: 上海证券交易所
+2025-04-17 12:01:57,881 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:57,882 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:57,882 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2023-01-01 至 2023-12-31，数据间隔: daily
+2025-04-17 12:01:57,883 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:57,887 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:01:57,888 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:01:57,889 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 12:01:57,890 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 12:01:58,041 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 12:01:58,042 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 12:01:58,043 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:58,043 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:58,046 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:01:58,047 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20230101, 结束日期: 20231231
+2025-04-17 12:01:58,047 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:58,050 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:01:58,120 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 12:01:58,120 - src.data_sources.akshare - INFO - 尝试不使用日期参数进行查询
+2025-04-17 12:01:58,203 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 12:01:58,204 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 12:01:58,205 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:58,205 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:01:58,207 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:01:58,208 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口获取数据: 600036
+2025-04-17 12:01:58,283 - src.data_sources.akshare - INFO - 尝试使用新浪财经接口获取数据: 600036
+2025-04-17 12:01:59,192 - src.data_sources.akshare - INFO - 成功通过新浪财经接口获取 600036 数据，共 5516 行
+2025-04-17 12:01:59,193 - __main__ - INFO - 成功获取 5516 条历史数据
+2025-04-17 12:01:59,193 - __main__ - INFO - 将数据保存到 sqlite 存储...
+2025-04-17 12:01:59,206 - src.storage.sqlite_storage - INFO - 成功为表 historical_600036 添加索引
+2025-04-17 12:01:59,207 - src.storage.sqlite_storage - INFO - 发现 10 个直接匹配标准列名的列，不需要映射
+2025-04-17 12:01:59,207 - src.storage.sqlite_storage - WARNING - 数据缺少必要列: ['change_pct']，将使用null值填充
+2025-04-17 12:01:59,483 - src.storage.sqlite_storage - INFO - 成功保存 5516 条 600036 的 historical 数据
+2025-04-17 12:01:59,486 - __main__ - INFO - 成功保存 600036 的历史数据
+2025-04-17 12:01:59,486 - __main__ - INFO - 程序执行完毕
+2025-04-17 12:12:08,276 - __main__ - INFO - 股票数据获取系统启动
+2025-04-17 12:12:08,276 - __main__ - INFO - 初始化AKShare数据源
+2025-04-17 12:12:08,276 - src.data_sources.base - INFO - 初始化数据源: akshare
+2025-04-17 12:12:08,276 - src.data_sources.akshare - INFO - AKShare数据源初始化，测试模式: False
+2025-04-17 12:12:08,277 - src.data_sources.akshare - INFO - 正在测试与AKShare的连接...
+2025-04-17 12:12:08,277 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 12:12:08,278 - src.data_sources.akshare - INFO - 连接超时设置为 10 秒
+2025-04-17 12:12:08,482 - src.data_sources.akshare - INFO - AKShare连接测试成功
+2025-04-17 12:12:08,482 - src.data_sources.akshare - INFO - AKShare 版本: 1.16.78
+2025-04-17 12:12:16,090 - src.data_sources.akshare - INFO - 成功加载 5412 只A股股票信息
+2025-04-17 12:12:16,092 - src.storage.config - INFO - 从 C:\Users\laisn\Desktop\Beeshare\config\storage.json 加载存储配置
+2025-04-17 12:12:16,092 - __main__ - INFO - 初始化SQLite存储
+2025-04-17 12:12:16,092 - src.storage.base - INFO - 初始化存储方式: sqlite
+2025-04-17 12:12:16,102 - src.storage.sqlite_storage - INFO - 成功为表 symbols 添加索引
+2025-04-17 12:12:16,103 - src.storage.sqlite_storage - INFO - 成功为表 indices 添加索引
+2025-04-17 12:12:16,111 - __main__ - INFO - 从 akshare 获取 600036 的历史数据...
+2025-04-17 12:12:16,111 - __main__ - INFO - 数据时间范围: 2023-01-01 至 2023-12-31
+2025-04-17 12:12:16,111 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,111 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,112 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:12:16,112 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,113 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,114 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:12:16,233 - src.data_sources.akshare - WARNING - 解析600036的详细信息时发生错误: If using all scalar values, you must pass an index
+2025-04-17 12:12:16,234 - __main__ - INFO - 股票确认: 600036 - 招商银行, 交易所: 上海证券交易所
+2025-04-17 12:12:16,235 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,235 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,235 - src.data_sources.akshare - INFO - 获取 600036 的历史数据，时间区间: 2023-01-01 至 2023-12-31，数据间隔: daily
+2025-04-17 12:12:16,236 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,236 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:12:16,237 - src.data_sources.akshare - INFO - 股票 600036 类型信息: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:12:16,237 - src.data_sources.akshare - INFO - 尝试使用 get_sh_hist 获取 600036 历史数据
+2025-04-17 12:12:16,237 - root - INFO - 使用上交所专用接口获取 600036 历史数据
+2025-04-17 12:12:16,374 - root - WARNING - 上交所接口未能获取到 600036 历史数据
+2025-04-17 12:12:16,374 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_standard_api 获取 600036 历史数据
+2025-04-17 12:12:16,375 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,375 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,376 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:12:16,376 - src.data_sources.akshare - INFO - 调用AKShare API获取股票数据, 代码: sh600036, 期间: daily, 开始日期: 20230101, 结束日期: 20231231
+2025-04-17 12:12:16,377 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,377 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:12:16,378 - src.data_sources.akshare - INFO - 尝试使用东方财富网接口(em)获取 600036 历史数据
+2025-04-17 12:12:16,472 - src.data_sources.akshare - WARNING - 标准API返回空数据集，请检查股票代码、日期范围或网络连接
+2025-04-17 12:12:16,473 - src.data_sources.akshare - INFO - 尝试使用 _get_stock_data_via_fallback_api 获取 600036 历史数据
+2025-04-17 12:12:16,473 - src.data_sources.akshare - WARNING - 使用备用方法获取 600036 历史数据
+2025-04-17 12:12:16,474 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,474 - src.data_sources.akshare - INFO - 标准化股票代码: 输入 600036 -> 输出 600036
+2025-04-17 12:12:16,475 - src.data_sources.akshare - INFO - 股票 600036 分析结果: {'market': 'A股', 'exchange': '上海证券交易所', 'board': '主板', 'prefix': 'sh', 'name': '招商银行', 'exists': True}
+2025-04-17 12:12:16,475 - src.data_sources.akshare - INFO - 尝试使用新浪财经接口获取数据: 600036
+2025-04-17 12:12:17,257 - src.data_sources.akshare - INFO - 成功通过新浪财经接口获取 600036 数据，共 242 行
+2025-04-17 12:12:17,258 - __main__ - INFO - 成功获取 242 条历史数据
+2025-04-17 12:12:17,258 - __main__ - INFO - 将数据保存到 sqlite 存储...
+2025-04-17 12:12:17,274 - src.storage.sqlite_storage - INFO - 成功为表 historical_600036 添加索引
+2025-04-17 12:12:17,274 - src.storage.sqlite_storage - INFO - 发现 10 个直接匹配标准列名的列，不需要映射
+2025-04-17 12:12:17,275 - src.storage.sqlite_storage - WARNING - 数据缺少必要列: ['change_pct']，将使用null值填充
+2025-04-17 12:12:17,298 - src.storage.sqlite_storage - INFO - 成功保存 242 条 600036 的 historical 数据
+2025-04-17 12:12:17,298 - __main__ - INFO - 成功保存 600036 的历史数据
+2025-04-17 12:12:17,298 - __main__ - INFO - 程序执行完毕

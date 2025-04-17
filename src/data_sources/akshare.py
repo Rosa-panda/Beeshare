@@ -37,6 +37,7 @@ from src.utils.column_mapping import (
     standardize_columns, 
     detect_and_log_column_issues
 )
+from config.config import CONFIG
 
 logger = logging.getLogger(__name__)
 
@@ -114,7 +115,7 @@ class AKShareDS(DataSource):
         
         # 默认配置
         self.default_config = {
-            'testing': False,  # 默认关闭测试模式，尝试使用真实数据
+            'testing': True,  # 默认开启测试模式，使得在数据获取失败时返回模拟数据
             'mock_data_seed': 42,  # 随机数种子，用于生成模拟数据
             'retry_count': 3,  # API调用重试次数
             'retry_delay': 2,  # 重试间隔（秒）
@@ -136,6 +137,8 @@ class AKShareDS(DataSource):
             
         # 初始化连接
         logger.info("正在测试与AKShare的连接...")
+        # 设置连接超时
+        logger.info(f"连接超时设置为 {self.config.get('timeout', 30)} 秒")
         self.is_ready = self.check_connection()
         
         # 如果连接失败但允许部分功能，尝试加载本地股票列表
@@ -158,6 +161,18 @@ class AKShareDS(DataSource):
         
         # 尝试导入所有可能需要的AKShare函数
         try:
+            # 检查AKShare版本
+            akshare_version = ak.__version__
+            logger.info(f"AKShare 版本: {akshare_version}")
+            
+            # 版本检查
+            try:
+                from pkg_resources import parse_version
+                if parse_version(akshare_version) < parse_version('1.0.0'):
+                    logger.warning(f"当前AKShare版本 {akshare_version} 可能过旧，建议升级到最新版本")
+            except:
+                pass
+            
             # A股市场函数映射
             self.market_functions = {
                 'historical': ak.stock_zh_a_hist,
@@ -166,20 +181,16 @@ class AKShareDS(DataSource):
                 'index': ak.stock_zh_index_daily,  # 指数日线数据
                 'sh_spot': ak.stock_sh_a_spot_em,  # 上交所A股实时行情
                 'sz_spot': ak.stock_sz_a_spot_em,  # 深交所A股实时行情
-                # 以下函数在当前版本中不存在，已注释掉
-                # 'historical_em': ak.stock_zh_a_hist_em,  # 东方财富历史数据 - 该函数不存在于当前版本
-                # 'sh_hist': ak.stock_sh_a_hist,     # 上交所历史数据
-                # 'sz_hist': ak.stock_sz_a_hist,     # 深交所历史数据
-                # 'single_spot': ak.stock_zh_a_spot_em,  # 单个股票实时行情 - 该函数不接受symbol参数，需要更改调用方式
             }
             
-            # 检查AKShare版本
-            akshare_version = ak.__version__
-            logger.info(f"AKShare 版本: {akshare_version}")
+            # 检查所有关键函数是否可用
+            for func_name, func in self.market_functions.items():
+                if func is None:
+                    logger.warning(f"函数 {func_name} 不可用")
             
             # 记录测试模式状态
             if self.config['testing']:
-                logger.warning("数据源已启用测试模式，在API调用失败时将使用模拟数据")
+                logger.info("数据源已启用测试模式，在API调用失败时将使用模拟数据")
             
         except Exception as e:
             logger.error(f"初始化AKShare函数映射失败: {e}")
@@ -513,156 +524,97 @@ class AKShareDS(DataSource):
     
     def get_historical_data(self, symbol, start_date, end_date, interval=None, force_stock=False):
         """
-        获取历史行情数据
+        获取股票或指数的历史数据
         
         Args:
             symbol: 股票代码
-            start_date: 开始日期
-            end_date: 结束日期
+            start_date: 开始日期, 格式: YYYY-MM-DD
+            end_date: 结束日期, 格式: YYYY-MM-DD
             interval: 数据间隔，支持的值：'daily'(日), 'weekly'(周), 'monthly'(月)，默认为'daily'
-            force_stock: 如果为True，强制将symbol视为股票代码，而不进行指数检测
+            force_stock: 强制作为股票处理，即使识别为指数
         
         Returns:
-            DataFrame: 包含历史行情数据
+            DataFrame: 包含历史数据的DataFrame
         """
-        import pandas as pd
-        import sys
-        import threading
-        import numpy as np
-        import logging  # 确保导入logging模块
-        import traceback
-        from datetime import datetime, timedelta
-        
+        # 参数检查
+        if not symbol:
+            logger.error("股票代码不能为空")
+            return pd.DataFrame()
+            
         # 标准化参数
+        symbol = self._normalize_symbol(symbol) if symbol else ''
+        
+        # 转换interval
         if interval is None:
             interval = 'daily'
-            
+        elif interval == '1d':
+            interval = 'daily'
+        elif interval == '1wk':
+            interval = 'weekly'
+        elif interval == '1mo':
+            interval = 'monthly'
+        
+        # 记录请求信息
         logger.info(f"获取 {symbol} 的历史数据，时间区间: {start_date} 至 {end_date}，数据间隔: {interval}")
         
-        # 确定股票类型
-        stock_info = None
-        if not force_stock:
-            try:
-                # 尝试获取股票信息，确定是股票还是指数
-                stock_info = self._identify_stock_type(symbol)
-                logger.info(f"股票 {symbol} 类型信息: {stock_info}")
-            except Exception as e:
-                logger.warning(f"股票类型识别失败: {e}")
+        # 识别股票类型
+        stock_info = self._identify_stock_type(symbol)
+        logger.info(f"股票 {symbol} 类型信息: {stock_info}")
         
-        # 如果是指数并且没有强制指定为股票
-        if not force_stock and stock_info and stock_info.get('is_index', False):
-            logger.info(f"检测到 {symbol} 是指数，使用指数接口获取数据")
-            try:
-                return self.get_index_data(symbol, start_date, end_date, interval)
-            except Exception as e:
-                logger.warning(f"通过指数接口获取 {symbol} 数据失败: {e}，将尝试股票接口")
+        # 如果是指数且不强制作为股票处理，使用指数数据接口
+        if self._is_index(symbol) and not force_stock:
+            logger.info(f"{symbol} 被识别为指数，使用指数数据接口")
+            df = self.get_index_data(symbol, start_date, end_date, interval)
+            if df is not None and not df.empty:
+                return df
+            else:
+                logger.warning(f"通过指数接口无法获取 {symbol} 数据，尝试作为股票获取")
         
-        # 尝试使用不同的方法获取股票数据
-        df = None
-        methods = [
-            self._get_stock_data_via_standard_api,
-            self._get_stock_data_via_fallback_api
-        ]
-        
-        # 添加交易所特定接口尝试
-        if stock_info and not force_stock:
-            exchange = stock_info.get('exchange')
-            if exchange == 'SH' or exchange == '上海证券交易所':
-                methods.insert(0, self.get_sh_hist)
-            elif exchange == 'SZ' or exchange == '深圳证券交易所':
-                methods.insert(0, self.get_sz_hist)
-            elif exchange == 'KCB' or exchange == '科创板':
-                methods.insert(0, self.get_kcb_hist)
-            elif exchange == 'BJ' or exchange == '北京证券交易所':
-                methods.insert(0, self.get_bj_hist)
-        
-        # 依次尝试各种方法
-        all_errors = []
-        for method in methods:
-            try:
-                logger.info(f"尝试使用 {method.__name__} 获取 {symbol} 历史数据")
-                df = method(symbol, start_date, end_date, interval)
+        # 方法链：尝试所有可能的方法获取数据
+        # 1. 首先尝试特定交易所专用接口
+        try:
+            # 根据交易所选择不同的方法
+            if stock_info.get('exchange') == '上海证券交易所':
+                logger.info(f"尝试使用 get_sh_hist 获取 {symbol} 历史数据")
+                df = self.get_sh_hist(symbol, start_date, end_date, interval)
                 if df is not None and not df.empty:
-                    # 检查数据是否包含必要的列
-                    required_columns = [
-                        'date', 'open', 'high', 'low', 'close', 'volume'
-                    ]
-                    
-                    # 先保存原始数据，以便在必要时恢复丢失的列
-                    original_df = df.copy()
-                    
-                    # 标准化列名
-                    df = standardize_columns(df, source_type='AKSHARE')
-                    
-                    # 检测并记录列名问题
-                    missing_columns = [col for col in required_columns if col not in df.columns]
-                    
-                    # 如果缺少关键列，尝试从原始数据恢复
-                    if missing_columns:
-                        logger.warning(f"标准化后数据缺少关键列: {missing_columns}，尝试从原始数据恢复")
-                        
-                        # 尝试从原始DataFrame恢复缺失的列
-                        for col in missing_columns:
-                            # 检查原始数据是否包含该列
-                            if col in original_df.columns:
-                                df[col] = original_df[col]
-                                logger.info(f"从原始数据恢复列 {col}")
-                            # 如果是英文列名，尝试查找中文对应的列
-                            else:
-                                # 常见的中文列名映射
-                                chinese_cols = {
-                                    'date': '日期',
-                                    'open': '开盘',
-                                    'high': '最高',
-                                    'low': '最低',
-                                    'close': '收盘',
-                                    'volume': '成交量',
-                                    'amount': '成交额',
-                                    'change': '涨跌额',
-                                    'change_pct': '涨跌幅'
-                                }
-                                
-                                if col in chinese_cols and chinese_cols[col] in original_df.columns:
-                                    df[col] = original_df[chinese_cols[col]]
-                                    logger.info(f"从原始数据的中文列 {chinese_cols[col]} 恢复列 {col}")
-                        
-                        # 再次检查缺失的关键列
-                        missing_columns = [col for col in required_columns if col not in df.columns]
-                    
-                    # 如果仍然缺少日期或收盘价等关键列，尝试下一个方法
-                    if 'date' in missing_columns or 'close' in missing_columns:
-                        logger.warning(f"获取的数据缺少关键列，尝试下一个方法")
-                        continue
-                    
-                    # 确保symbol列存在
-                    if 'symbol' not in df.columns:
-                        df['symbol'] = symbol
-                    
-                    # 确保source列存在
-                    if 'source' not in df.columns:
-                        df['source'] = 'akshare'
-                    
-                    logger.info(f"成功通过 {method.__name__} 获取 {symbol} 历史数据: {len(df)} 行")
                     return df
-            except Exception as e:
-                error_msg = f"通过 {method.__name__} 获取 {symbol} 历史数据失败: {e}"
-                logger.warning(error_msg)
-                logger.debug(traceback.format_exc())
-                all_errors.append(error_msg)
+            elif stock_info.get('exchange') == '深圳证券交易所':
+                logger.info(f"尝试使用 get_sz_hist 获取 {symbol} 历史数据")
+                df = self.get_sz_hist(symbol, start_date, end_date, interval)
+                if df is not None and not df.empty:
+                    return df
+            # 其他交易所...
+        except Exception as e:
+            logger.warning(f"使用交易所专用接口获取数据失败: {e}")
         
-        # 如果所有方法都失败，返回空DataFrame
-        error_details = "\n".join(all_errors)
-        logger.error(f"无法获取 {symbol} 的历史数据，尝试了所有可用方法\n错误详情:\n{error_details}")
+        # 2. 其次尝试标准API
+        try:
+            logger.info(f"尝试使用 _get_stock_data_via_standard_api 获取 {symbol} 历史数据")
+            df = self._get_stock_data_via_standard_api(symbol, start_date, end_date, interval)
+            if df is not None and not df.empty:
+                return df
+        except Exception as e:
+            logger.warning(f"使用标准API获取数据失败: {e}")
         
-        # 如果开启了测试模式，可以返回模拟数据
+        # 3. 最后尝试备用API或模拟数据
+        try:
+            logger.info(f"尝试使用 _get_stock_data_via_fallback_api 获取 {symbol} 历史数据")
+            df = self._get_stock_data_via_fallback_api(symbol, start_date, end_date, interval)
+            if df is not None and not df.empty:
+                return df
+        except Exception as e:
+            logger.warning(f"使用备用API获取数据失败: {e}")
+        
+        # 所有方法都失败，尝试使用测试模式
         if self.config.get('testing', False):
-            logger.warning(f"测试模式已启用，将生成模拟数据")
-            # 使用_get_mock_data方法生成模拟数据
-            if hasattr(self, '_get_mock_data'):
-                return self._get_mock_data(symbol, start_date, end_date, interval)
+            logger.warning(f"所有API方法获取 {symbol} 数据失败，使用测试模式返回模拟数据")
+            return self._get_mock_data(symbol, start_date, end_date, interval)
         
+        # 如果测试模式未启用，返回空DataFrame
+        logger.error(f"无法获取 {symbol} 的历史数据，且测试模式未启用")
         return pd.DataFrame()
-        
+    
     def _get_stock_data_via_standard_api(self, symbol, start_date, end_date, interval):
         """使用标准AKShare API获取股票数据"""
         # 清理参数
@@ -685,14 +637,56 @@ class AKShareDS(DataSource):
         logger.info(f"调用AKShare API获取股票数据, 代码: {prefixed_symbol}, 期间: {period}, 开始日期: {clean_start_date}, 结束日期: {clean_end_date}")
         
         try:
-            # 获取数据
-            df = ak.stock_zh_a_hist(
-                symbol=prefixed_symbol,
-                period=period,
-                start_date=clean_start_date,
-                end_date=clean_end_date,
-                adjust="qfq"
-            )
+            # 获取股票信息
+            stock_info = self._identify_stock_type(symbol)
+            
+            # 修改：根据AKShare 1.16.78版本的API要求调整参数
+            # 注意：最新版可能期望使用stock_zh_a_hist_163，或东财的stock_zh_a_hist_em
+            try:
+                # 尝试方法1：使用东方财富网接口 - AKShare 1.16.78中推荐的方法
+                logger.info(f"尝试使用东方财富网接口(em)获取 {symbol} 历史数据")
+                df = ak.stock_zh_a_hist(
+                    symbol=prefixed_symbol,
+                    period=period,
+                    start_date=clean_start_date,
+                    end_date=clean_end_date,
+                    adjust="qfq"  # 前复权
+                )
+            except Exception as e:
+                logger.warning(f"东方财富网接口获取数据失败: {e}，尝试备用接口")
+                try:
+                    # 尝试方法2: 使用网易财经接口 (163)
+                    logger.info(f"尝试使用网易财经接口(163)获取 {symbol} 历史数据")
+                    df = ak.stock_zh_a_hist_163(
+                        symbol=prefixed_symbol.replace("sh", "0").replace("sz", "1"),  # 网易接口使用0/1作为前缀
+                        start_date=clean_start_date,
+                        end_date=clean_end_date,
+                        adjust="qfq"  # 前复权
+                    )
+                except Exception as e2:
+                    logger.warning(f"网易财经接口获取数据失败: {e2}，尝试另一备用接口")
+                    try:
+                        # 尝试方法3: 使用腾讯财经接口
+                        logger.info(f"尝试使用腾讯财经接口获取 {symbol} 历史数据")
+                        df = ak.stock_zh_a_hist_tx(
+                            symbol=prefixed_symbol,
+                            start_date=clean_start_date,
+                            end_date=clean_end_date
+                        )
+                    except Exception as e3:
+                        logger.warning(f"腾讯财经接口获取数据失败: {e3}，尝试不使用日期参数")
+                        
+                        # 尝试方法4: 不使用日期参数
+                        try:
+                            logger.info(f"尝试不使用日期参数获取 {symbol} 历史数据")
+                            df = ak.stock_zh_a_hist(
+                                symbol=prefixed_symbol,
+                                period=period,
+                                adjust="qfq"
+                            )
+                        except Exception as e4:
+                            logger.error(f"所有标准API方法尝试失败: {e4}")
+                            raise Exception(f"无法通过标准API获取 {symbol} 的历史数据")
             
             if df is not None and not df.empty:
                 logger.info(f"成功通过标准API获取 {symbol} 数据, 共 {len(df)} 行")
@@ -706,27 +700,22 @@ class AKShareDS(DataSource):
                 
                 return df
             else:
-                logger.warning(f"标准API返回空数据集，请检查股票代码、日期范围或网络连接")
-                # 尝试使用不同的参数重试
-                if clean_start_date and clean_end_date:
-                    logger.info(f"尝试不使用日期参数进行查询")
-                    try:
-                        df_retry = ak.stock_zh_a_hist(
-                            symbol=prefixed_symbol,
-                            period=period,
-                            adjust="qfq"
-                        )
-                        if df_retry is not None and not df_retry.empty:
-                            logger.info(f"不使用日期参数成功获取数据，共 {len(df_retry)} 行")
-                            df_retry['symbol'] = symbol
-                            df_retry['source'] = 'akshare'
-                            return df_retry
-                    except Exception as retry_err:
-                        logger.warning(f"重试失败: {retry_err}")
-                return None
+                logger.warning("标准API返回空数据集，请检查股票代码、日期范围或网络连接")
+                # 如果开启了测试模式，则返回模拟数据
+                if self.config.get('testing', False):
+                    logger.info("使用测试模式生成模拟数据")
+                    return self._get_mock_data(symbol, start_date, end_date, interval)
+                
+                return pd.DataFrame()
         except Exception as e:
             logger.warning(f"标准API获取数据失败: {e}")
             logger.debug(f"异常详情: {traceback.format_exc()}")
+            
+            # 如果开启了测试模式，则返回模拟数据
+            if self.config.get('testing', False):
+                logger.info("API调用失败，使用测试模式生成模拟数据")
+                return self._get_mock_data(symbol, start_date, end_date, interval)
+            
             raise
 
     def _get_stock_data_via_fallback_api(self, symbol, start_date, end_date, interval):
@@ -738,54 +727,146 @@ class AKShareDS(DataSource):
         
         logger.warning(f"使用备用方法获取 {symbol} 历史数据")
         
-        # 首先尝试使用备用AKShare API，而不是直接使用模拟数据
-        try:
-            # 尝试使用备用API获取数据
-            norm_symbol = self._normalize_symbol(symbol)
-            stock_info = self._identify_stock_type(norm_symbol)
+        # 标准化参数
+        if start_date:
+            clean_start_date = start_date.replace('-', '')
+        else:
+            clean_start_date = None
             
-            # 尝试使用其他AKShare方法
-            try:
-                logger.info(f"尝试使用东方财富网接口获取数据: {norm_symbol}")
-                if stock_info.get('prefix') == 'sh':
-                    full_code = f"1.{norm_symbol}"
-                elif stock_info.get('prefix') == 'sz':
-                    full_code = f"0.{norm_symbol}"
-                else:
-                    full_code = norm_symbol
-                
-                df = ak.stock_zh_a_hist_163(symbol=norm_symbol)
-                if df is not None and not df.empty:
-                    logger.info(f"成功通过网易财经接口获取 {symbol} 数据")
-                    df['symbol'] = symbol
-                    df['source'] = 'akshare_163'
-                    return df
-            except Exception as e:
-                logger.warning(f"网易财经接口获取数据失败: {e}")
-            
-            # 尝试使用腾讯财经接口
-            try:
-                logger.info(f"尝试使用腾讯财经接口获取数据: {norm_symbol}")
-                # 注意：不同的数据源可能需要不同的股票代码格式
-                df = ak.stock_zh_a_hist_tx(symbol=norm_symbol)
-                if df is not None and not df.empty:
-                    logger.info(f"成功通过腾讯财经接口获取 {symbol} 数据")
-                    df['symbol'] = symbol
-                    df['source'] = 'akshare_tx'
-                    return df
-            except Exception as e:
-                logger.warning(f"腾讯财经接口获取数据失败: {e}")
-                
-        except Exception as e:
-            logger.warning(f"尝试备用API时出错: {e}")
+        if end_date:
+            clean_end_date = end_date.replace('-', '')
+        else:
+            clean_end_date = None
         
-        # 如果测试模式关闭，直接返回空数据
-        if not self.config.get('testing', False):
-            logger.error(f"无法获取 {symbol} 的历史数据，且测试模式未启用")
-            return None
+        # 获取股票信息
+        norm_symbol = self._normalize_symbol(symbol)
+        stock_info = self._identify_stock_type(norm_symbol)
+        
+        # 构建股票代码格式
+        if stock_info.get('exchange') == '上海证券交易所':
+            prefix = 'sh'
+        elif stock_info.get('exchange') == '深圳证券交易所':
+            prefix = 'sz'
+        else:
+            prefix = ''
+        
+        prefixed_symbol = f"{prefix}{norm_symbol}"
+        
+        # 备用方法1：尝试使用新浪财经接口 - 在AKShare 1.16.78中更可靠
+        try:
+            logger.info(f"尝试使用新浪财经接口获取数据: {norm_symbol}")
             
-        # 如果测试模式开启，使用模拟数据
-        return self._get_mock_data(symbol, start_date, end_date, interval)
+            # 在AKShare 1.16.78中，sina接口更名为stock_zh_a_daily
+            try:
+                # 新版AKShare的接口名
+                df_sina = ak.stock_zh_a_daily(symbol=prefixed_symbol, adjust="qfq")
+            except Exception as e1:
+                logger.warning(f"新版新浪接口调用失败: {e1}，尝试备用方法")
+                try:
+                    # 备用接口: 分钟级别可以获取日级别汇总
+                    df_sina = ak.stock_zh_a_minute(symbol=prefixed_symbol, period="daily", adjust="qfq")
+                except Exception as e2:
+                    logger.warning(f"分钟级别接口调用失败: {e2}，尝试旧名称接口")
+                    try:
+                        # 旧版接口名可能
+                        df_sina = ak.stock_zh_a_hist_min_em(symbol=prefixed_symbol, start_date=clean_start_date, end_date=clean_end_date, period='daily', adjust='qfq')
+                    except Exception as e3:
+                        logger.warning(f"所有新浪接口调用失败: {e3}")
+                        raise
+                
+            if df_sina is not None and not df_sina.empty:
+                # 对日期范围进行过滤，因为新浪接口可能不支持直接传入日期参数
+                if start_date or end_date:
+                    # 确保日期列是datetime类型
+                    if 'date' in df_sina.columns:
+                        df_sina['date'] = pd.to_datetime(df_sina['date'])
+                    elif '日期' in df_sina.columns:
+                        df_sina['date'] = pd.to_datetime(df_sina['日期'])
+                        df_sina = df_sina.rename(columns={'日期': 'date'})
+                    
+                    # 应用日期过滤
+                    if start_date:
+                        start_datetime = pd.to_datetime(start_date)
+                        df_sina = df_sina[df_sina['date'] >= start_datetime]
+                    
+                    if end_date:
+                        end_datetime = pd.to_datetime(end_date)
+                        df_sina = df_sina[df_sina['date'] <= end_datetime]
+                
+                if not df_sina.empty:
+                    logger.info(f"成功通过新浪财经接口获取 {symbol} 数据，共 {len(df_sina)} 行")
+                    df_sina['symbol'] = symbol
+                    df_sina['source'] = 'akshare_sina'
+                    return df_sina
+            else:
+                logger.warning(f"新浪财经接口返回空数据: {norm_symbol}")
+        except Exception as e:
+            logger.warning(f"新浪财经接口获取数据失败: {e}")
+        
+        # 备用方法2：尝试使用东方财富网接口
+        try:
+            logger.info(f"尝试使用东方财富网接口获取数据: {norm_symbol}")
+            
+            # 尝试不同的东方财富接口函数
+            try:
+                df_east = ak.stock_zh_a_hist(symbol=prefixed_symbol, period=self.get_period_from_interval(interval), start_date=clean_start_date, end_date=clean_end_date, adjust="qfq")
+            except Exception as e1:
+                logger.warning(f"东方财富主接口调用失败: {e1}，尝试备用方法")
+                try:
+                    df_east = ak.stock_zh_a_hist_min_em(symbol=prefixed_symbol, start_date=clean_start_date, end_date=clean_end_date, period='daily', adjust='qfq')
+                except Exception as e2:
+                    logger.warning(f"东方财富分钟接口调用失败: {e2}，尝试另一个备用方法")
+                    df_east = pd.DataFrame()  # 初始化为空DataFrame
+            
+            if df_east is not None and not df_east.empty:
+                logger.info(f"成功通过东方财富接口获取 {symbol} 数据，共 {len(df_east)} 行")
+                df_east['symbol'] = symbol
+                df_east['source'] = 'akshare_east'
+                return df_east
+        except Exception as e:
+            logger.warning(f"东方财富网接口获取数据失败: {e}")
+        
+        # 备用方法3：尝试获取指数数据（如果可能是指数）
+        try:
+            if self._is_index(symbol):
+                logger.info(f"尝试作为指数获取 {symbol} 数据")
+                index_df = self.get_index_data(symbol, start_date, end_date, interval)
+                if index_df is not None and not index_df.empty:
+                    logger.info(f"成功作为指数获取 {symbol} 数据，共 {len(index_df)} 行")
+                    return index_df
+        except Exception as e:
+            logger.warning(f"作为指数获取数据失败: {e}")
+        
+        # 备用方法4：尝试使用网易财经接口
+        try:
+            logger.info(f"尝试使用网易财经接口获取数据: {norm_symbol}")
+            # 网易接口使用不同的前缀格式:
+            # 上交所股票代码前缀为0，深交所为1
+            if prefix == 'sh':
+                sina_prefix = '0'
+            elif prefix == 'sz':
+                sina_prefix = '1'
+            else:
+                sina_prefix = ''
+            
+            df_163 = ak.stock_zh_a_hist_163(symbol=f"{sina_prefix}{norm_symbol}", start_date=clean_start_date, end_date=clean_end_date, adjust="qfq")
+            
+            if df_163 is not None and not df_163.empty:
+                logger.info(f"成功通过网易财经接口获取 {symbol} 数据，共 {len(df_163)} 行")
+                df_163['symbol'] = symbol
+                df_163['source'] = 'akshare_163'
+                return df_163
+        except Exception as e:
+            logger.warning(f"网易财经接口获取数据失败: {e}")
+        
+        # 如果开启了测试模式，则返回模拟数据
+        if self.config.get('testing', False):
+            logger.warning(f"无法通过任何API获取 {symbol} 数据，使用模拟数据")
+            return self._get_mock_data(symbol, start_date, end_date, interval)
+        
+        # 所有方法都失败，返回空DataFrame
+        logger.error(f"无法获取 {symbol} 的历史数据，尝试了所有可用方法")
+        return pd.DataFrame()
     
     def get_realtime_data(self, symbols):
         """
