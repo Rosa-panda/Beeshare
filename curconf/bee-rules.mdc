@@ -1,0 +1,131 @@
+---
+description: python开发的相关规则
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+
+# 代码规范与风格检查规则‌
+json
+Copy Code
+{
+  "code_style": {
+    "pep8_validation": true,
+    "docstring_generator": {
+      "template": "google_style",
+      "required_sections": ["Args", "Returns", "Raises"]
+    },
+    "max_line_length": 88
+  }
+}
+# 自动修正不符合PEP8规范的代码（如缩进错误、多余空格等）‌
+# 生成包含参数说明、返回值、异常说明的文档字符串模板‌
+# 强制代码行长度不超过88字符（兼容Black格式化标准）
+
+# ‌依赖管理规则‌
+json
+Copy Code
+{
+  "dependency_control": {
+    "auto_requirements": {
+      "exclude_envs": ["test", "dev"],
+      "version_pinning": "minor"
+    },
+    "virtualenv_autocreate": true
+  }
+}
+# 自动识别import语句生成requirements.txt‌
+# 排除测试环境依赖（如pytest）生成生产环境依赖文件‌
+# 自动创建虚拟环境避免全局污染（支持venv/conda）‌
+
+# ‌AI辅助生成规则‌ ‌
+json
+Copy Code
+{
+  "ai_assist": {
+    "test_generator": {
+      "coverage_target": 90,
+      "edge_case_ratio": 30
+    },
+    "code_optimizer": {
+      "performance_mode": true,
+      "memory_usage_check": true
+    }
+  }
+}
+# 为函数生成包含边界条件的测试用例（自动mock外部依赖）‌
+# 优化循环结构/内存使用（如将列表推导式改为生成器）‌
+# 识别低效SQL查询并建议ORM优化方案‌
+
+# ‌安全防护规则‌ 
+json
+Copy Code
+{
+  "security": {
+    "sensitive_data_filter": ["API_KEY", "SECRET"],
+    "sql_injection_check": true,
+    "dependency_vulnerability_scan": true
+  }
+}
+# 阻止提交包含敏感信息的代码（自动替换为环境变量引用）‌
+# 检测SQL拼接语句并建议参数化查询方案‌
+# 扫描依赖库漏洞（如numpy旧版本安全风险）‌
+
+# ‌版本控制规则‌ ‌
+json
+Copy Code
+{
+  "version_control": {
+    "auto_ignore": ["__pycache__", "*.log"],
+    "commit_message_generator": {
+      "type_enforcement": ["feat", "fix", "docs"],
+      "scope_detection": true
+    }
+  }
+}
+# 自动忽略编译缓存文件和日志文件‌
+# 生成符合Angular规范的提交信息（检测代码变更类型自动填充scope）‌
+# 阻止包含TODO注释的代码提交到主分支‌
+
+# ‌调试优化规则‌ ‌
+json
+Copy Code
+{
+  "debugging": {
+    "auto_pdb": true,
+    "exception_visualizer": {
+      "call_stack_depth": 3,
+      "variable_tracing": true
+    }
+  }
+}
+# 在异常发生处自动插入断点并启动pdb调试器‌
+# 图形化展示异常传播路径（高亮关键变量变化）‌
+# 内存泄漏检测（标记未释放的资源句柄）‌
+
+# ‌结构化输出规则‌ 
+json
+Copy Code
+{
+  "output_rules": {
+    "flowchart_in_comment": true,
+    "auto_generate_docstring": true
+  }
+}
+# ‌功能‌：要求 AI 在生成代码时，自动在注释中添加 mermaid 流程图代码片段（而非独立输出），并与代码逻辑强关联‌
+
+
+
+
+
+
+
+
+
+
+
+
