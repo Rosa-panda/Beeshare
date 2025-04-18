@@ -1,12 +1,10 @@
-# Python字节码文件
+# BeeShare项目的.gitignore文件
+
+# Python编译文件
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C扩展
 *.so
-
-# 发行版
 .Python
 env/
 build/
@@ -20,40 +18,42 @@ lib64/
 parts/
 sdist/
 var/
-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 
-# PyInstaller生成的文件
-*.manifest
-*.spec
+# 日志文件
+logs/
+*.log
 
-# 单元测试/覆盖率报告
-htmlcov/
-.tox/
+# 数据库文件
+*.db
+*.db-shm
+*.db-wal
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# 备份文件
+*.bak*
+*.backup
+
+# 临时文件
+*.tmp
+*.temp
+.DS_Store
+
+# 缓存目录
+.cache/
+.pytest_cache/
 .coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
+htmlcov/
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# 环境
+# 环境配置文件
 .env
 .venv
 venv/
 ENV/
-
-# 项目相关
-logs/
-*.log
-.DS_Store
-.cursor/
 
 # IDE配置文件
 .idea/
@@ -61,11 +61,12 @@ logs/
 *.swp
 *.swo
 
-# 数据库文件
-*.db
-*.sqlite3
-data/*.db
+# Cursor配置
+curconf/
+.cursor/
 
-# 临时文件
-*.bak
-*.tmp 
+# 结果输出目录 - 根据需要取消注释
+# results/
+
+# 个人配置文件（如有）
+# config/personal_settings.py 
