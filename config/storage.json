@@ -1,8 +1,22 @@
 {
-    "active_storage": "sqlite",
+    "active_storage": "postgresql",
     "storage_configs": {
         "sqlite": {
             "db_path": "data/stock_data.db"
+        },
+        "postgresql": {
+            "type": "postgresql",
+            "connection": {
+                "host": "localhost",
+                "port": 5432,
+                "database": "beeshare_db",
+                "user": "beeshare",
+                "password": "beeshare123"
+            },
+            "pool_size": 5,
+            "max_overflow": 10,
+            "pool_recycle": 3600,
+            "echo": false
         }
     }
-} 
+}

@@ -102,6 +102,7 @@ def init_storage():
         dict: 存储名称到存储实例的映射
     """
     from src.storage.config import StorageConfig
+    from src.storage.factory import create_storage
     
     storage_instances = {}
     
@@ -109,21 +110,26 @@ def init_storage():
     storage_config = StorageConfig()
     active_storage_type = storage_config.get_storage_type()
     
-    # 确保活跃存储类型为sqlite
-    if active_storage_type != 'sqlite':
-        logger.warning(f"系统现在只支持SQLite存储，将配置从{active_storage_type}修改为sqlite")
-        storage_config.set_storage_type('sqlite', migrate=False)
-        active_storage_type = 'sqlite'
+    # 使用配置中指定的存储类型
+    logger.info(f"初始化存储：类型 = {active_storage_type}")
     
-    # 初始化SQLite存储
     try:
-        logger.info("初始化SQLite存储")
-        from src.storage.sqlite_storage import SQLiteStorage
-        sqlite_config = storage_config.get_storage_config('sqlite')
-        sqlite_storage = SQLiteStorage(sqlite_config['db_path'])
-        storage_instances['sqlite'] = sqlite_storage
+        # 使用工厂模式创建存储实例
+        config = storage_config.get_storage_config(active_storage_type)
+        storage = create_storage(active_storage_type, config)
+        storage_instances[active_storage_type] = storage
     except Exception as e:
-        logger.error(f"初始化SQLite存储失败: {e}")
+        logger.error(f"初始化{active_storage_type}存储失败: {e}")
+        # 如果初始化失败且不是sqlite，尝试回退到sqlite
+        if active_storage_type != 'sqlite':
+            logger.warning(f"尝试回退到SQLite存储")
+            try:
+                sqlite_config = storage_config.get_storage_config('sqlite')
+                from src.storage.sqlite_storage import SQLiteStorage
+                sqlite_storage = SQLiteStorage(sqlite_config.get('db_path', 'data/beeshare.db'))
+                storage_instances['sqlite'] = sqlite_storage
+            except Exception as fallback_error:
+                logger.error(f"回退到SQLite存储也失败: {fallback_error}")
     
     return storage_instances
 
@@ -982,52 +988,100 @@ def run_clustering_analysis(data_source, storage, args):
         logger.error(traceback.format_exc())
 
 def manage_storage(args):
-    """
-    管理存储功能
+    """管理存储功能
     
     Args:
         args: 命令行参数
     """
-    storage = init_storage()
+    storage_instances = init_storage()
+    
+    # 确定使用的存储方式
+    from src.storage.config import StorageConfig
+    storage_config = StorageConfig()
+    active_storage_type = storage_config.get_storage_type()
+    storage = storage_instances.get(active_storage_type)
+    
+    if not storage:
+        logger.error(f"存储类型 {active_storage_type} 不可用")
+        return False
     
     if args.status:
         try:
             logger.info("获取存储状态信息...")
-            # 获取数据库文件大小
-            db_path = storage.db_path if hasattr(storage, 'db_path') else "未知"
             
-            if os.path.exists(db_path):
-                db_size = os.path.getsize(db_path) / (1024 * 1024)  # 转换为MB
+            # 使用存储对象的get_status方法获取状态
+            if hasattr(storage, 'get_status'):
+                status = storage.get_status()
                 
-                # 获取表数量
-                conn = sqlite3.connect(db_path)
-                cursor = conn.cursor()
-                cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table'")
-                table_count = cursor.fetchone()[0]
-                
-                # 获取各类表的数量
-                cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name LIKE 'historical_stock_%'")
-                hist_stock_count = cursor.fetchone()[0]
-                
-                cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name LIKE 'historical_index_%'")
-                hist_index_count = cursor.fetchone()[0]
-                
-                cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name LIKE 'realtime_%'")
-                realtime_count = cursor.fetchone()[0]
-                
-                # 输出状态信息
                 print("\n====== 存储状态信息 ======")
-                print(f"数据库路径: {db_path}")
-                print(f"数据库大小: {db_size:.2f} MB")
-                print(f"表数量: {table_count}")
-                print(f"  - 股票历史数据表: {hist_stock_count}")
-                print(f"  - 指数历史数据表: {hist_index_count}")
-                print(f"  - 实时数据表: {realtime_count}")
+                print(f"存储类型: {status.get('type', active_storage_type)}")
+                
+                # 显示连接信息
+                if 'connection' in status:
+                    conn_info = status['connection']
+                    print(f"数据库连接: {conn_info.get('host', 'localhost')}:{conn_info.get('port', '5432')}/{conn_info.get('database', '')}")
+                    print(f"用户: {conn_info.get('user', '')}")
+                
+                # 显示版本信息
+                if 'version' in status:
+                    version_info = status['version']
+                    for k, v in version_info.items():
+                        print(f"{k.capitalize()} 版本: {v}")
+                
+                # 显示表信息
+                if 'tables' in status:
+                    print("\n表数据:")
+                    for table, count in status['tables'].items():
+                        size = status.get('size', {}).get(table, '未知')
+                        print(f"  - {table}: {count} 条记录, 大小: {size}")
+                
+                # 显示总大小
+                if 'total_size' in status:
+                    print(f"\n数据库总大小: {status['total_size']}")
+                
                 print("==========================\n")
                 
-                conn.close()
+            # SQLite老版本兼容处理
+            elif active_storage_type == 'sqlite' and hasattr(storage, 'db_path'):
+                # 获取数据库文件大小
+                db_path = storage.db_path
+                
+                if os.path.exists(db_path):
+                    db_size = os.path.getsize(db_path) / (1024 * 1024)  # 转换为MB
+                    
+                    # 获取表数量
+                    import sqlite3
+                    conn = sqlite3.connect(db_path)
+                    cursor = conn.cursor()
+                    cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table'")
+                    table_count = cursor.fetchone()[0]
+                    
+                    # 获取各类表的数量
+                    cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name LIKE 'historical_stock_%'")
+                    hist_stock_count = cursor.fetchone()[0]
+                    
+                    cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name LIKE 'historical_index_%'")
+                    hist_index_count = cursor.fetchone()[0]
+                    
+                    cursor.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name LIKE 'realtime_%'")
+                    realtime_count = cursor.fetchone()[0]
+                    
+                    # 输出状态信息
+                    print("\n====== 存储状态信息 ======")
+                    print(f"存储类型: SQLite")
+                    print(f"数据库路径: {db_path}")
+                    print(f"数据库大小: {db_size:.2f} MB")
+                    print(f"表数量: {table_count}")
+                    print(f"  - 股票历史数据表: {hist_stock_count}")
+                    print(f"  - 指数历史数据表: {hist_index_count}")
+                    print(f"  - 实时数据表: {realtime_count}")
+                    print("==========================\n")
+                    
+                    conn.close()
+                else:
+                    print(f"数据库文件不存在: {db_path}")
             else:
-                print(f"数据库文件不存在: {db_path}")
+                print(f"存储类型 {active_storage_type} 不支持状态查询")
                 
         except Exception as e:
             logger.error(f"获取存储状态失败: {e}")
@@ -1036,20 +1090,25 @@ def manage_storage(args):
     elif args.optimize:
         try:
             logger.info("开始优化存储...")
-            print("开始优化SQLite数据库...")
+            print(f"开始优化 {active_storage_type} 数据库...")
             
             # 使用存储对象的优化方法
-            if hasattr(storage, '_optimize_database'):
+            if hasattr(storage, 'optimize'):
+                storage.optimize()
+                print("数据库优化完成")
+            elif hasattr(storage, '_optimize_database'):  # 兼容旧版SQLite
                 storage._optimize_database()
                 print("基本数据库优化完成")
                 
-            # 调用索引优化方法
-            if hasattr(storage, 'optimize_indexes'):
-                print("开始优化数据库索引...")
-                storage.optimize_indexes()
-                print("索引优化完成")
+                # 调用索引优化方法
+                if hasattr(storage, 'optimize_indexes'):
+                    print("开始优化数据库索引...")
+                    storage.optimize_indexes()
+                    print("索引优化完成")
                 
-            print("数据库优化完成！")
+                print("数据库优化完成！")
+            else:
+                print(f"存储类型 {active_storage_type} 不支持优化操作")
             
         except Exception as e:
             logger.error(f"优化存储失败: {e}")

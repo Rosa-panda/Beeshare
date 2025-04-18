@@ -38,7 +38,7 @@ graph TB
    - **股票代码信息识别**（主板、创业板、科创板等）
 
 3. **数据存储方式**：
-   - SQLite数据库存储（支持高级查询和优化）
+   - TimescaleDB数据库存储（专为时间序列数据优化的PostgreSQL扩展）
 
 4. **数据分析功能**：
    - **技术分析**：移动平均线、MACD、RSI、KDJ、布林带等指标计算
@@ -88,17 +88,17 @@ python main.py identify --symbol 600519,001279,300059,688001
 
 ### 存储管理命令
 
-系统现在只支持SQLite存储：
+系统现在使用TimescaleDB存储：
 
 ```bash
 # 查看当前存储状态
 python main.py storage --status
 
-# 优化SQLite数据库
+# 优化数据库
 python main.py storage --optimize
 ```
 
-有关存储方案的详细说明，请参考[存储方案指南](docs/storage_guide.md)。
+有关存储方案的详细说明，请参考[存储方案指南](docs/storage_guide.md)和[TimescaleDB配置文档](docs/timescaledb_configuration.md)。
 
 ## 分析模块使用
 
@@ -236,7 +236,7 @@ BeeShare系统提供了一套实用的时间管理工具，包括：
    - 返回：
      - 包含股票类型信息的字典（市场、交易所、板块、前缀等）
 
-### 存储API (SQLiteStorage类)
+### 存储API (PostgreSQLStorage类)
 
 1. **save_data(data, data_type, symbol, mode)**
    - 功能：保存数据到SQLite数据库
@@ -406,6 +406,7 @@ beeshare/
 │   ├── api_guide.md        # API使用指南
 │   ├── storage_guide.md    # 存储方案指南
 │   ├── logging_guide.md    # 日志和异常处理指南
+│   ├── postgresql_management.md # PostgreSQL/TimescaleDB 管理功能
 │   ├── 聚类分析模块说明.md  # 聚类分析说明
 │   ├── 时间管理工具使用指南.md # 时间工具使用说明
 │   └── examples/           # 示例代码

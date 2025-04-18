@@ -4,6 +4,16 @@
 
 本项目为BeeShare系统提供了增强版的列标准化功能。列标准化系统负责将不同数据源的列名映射为标准格式，使数据在整个系统中保持一致性。增强版在原有功能基础上，添加了模糊匹配、内容推断和用户自定义映射支持等智能特性。
 
+## 项目文档
+
+- [TimescaleDB配置信息](./timescaledb_configuration.md) - 数据库连接和配置详情
+- [TimescaleDB迁移指南](./timescaledb_migration.md) - 从SQLite迁移到TimescaleDB的详细步骤
+- [TimescaleDB设置总结](./timescaledb_setup_summary.md) - TimescaleDB设置与配置工作总结
+- [性能优化指南](./performance_optimization.md) - 系统性能优化策略
+- [后端优化方案](./backend_optimization.md) - 后端架构优化方案
+- [存储层指南](./storage_guide.md) - 数据存储层使用说明
+- [API使用指南](./api_guide.md) - API接口使用说明
+
 ## 主要功能
 
 1. **模糊匹配**：通过字符串相似度算法，识别相似但不完全相同的列名

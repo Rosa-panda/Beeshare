@@ -113,30 +113,78 @@ class StorageConfig:
     
     def get_storage_type(self) -> str:
         """
-        获取当前激活的存储类型，系统现在只支持SQLite存储
+        获取当前激活的存储类型
         
         Returns:
-            str: 始终返回'sqlite'
+            str: 当前激活的存储类型，如'sqlite'或'postgresql'
         """
-        return "sqlite"
+        return self._config.get("active_storage", "sqlite")
     
     def set_storage_type(self, storage_type: str, migrate: bool = False) -> None:
         """
-        设置激活的存储类型。
-        注意：系统现在只支持SQLite存储，所以此方法仅为了兼容性保留。
+        设置激活的存储类型
         
         Args:
-            storage_type (str): 存储类型，将被忽略并强制设置为'sqlite'
-            migrate (bool, optional): 是否迁移数据，此参数将被忽略. Defaults to False.
+            storage_type (str): 存储类型，如'sqlite'或'postgresql'
+            migrate (bool, optional): 是否迁移数据. Defaults to False.
         """
-        if storage_type != 'sqlite':
-            logger.warning(f"系统现在只支持SQLite存储，忽略设置存储类型为{storage_type}的请求")
+        # 确保配置中包含指定的存储类型配置
+        storage_configs = self._config.get("storage_configs", {})
+        if storage_type not in storage_configs:
+            logger.warning(f"存储配置中没有 {storage_type} 的配置信息，将使用默认配置")
+            # 为新存储类型添加默认配置
+            if storage_type == "sqlite":
+                storage_configs[storage_type] = {
+                    "db_path": os.path.join(get_project_root(), 'data', 'stock_data.db')
+                }
+            elif storage_type in ["postgresql", "postgres", "timescaledb"]:
+                storage_configs[storage_type] = {
+                    "type": "postgresql",
+                    "connection": {
+                        "host": "localhost",
+                        "port": 5432,
+                        "database": "beeshare_db",
+                        "user": "beeshare",
+                        "password": "beeshare123"
+                    },
+                    "pool_size": 5,
+                    "max_overflow": 10,
+                    "pool_recycle": 3600,
+                    "echo": False
+                }
+            else:
+                logger.error(f"不支持的存储类型: {storage_type}")
+                return
         
-        # 确保配置中的active_storage为sqlite
-        if self._config.get("active_storage") != "sqlite":
-            self._config["active_storage"] = "sqlite"
-            self.save_config()
-            logger.info("存储类型已设置为SQLite")
+        # 更新激活的存储类型
+        self._config["active_storage"] = storage_type
+        self._config["storage_configs"] = storage_configs
+        self.save_config()
+        logger.info(f"存储类型已设置为 {storage_type}")
+        
+        # 如果需要迁移数据，创建迁移实例并执行迁移
+        if migrate and hasattr(self, '_current_storage_type') and self._current_storage_type != storage_type:
+            try:
+                # 获取源存储和目标存储
+                source_storage = StorageFactory.get_storage(self._current_storage_type)
+                target_storage = StorageFactory.get_storage(storage_type)
+                
+                # 执行迁移
+                migration = StorageMigration()
+                success = migration.migrate(source_storage, target_storage)
+                
+                if success:
+                    logger.info(f"数据已成功从 {self._current_storage_type} 迁移到 {storage_type}")
+                else:
+                    logger.warning(f"数据迁移失败，但存储类型已更改为 {storage_type}")
+            except Exception as e:
+                logger.error(f"数据迁移过程发生错误: {e}")
+        
+        # 更新当前存储类型
+        self._current_storage_type = storage_type
+        
+        # 清除存储工厂中的缓存实例
+        StorageFactory.clear_instances()
     
     def get_storage_config(self, storage_type: Optional[str] = None) -> Dict[str, Any]:
         """
